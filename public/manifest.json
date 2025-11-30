@@ -1,0 +1,27 @@
+{
+  "name": "RED BRIDGE DEV",
+  "short_name": "RED BRIDGE",
+  "description": "고객과 기술을 안전하고 튼튼하게 연결합니다",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "ko",
+  "dir": "ltr"
+}

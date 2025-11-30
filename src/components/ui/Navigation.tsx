@@ -4,26 +4,47 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
+import ThemeToggle from "./ThemeToggle";
+import LanguageToggle from "./LanguageToggle";
 
-const navItems = [
-  { name: "홈", href: "#hero" },
-  { name: "소개", href: "#about" },
-  { name: "서비스", href: "#services" },
-  { name: "포트폴리오", href: "#portfolio" },
-  { name: "문의", href: "#contact" },
-];
+const navItems = {
+  ko: [
+    { name: "홈", href: "#hero" },
+    { name: "소개", href: "#about" },
+    { name: "서비스", href: "#services" },
+    { name: "프로세스", href: "#process" },
+    { name: "포트폴리오", href: "#portfolio" },
+    { name: "FAQ", href: "#faq" },
+    { name: "문의", href: "#contact" },
+  ],
+  en: [
+    { name: "Home", href: "#hero" },
+    { name: "About", href: "#about" },
+    { name: "Services", href: "#services" },
+    { name: "Process", href: "#process" },
+    { name: "Portfolio", href: "#portfolio" },
+    { name: "FAQ", href: "#faq" },
+    { name: "Contact", href: "#contact" },
+  ],
+};
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
+  const { theme } = useTheme();
+  const { language } = useLanguage();
+
+  const items = navItems[language];
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
       // Update active section based on scroll position
-      const sections = navItems.map((item) => item.href.slice(1));
+      const sections = items.map((item) => item.href.slice(1));
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
         if (element) {
@@ -38,7 +59,7 @@ export default function Navigation() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [items]);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -48,6 +69,8 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
   };
 
+  const ctaText = language === "ko" ? "프로젝트 문의" : "Get Started";
+
   return (
     <>
       <motion.nav
@@ -56,7 +79,9 @@ export default function Navigation() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-black/80 backdrop-blur-lg border-b border-red-900/20"
+            ? theme === "dark"
+              ? "bg-black/80 backdrop-blur-lg border-b border-red-900/20"
+              : "bg-white/80 backdrop-blur-lg border-b border-red-200/50 shadow-sm"
             : "bg-transparent"
         }`}
       >
@@ -73,7 +98,7 @@ export default function Navigation() {
               whileHover={{ scale: 1.02 }}
             >
               <Image
-                src="/logo_white.png"
+                src={theme === "dark" ? "/logo_white.png" : "/logo_red.png"}
                 alt="RED BRIDGE DEV"
                 width={160}
                 height={40}
@@ -83,8 +108,8 @@ export default function Navigation() {
             </motion.a>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => (
+            <div className="hidden lg:flex items-center gap-6">
+              {items.map((item) => (
                 <motion.a
                   key={item.name}
                   href={item.href}
@@ -95,7 +120,9 @@ export default function Navigation() {
                   className={`relative text-sm font-medium transition-colors ${
                     activeSection === item.href.slice(1)
                       ? "text-red-500"
-                      : "text-gray-300 hover:text-white"
+                      : theme === "dark"
+                      ? "text-gray-300 hover:text-white"
+                      : "text-gray-600 hover:text-gray-900"
                   }`}
                   whileHover={{ y: -2 }}
                 >
@@ -110,6 +137,11 @@ export default function Navigation() {
                 </motion.a>
               ))}
 
+              <div className="flex items-center gap-3 ml-2">
+                <LanguageToggle />
+                <ThemeToggle />
+              </div>
+
               <motion.a
                 href="#contact"
                 onClick={(e) => {
@@ -120,18 +152,22 @@ export default function Navigation() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                프로젝트 문의
+                {ctaText}
               </motion.a>
             </div>
 
             {/* Mobile Menu Button */}
-            <motion.button
-              className="md:hidden text-white p-2"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              whileTap={{ scale: 0.9 }}
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </motion.button>
+            <div className="lg:hidden flex items-center gap-3">
+              <LanguageToggle />
+              <ThemeToggle />
+              <motion.button
+                className={`p-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                whileTap={{ scale: 0.9 }}
+              >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -144,10 +180,12 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 md:hidden"
+            className="fixed inset-0 z-40 lg:hidden"
           >
             <div
-              className="absolute inset-0 bg-black/90 backdrop-blur-lg"
+              className={`absolute inset-0 backdrop-blur-lg ${
+                theme === "dark" ? "bg-black/90" : "bg-white/90"
+              }`}
               onClick={() => setIsMobileMenuOpen(false)}
             />
             <motion.div
@@ -155,10 +193,14 @@ export default function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 h-full w-80 bg-black/95 border-l border-red-900/30 p-8 pt-24"
+              className={`absolute right-0 top-0 h-full w-80 p-8 pt-24 ${
+                theme === "dark"
+                  ? "bg-black/95 border-l border-red-900/30"
+                  : "bg-white border-l border-gray-200"
+              }`}
             >
               <div className="flex flex-col gap-6">
-                {navItems.map((item, index) => (
+                {items.map((item, index) => (
                   <motion.a
                     key={item.name}
                     href={item.href}
@@ -172,7 +214,9 @@ export default function Navigation() {
                     className={`text-2xl font-light ${
                       activeSection === item.href.slice(1)
                         ? "text-red-500"
-                        : "text-gray-300"
+                        : theme === "dark"
+                        ? "text-gray-300"
+                        : "text-gray-700"
                     }`}
                   >
                     {item.name}
@@ -186,10 +230,10 @@ export default function Navigation() {
                   }}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
+                  transition={{ delay: 0.7 }}
                   className="mt-4 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white text-center font-medium"
                 >
-                  프로젝트 문의
+                  {ctaText}
                 </motion.a>
               </div>
             </motion.div>

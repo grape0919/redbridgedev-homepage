@@ -2,95 +2,201 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ExternalLink, Github, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ExternalLink, ChevronRight, X } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
-const projects = [
-  {
-    id: 1,
-    title: "글로벌 이커머스 플랫폼",
-    category: "Web Development",
-    description:
-      "대규모 트래픽을 처리하는 글로벌 이커머스 플랫폼. 마이크로서비스 아키텍처 기반으로 설계되어 높은 확장성과 안정성을 제공합니다.",
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
-    tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "AWS"],
-    color: "from-red-500 to-orange-500",
-    metrics: { users: "100만+", performance: "99.9%", response: "< 100ms" },
-  },
-  {
-    id: 2,
-    title: "핀테크 모바일 앱",
-    category: "App Development",
-    description:
-      "보안이 중요한 금융 서비스를 위한 크로스 플랫폼 모바일 앱. 생체 인증, 암호화, 실시간 거래 처리 기능을 포함합니다.",
-    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop",
-    tech: ["React Native", "TypeScript", "Firebase", "Stripe"],
-    color: "from-red-500 to-pink-500",
-    metrics: { downloads: "50만+", rating: "4.8★", transactions: "1M+/일" },
-  },
-  {
-    id: 3,
-    title: "AI 기반 분석 대시보드",
-    category: "Solution Development",
-    description:
-      "기업용 데이터 분석 및 시각화 플랫폼. 머신러닝 기반 예측 분석과 실시간 대시보드를 제공합니다.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-    tech: ["React", "Python", "TensorFlow", "D3.js", "MongoDB"],
-    color: "from-red-500 to-rose-500",
-    metrics: { accuracy: "95%+", dataPoints: "10억+", realtime: "실시간" },
-  },
-  {
-    id: 4,
-    title: "SaaS 프로젝트 관리 툴",
-    category: "Web Development",
-    description:
-      "팀 협업을 위한 올인원 프로젝트 관리 SaaS 솔루션. 실시간 협업, 간트 차트, 자동화 워크플로우를 제공합니다.",
-    image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=600&fit=crop",
-    tech: ["Next.js", "GraphQL", "Prisma", "WebSocket"],
-    color: "from-red-500 to-amber-500",
-    metrics: { teams: "5,000+", tasks: "100만+/월", uptime: "99.99%" },
-  },
-  {
-    id: 5,
-    title: "헬스케어 IoT 플랫폼",
-    category: "Solution Development",
-    description:
-      "의료 기기와 연동되는 헬스케어 IoT 플랫폼. 실시간 모니터링과 알림 시스템을 통해 환자 케어를 지원합니다.",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
-    tech: ["Flutter", "Go", "InfluxDB", "MQTT", "AWS IoT"],
-    color: "from-red-500 to-violet-500",
-    metrics: { devices: "10,000+", latency: "< 50ms", reliability: "99.95%" },
-  },
-  {
-    id: 6,
-    title: "소셜 커머스 앱",
-    category: "App Development",
-    description:
-      "소셜 미디어와 쇼핑을 결합한 차세대 커머스 앱. 라이브 스트리밍, 인플루언서 마케팅 기능을 포함합니다.",
-    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&h=600&fit=crop",
-    tech: ["React Native", "Node.js", "WebRTC", "Elasticsearch"],
-    color: "from-red-500 to-red-700",
-    metrics: { MAU: "200만+", engagement: "45분/일", conversion: "8.5%" },
-  },
-];
+const projectsData = {
+  ko: [
+    {
+      id: 1,
+      title: "글로벌 이커머스 플랫폼",
+      category: "Web Development",
+      description:
+        "대규모 트래픽을 처리하는 글로벌 이커머스 플랫폼. 마이크로서비스 아키텍처 기반으로 설계되어 높은 확장성과 안정성을 제공합니다.",
+      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
+      tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "AWS"],
+      color: "from-red-500 to-orange-500",
+      metrics: { users: "100만+", performance: "99.9%", response: "< 100ms" },
+    },
+    {
+      id: 2,
+      title: "핀테크 모바일 앱",
+      category: "App Development",
+      description:
+        "보안이 중요한 금융 서비스를 위한 크로스 플랫폼 모바일 앱. 생체 인증, 암호화, 실시간 거래 처리 기능을 포함합니다.",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop",
+      tech: ["React Native", "TypeScript", "Firebase", "Stripe"],
+      color: "from-red-500 to-pink-500",
+      metrics: { downloads: "50만+", rating: "4.8★", transactions: "1M+/일" },
+    },
+    {
+      id: 3,
+      title: "AI 기반 분석 대시보드",
+      category: "Solution Development",
+      description:
+        "기업용 데이터 분석 및 시각화 플랫폼. 머신러닝 기반 예측 분석과 실시간 대시보드를 제공합니다.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      tech: ["React", "Python", "TensorFlow", "D3.js", "MongoDB"],
+      color: "from-red-500 to-rose-500",
+      metrics: { accuracy: "95%+", dataPoints: "10억+", realtime: "실시간" },
+    },
+    {
+      id: 4,
+      title: "SaaS 프로젝트 관리 툴",
+      category: "Web Development",
+      description:
+        "팀 협업을 위한 올인원 프로젝트 관리 SaaS 솔루션. 실시간 협업, 간트 차트, 자동화 워크플로우를 제공합니다.",
+      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=600&fit=crop",
+      tech: ["Next.js", "GraphQL", "Prisma", "WebSocket"],
+      color: "from-red-500 to-amber-500",
+      metrics: { teams: "5,000+", tasks: "100만+/월", uptime: "99.99%" },
+    },
+    {
+      id: 5,
+      title: "헬스케어 IoT 플랫폼",
+      category: "Solution Development",
+      description:
+        "의료 기기와 연동되는 헬스케어 IoT 플랫폼. 실시간 모니터링과 알림 시스템을 통해 환자 케어를 지원합니다.",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
+      tech: ["Flutter", "Go", "InfluxDB", "MQTT", "AWS IoT"],
+      color: "from-red-500 to-violet-500",
+      metrics: { devices: "10,000+", latency: "< 50ms", reliability: "99.95%" },
+    },
+    {
+      id: 6,
+      title: "소셜 커머스 앱",
+      category: "App Development",
+      description:
+        "소셜 미디어와 쇼핑을 결합한 차세대 커머스 앱. 라이브 스트리밍, 인플루언서 마케팅 기능을 포함합니다.",
+      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&h=600&fit=crop",
+      tech: ["React Native", "Node.js", "WebRTC", "Elasticsearch"],
+      color: "from-red-500 to-red-700",
+      metrics: { MAU: "200만+", engagement: "45분/일", conversion: "8.5%" },
+    },
+  ],
+  en: [
+    {
+      id: 1,
+      title: "Global E-commerce Platform",
+      category: "Web Development",
+      description:
+        "A global e-commerce platform handling large-scale traffic. Designed with microservices architecture for high scalability and reliability.",
+      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
+      tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "AWS"],
+      color: "from-red-500 to-orange-500",
+      metrics: { users: "1M+", performance: "99.9%", response: "< 100ms" },
+    },
+    {
+      id: 2,
+      title: "Fintech Mobile App",
+      category: "App Development",
+      description:
+        "Cross-platform mobile app for security-critical financial services. Includes biometric authentication, encryption, and real-time transaction processing.",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop",
+      tech: ["React Native", "TypeScript", "Firebase", "Stripe"],
+      color: "from-red-500 to-pink-500",
+      metrics: { downloads: "500K+", rating: "4.8★", transactions: "1M+/day" },
+    },
+    {
+      id: 3,
+      title: "AI Analytics Dashboard",
+      category: "Solution Development",
+      description:
+        "Enterprise data analytics and visualization platform. Provides machine learning-based predictive analytics and real-time dashboards.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      tech: ["React", "Python", "TensorFlow", "D3.js", "MongoDB"],
+      color: "from-red-500 to-rose-500",
+      metrics: { accuracy: "95%+", dataPoints: "1B+", realtime: "Real-time" },
+    },
+    {
+      id: 4,
+      title: "SaaS Project Management Tool",
+      category: "Web Development",
+      description:
+        "All-in-one project management SaaS solution for team collaboration. Provides real-time collaboration, Gantt charts, and automated workflows.",
+      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=600&fit=crop",
+      tech: ["Next.js", "GraphQL", "Prisma", "WebSocket"],
+      color: "from-red-500 to-amber-500",
+      metrics: { teams: "5,000+", tasks: "1M+/mo", uptime: "99.99%" },
+    },
+    {
+      id: 5,
+      title: "Healthcare IoT Platform",
+      category: "Solution Development",
+      description:
+        "Healthcare IoT platform integrated with medical devices. Supports patient care through real-time monitoring and alert systems.",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
+      tech: ["Flutter", "Go", "InfluxDB", "MQTT", "AWS IoT"],
+      color: "from-red-500 to-violet-500",
+      metrics: { devices: "10,000+", latency: "< 50ms", reliability: "99.95%" },
+    },
+    {
+      id: 6,
+      title: "Social Commerce App",
+      category: "App Development",
+      description:
+        "Next-generation commerce app combining social media and shopping. Includes live streaming and influencer marketing features.",
+      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&h=600&fit=crop",
+      tech: ["React Native", "Node.js", "WebRTC", "Elasticsearch"],
+      color: "from-red-500 to-red-700",
+      metrics: { MAU: "2M+", engagement: "45min/day", conversion: "8.5%" },
+    },
+  ],
+};
 
-const categories = ["All", "Web Development", "App Development", "Solution Development"];
+const categoriesData = {
+  ko: ["전체", "Web Development", "App Development", "Solution Development"],
+  en: ["All", "Web Development", "App Development", "Solution Development"],
+};
+
+const content = {
+  ko: {
+    subtitle: "Our Work",
+    title: "포트폴리오",
+    description: "다양한 산업 분야에서 진행한 프로젝트들입니다",
+    viewMore: "자세히 보기",
+    moreProjects: "더 많은 프로젝트가 궁금하신가요?",
+    contactUs: "문의하기",
+    techStack: "기술 스택",
+    similarProject: "비슷한 프로젝트 문의",
+  },
+  en: {
+    subtitle: "Our Work",
+    title: "Portfolio",
+    description: "Projects we've completed across various industries",
+    viewMore: "View Details",
+    moreProjects: "Want to see more projects?",
+    contactUs: "Contact Us",
+    techStack: "Tech Stack",
+    similarProject: "Inquire About Similar Project",
+  },
+};
 
 export default function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [selectedProject, setSelectedProject] = useState<typeof projectsData.ko[0] | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const { theme } = useTheme();
+  const { language } = useLanguage();
+
+  const t = content[language];
+  const projects = projectsData[language];
+  const categories = categoriesData[language];
 
   const filteredProjects =
-    activeCategory === "All"
+    activeCategory === 0
       ? projects
-      : projects.filter((p) => p.category === activeCategory);
+      : projects.filter((p) => p.category === categoriesData.en[activeCategory]);
 
   return (
     <section
       id="portfolio"
-      className="relative py-32 bg-black overflow-hidden"
+      className={`relative py-32 overflow-hidden ${
+        theme === "dark" ? "bg-black" : "bg-gray-50"
+      }`}
     >
       {/* Background */}
       <div className="absolute inset-0 grid-pattern opacity-30" />
@@ -104,13 +210,13 @@ export default function Portfolio() {
           className="text-center mb-16"
         >
           <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            Our Work
+            {t.subtitle}
           </span>
-          <h2 className="mt-4 text-4xl sm:text-5xl font-bold text-white">
-            포트폴리오
+          <h2 className={`mt-4 text-4xl sm:text-5xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+            {t.title}
           </h2>
-          <p className="mt-6 text-xl text-gray-400 max-w-3xl mx-auto">
-            다양한 산업 분야에서 진행한 프로젝트들입니다
+          <p className={`mt-6 text-xl max-w-3xl mx-auto ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+            {t.description}
           </p>
         </motion.div>
 
@@ -121,14 +227,16 @@ export default function Portfolio() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-wrap justify-center gap-4 mb-16"
         >
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <motion.button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveCategory(index)}
               className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
-                activeCategory === category
+                activeCategory === index
                   ? "bg-red-600 text-white shadow-lg shadow-red-900/30"
-                  : "bg-gray-900/50 text-gray-400 hover:text-white hover:bg-gray-800"
+                  : theme === "dark"
+                  ? "bg-gray-900/50 text-gray-400 hover:text-white hover:bg-gray-800"
+                  : "bg-white text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-gray-200"
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -157,7 +265,11 @@ export default function Portfolio() {
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
-                <div className="relative h-[400px] bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 hover:border-red-900/50 transition-all duration-500">
+                <div className={`relative h-[400px] rounded-2xl overflow-hidden border transition-all duration-500 ${
+                  theme === "dark"
+                    ? "bg-gray-900 border-gray-800 hover:border-red-900/50"
+                    : "bg-white border-gray-200 hover:border-red-300 shadow-sm hover:shadow-lg"
+                }`}>
                   {/* Project image */}
                   <div className="absolute inset-0">
                     <img
@@ -213,7 +325,7 @@ export default function Portfolio() {
                       }}
                       className="flex items-center gap-2 text-red-400 text-sm font-medium"
                     >
-                      자세히 보기
+                      {t.viewMore}
                       <ExternalLink size={16} />
                     </motion.div>
                   </div>
@@ -235,7 +347,7 @@ export default function Portfolio() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <p className="text-gray-400 mb-4">더 많은 프로젝트가 궁금하신가요?</p>
+          <p className={`mb-4 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>{t.moreProjects}</p>
           <motion.a
             href="#contact"
             onClick={(e) => {
@@ -245,7 +357,7 @@ export default function Portfolio() {
             className="inline-flex items-center gap-2 text-red-400 hover:text-red-300 transition-colors font-medium"
             whileHover={{ x: 5 }}
           >
-            문의하기
+            {t.contactUs}
             <ChevronRight size={20} />
           </motion.a>
         </motion.div>
@@ -321,7 +433,7 @@ export default function Portfolio() {
                   {/* Tech stack */}
                   <div className="mt-6">
                     <h4 className="text-sm font-medium text-gray-400 mb-3">
-                      기술 스택
+                      {t.techStack}
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.tech.map((tech) => (
@@ -352,7 +464,7 @@ export default function Portfolio() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      비슷한 프로젝트 문의
+                      {t.similarProject}
                     </motion.a>
                   </div>
                 </div>

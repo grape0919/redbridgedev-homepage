@@ -16,13 +16,6 @@ import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { openChannelTalk } from "@/components/ui/ChannelTalk";
 
-// 카카오톡 채널 아이콘 (SVG)
-const KakaoIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-    <path d="M12 3c-5.08 0-9.19 3.34-9.19 7.47 0 2.63 1.73 4.94 4.34 6.27-.14.48-.89 3.08-.93 3.33 0 0-.02.08.04.11.06.03.12.02.12.02.16-.02 1.87-1.22 2.73-1.79.94.14 1.92.21 2.89.21 5.08 0 9.19-3.34 9.19-7.47S17.08 3 12 3z" />
-  </svg>
-);
-
 const contactInfoData = {
   ko: [
     {
@@ -222,30 +215,60 @@ export default function Contact() {
     e.preventDefault();
     setFormStatus("loading");
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // 프로젝트 유형 한글/영문 변환
+    const projectTypeLabel = formData.projectType
+      ? t.form.projectTypes[formData.projectType as keyof typeof t.form.projectTypes]
+      : "";
 
-    // In production, you would send this to your backend
-    console.log("Form submitted:", formData);
-    setFormStatus("success");
+    // 예산 한글/영문 변환
+    const budgetLabel = formData.budget
+      ? t.form.budgets[formData.budget as keyof typeof t.form.budgets]
+      : language === "ko" ? "미정" : "TBD";
 
-    // Reset form after success
-    setTimeout(() => {
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        projectType: "",
-        budget: "",
-        message: "",
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          projectType: projectTypeLabel,
+          budget: budgetLabel,
+          message: formData.message,
+          language,
+        }),
       });
-      setFormStatus("idle");
-    }, 3000);
-  };
 
-  const openKakaoChannel = () => {
-    // 카카오톡 채널 URL - 실제 채널 ID로 교체 필요
-    window.open("https://pf.kakao.com/_xxxxxC", "_blank");
+      if (!response.ok) {
+        throw new Error("Failed to send email");
+      }
+
+      setFormStatus("success");
+
+      // Reset form after success
+      setTimeout(() => {
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          projectType: "",
+          budget: "",
+          message: "",
+        });
+        setFormStatus("idle");
+      }, 3000);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setFormStatus("error");
+
+      // Reset error status after 3 seconds
+      setTimeout(() => {
+        setFormStatus("idle");
+      }, 3000);
+    }
   };
 
   return (
@@ -322,16 +345,6 @@ export default function Contact() {
             <div>
               <h3 className={`text-xl font-bold mb-4 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{t.quickContact}</h3>
               <div className="flex flex-col gap-4">
-                <motion.button
-                  onClick={openKakaoChannel}
-                  className="flex items-center justify-center gap-3 w-full py-4 bg-[#FEE500] rounded-xl text-black font-medium hover:bg-[#FDD800] transition-colors"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <KakaoIcon />
-                  {t.kakaoButton}
-                </motion.button>
-
                 <motion.button
                   onClick={openChannelTalk}
                   className="flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-xl text-white font-medium hover:from-red-500 hover:to-red-600 transition-all"

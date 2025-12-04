@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://redbridge.dev"),
+  metadataBase: new URL("https://redbridgedev.ai.kr"),
   title: {
     default: "RED BRIDGE DEV | 웹/앱/솔루션 외주 개발",
     template: "%s | RED BRIDGE DEV",
@@ -57,10 +57,13 @@ export const metadata: Metadata = {
     "web development",
     "app development",
     "outsourcing",
+    "레드브릿지",
+    "개발 외주",
+    "홈페이지 제작",
   ],
-  authors: [{ name: "RED BRIDGE DEV", url: "https://redbridge.dev" }],
+  authors: [{ name: "RED BRIDGE DEV", url: "https://redbridgedev.ai.kr" }],
   creator: "RED BRIDGE DEV",
-  publisher: "RED BRIDGE DEV",
+  publisher: "마리파더 (Mari Father)",
   formatDetection: {
     email: false,
     address: false,
@@ -70,7 +73,7 @@ export const metadata: Metadata = {
     title: "RED BRIDGE DEV | 웹/앱/솔루션 외주 개발",
     description:
       "고객과 기술을 안전하고 튼튼하게 연결합니다. 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
-    url: "https://redbridge.dev",
+    url: "https://redbridgedev.ai.kr",
     siteName: "RED BRIDGE DEV",
     images: [
       {
@@ -105,14 +108,15 @@ export const metadata: Metadata = {
   },
   verification: {
     google: "google-site-verification-code", // Replace with actual code
-    // yandex: "yandex-verification-code",
-    // yahoo: "yahoo-verification-code",
+    other: {
+      "naver-site-verification": "729940fb4ad85f837a18692f85177c4588519e37",
+    },
   },
   alternates: {
-    canonical: "https://redbridge.dev",
+    canonical: "https://redbridgedev.ai.kr",
     languages: {
-      "ko-KR": "https://redbridge.dev",
-      "en-US": "https://redbridge.dev/en",
+      "ko-KR": "https://redbridgedev.ai.kr",
+      "en-US": "https://redbridgedev.ai.kr",
     },
   },
   category: "technology",
@@ -124,22 +128,23 @@ const jsonLd = {
   "@type": "Organization",
   name: "RED BRIDGE DEV",
   alternateName: "레드브릿지데브",
-  url: "https://redbridge.dev",
-  logo: "https://redbridge.dev/logo_red.png",
+  legalName: "마리파더 (Mari Father)",
+  url: "https://redbridgedev.ai.kr",
+  logo: "https://redbridgedev.ai.kr/logo_red.png",
   description:
     "고객과 기술을 안전하고 튼튼하게 연결하는 웹/앱/솔루션 개발 전문 회사",
   foundingDate: "2024",
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+82-2-1234-5678",
+    telephone: "+82-10-2896-5049",
     contactType: "customer service",
-    email: "contact@redbridge.dev",
+    email: "contact@redbridgedev.ai.kr",
     availableLanguage: ["Korean", "English"],
   },
   address: {
     "@type": "PostalAddress",
     addressLocality: "Seoul",
-    addressRegion: "Gangnam",
+    addressRegion: "Jung-gu",
     addressCountry: "KR",
   },
   sameAs: [

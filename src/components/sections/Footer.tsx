@@ -220,8 +220,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-gray-500 text-sm text-center sm:text-left">
-              <p>© {new Date().getFullYear()} RED BRIDGE DEV. All rights reserved.</p>
-              <p className="text-xs mt-1 text-gray-400">{language === "ko" ? "사업자명: 마리파더 (Mari Father)" : "Business Name: Mari Father"}</p>
+              <p>© {new Date().getFullYear()} RED BRIDGE DEV {language === "ko" && "(레드 브릿지 데브)"}. All rights reserved.</p>
+              <div className="text-xs mt-2 text-gray-400 space-y-0.5">
+                <p>{language === "ko" ? "사업자명: 마리파더 (Mari Father) | 대표자명: 김홍교" : "Business Name: Mari Father | CEO: Hongkyo Kim"}</p>
+                <p>{language === "ko" ? "사업자 번호: 494-36-01450" : "Business Registration: 494-36-01450"}</p>
+                <p>{language === "ko" ? "사업자 주소: 서울시 중구 동호로10길 30" : "Address: 30, Dongho-ro 10-gil, Jung-gu, Seoul, Korea"}</p>
+              </div>
             </div>
             <div className="flex items-center gap-6 text-sm">
               <a

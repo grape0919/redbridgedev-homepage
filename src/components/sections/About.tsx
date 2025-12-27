@@ -108,7 +108,7 @@ const content = {
     title: "우리의",
     titleHighlight: "개발 철학",
     description:
-      "RED BRIDGE DEV는 '다리'라는 이름처럼 고객과 기술을 안전하고 튼튼하게 연결합니다. 우리는 단순히 코드를 작성하는 것이 아니라, 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+      "RED BRIDGE DEV(레드 브릿지 데브)는 '다리'라는 이름처럼 고객과 기술을 안전하고 튼튼하게 연결합니다. 우리는 단순히 코드를 작성하는 것이 아니라, 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
     techSubtitle: "Tech Stack",
     techTitle: "기술 스택",
   },

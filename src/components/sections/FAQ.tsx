@@ -90,14 +90,16 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
-      className={`border-b ${theme === "dark" ? "border-gray-800" : "border-gray-200"}`}
+      className={`border-b last:border-b-0 ${
+        theme === "dark" ? "border-white/10" : "border-gray-900/10"
+      }`}
     >
       <button
         id={buttonId}
         onClick={onToggle}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        className={`w-full py-6 flex items-center justify-between text-left group ${
+        className={`w-full py-6 px-2 flex items-center justify-between text-left group ${
           theme === "dark" ? "hover:text-red-400" : "hover:text-red-500"
         } transition-colors`}
       >
@@ -107,12 +109,12 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-xl ${
             isOpen
-              ? "bg-red-500 text-white"
+              ? "bg-gradient-to-br from-red-500 to-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)]"
               : theme === "dark"
-              ? "bg-gray-800 text-gray-400"
-              : "bg-gray-100 text-gray-600"
+              ? "bg-white/10 text-gray-300 border border-white/10"
+              : "bg-gray-900/5 text-gray-600 border border-gray-900/10"
           }`}
         >
           {isOpen ? <Minus size={18} /> : <Plus size={18} />}
@@ -131,7 +133,7 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className={`pb-6 leading-relaxed ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+            <p className={`pb-6 px-2 leading-relaxed ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
               {answer}
             </p>
           </motion.div>
@@ -180,12 +182,18 @@ export default function FAQ() {
           : "bg-gradient-to-b from-white to-gray-50"
       }`}
     >
-      {/* Background */}
-      <div className="absolute inset-0">
+      {/* Ambient liquid-glass refraction source */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className={`absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full blur-3xl ${
-            theme === "dark" ? "bg-red-900/5" : "bg-red-100/30"
+          className={`glass-ambient animate-drift top-[15%] right-[-5%] w-[540px] h-[540px] ${
+            theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
+        />
+        <div
+          className={`glass-ambient animate-drift-reverse bottom-[10%] left-[-5%] w-[460px] h-[460px] ${
+            theme === "dark" ? "bg-orange-600" : "bg-amber-300"
+          }`}
+          style={{ animationDelay: "-10s" }}
         />
       </div>
 
@@ -213,11 +221,7 @@ export default function FAQ() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className={`rounded-2xl border ${
-            theme === "dark"
-              ? "bg-gray-900/30 border-gray-800"
-              : "bg-white border-gray-200 shadow-sm"
-          } p-2`}
+          className="glass-panel rounded-3xl p-4 sm:p-6"
         >
           {faqs.map((faq, index) => (
             <FAQItem

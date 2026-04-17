@@ -201,6 +201,7 @@ export default function Contact() {
     message: "",
   });
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -214,6 +215,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus("loading");
+    setErrorMessage("");
 
     // 프로젝트 유형 한글/영문 변환
     const projectTypeLabel = formData.projectType
@@ -243,7 +245,8 @@ export default function Contact() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to send email");
+        const payload = await response.json().catch(() => null);
+        throw new Error(payload?.error || "Failed to send email");
       }
 
       setFormStatus("success");
@@ -262,11 +265,13 @@ export default function Contact() {
       }, 3000);
     } catch (error) {
       console.error("Form submission error:", error);
+      setErrorMessage(error instanceof Error ? error.message : "");
       setFormStatus("error");
 
       // Reset error status after 3 seconds
       setTimeout(() => {
         setFormStatus("idle");
+        setErrorMessage("");
       }, 3000);
     }
   };
@@ -542,6 +547,7 @@ export default function Contact() {
               <motion.button
                 type="submit"
                 disabled={formStatus === "loading" || formStatus === "success"}
+                aria-live="polite"
                 className={`w-full py-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-all ${
                   formStatus === "success"
                     ? "bg-green-600"
@@ -567,7 +573,7 @@ export default function Contact() {
                 ) : formStatus === "error" ? (
                   <>
                     <AlertCircle className="w-5 h-5" />
-                    {t.submit.error}
+                    {errorMessage || t.submit.error}
                   </>
                 ) : (
                   <>

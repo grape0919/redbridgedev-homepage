@@ -157,12 +157,12 @@ export default function Navigation() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="lg:hidden flex items-center gap-3">
-              <LanguageToggle />
-              <ThemeToggle />
+            <div className="lg:hidden flex items-center">
               <motion.button
                 className={`p-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? (language === "ko" ? "메뉴 닫기" : "Close menu") : (language === "ko" ? "메뉴 열기" : "Open menu")}
+                aria-expanded={isMobileMenuOpen}
                 whileTap={{ scale: 0.9 }}
               >
                 {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -235,6 +235,18 @@ export default function Navigation() {
                 >
                   {ctaText}
                 </motion.a>
+
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className={`mt-6 pt-6 flex items-center gap-3 border-t ${
+                    theme === "dark" ? "border-gray-800" : "border-gray-200"
+                  }`}
+                >
+                  <LanguageToggle />
+                  <ThemeToggle />
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>

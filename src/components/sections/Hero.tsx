@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { ChevronDown, Sparkles } from "lucide-react";
@@ -52,8 +52,25 @@ const content = {
   },
 };
 
+const subscribe3DCapability = () => () => {};
+const get3DCapabilitySnapshot = () => {
+  const isSmallScreen = window.matchMedia("(max-width: 768px)").matches;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const lowCores =
+    typeof navigator.hardwareConcurrency === "number" &&
+    navigator.hardwareConcurrency > 0 &&
+    navigator.hardwareConcurrency < 4;
+  return !isSmallScreen && !prefersReducedMotion && !lowCores;
+};
+const get3DCapabilityServerSnapshot = () => false;
+
 export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const enable3D = useSyncExternalStore(
+    subscribe3DCapability,
+    get3DCapabilitySnapshot,
+    get3DCapabilityServerSnapshot
+  );
   const containerRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const { language } = useLanguage();
@@ -108,10 +125,12 @@ export default function Hero() {
       {/* Grid pattern */}
       <div className="absolute inset-0 grid-pattern opacity-50" />
 
-      {/* 3D Bridge */}
-      <div className="absolute inset-0 z-0">
-        <Bridge3D />
-      </div>
+      {/* 3D Bridge (desktop only) */}
+      {enable3D && (
+        <div className="absolute inset-0 z-0">
+          <Bridge3D />
+        </div>
+      )}
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

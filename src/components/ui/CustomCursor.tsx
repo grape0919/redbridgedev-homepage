@@ -7,7 +7,10 @@ export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [cursorText, setCursorText] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(hover: hover)").matches;
+  });
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -24,8 +27,6 @@ export default function CustomCursor() {
     // Check if device supports hover (not touch-only)
     const hasHover = window.matchMedia("(hover: hover)").matches;
     if (!hasHover) return;
-
-    setIsVisible(true);
 
     const handleMouseMove = (e: MouseEvent) => {
       moveCursor(e);

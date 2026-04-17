@@ -24,7 +24,6 @@ function Particles({ points, visibleCount }: { points: THREE.Vector3[]; visibleC
 
 function WireframeBridge({ progress }: { progress: number }) {
   const groupRef = useRef<THREE.Group>(null);
-  const linesRef = useRef<THREE.LineSegments[]>([]);
 
   const bridgeGeometry = useMemo(() => {
     const points: THREE.Vector3[] = [];
@@ -165,22 +164,6 @@ function WireframeBridge({ progress }: { progress: number }) {
     return { points, indices };
   }, []);
 
-  const lineSegments = useMemo(() => {
-    const geometry = new THREE.BufferGeometry();
-    const positions: number[] = [];
-
-    bridgeGeometry.indices.forEach((idx) => {
-      const point = bridgeGeometry.points[idx];
-      positions.push(point.x, point.y, point.z);
-    });
-
-    geometry.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(positions, 3)
-    );
-
-    return geometry;
-  }, [bridgeGeometry]);
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -230,18 +213,24 @@ function WireframeBridge({ progress }: { progress: number }) {
   );
 }
 
+// Pre-generate particle positions outside component to avoid impure function calls
+const generateParticlePositions = () => {
+  const positions = new Float32Array(200 * 3);
+  for (let i = 0; i < 200; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 30;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+  }
+  return positions;
+};
+const particlePositions = generateParticlePositions();
+
 function FloatingParticles() {
   const particlesRef = useRef<THREE.Points>(null);
 
   const geometry = useMemo(() => {
     const geo = new THREE.BufferGeometry();
-    const positions = new Float32Array(200 * 3);
-    for (let i = 0; i < 200; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 30;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
-    }
-    geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(particlePositions, 3));
     return geo;
   }, []);
 
@@ -296,10 +285,9 @@ function Scene({ progress }: { progress: number }) {
 
 export default function Bridge3D() {
   const [progress, setProgress] = useState(0);
-  const [isClient, setIsClient] = useState(false);
+  const isClient = typeof window !== "undefined";
 
   useEffect(() => {
-    setIsClient(true);
 
     // Animate the bridge drawing
     const duration = 3000;

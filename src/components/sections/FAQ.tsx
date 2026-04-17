@@ -83,6 +83,8 @@ interface FAQItemProps {
 }
 
 function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemProps) {
+  const panelId = `faq-panel-${index}`;
+  const buttonId = `faq-button-${index}`;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -91,7 +93,10 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
       className={`border-b ${theme === "dark" ? "border-gray-800" : "border-gray-200"}`}
     >
       <button
+        id={buttonId}
         onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className={`w-full py-6 flex items-center justify-between text-left group ${
           theme === "dark" ? "hover:text-red-400" : "hover:text-red-500"
         } transition-colors`}
@@ -117,6 +122,9 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            id={panelId}
+            role="region"
+            aria-labelledby={buttonId}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

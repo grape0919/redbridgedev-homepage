@@ -18,7 +18,7 @@ const valuesData = {
       icon: Zap,
       title: "확장성",
       description:
-        "단순히 코드를 작성하는 것이 아니라, 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+        "트래픽 증가와 기능 추가에 유연하게 대응하는 아키텍처 설계로, 서비스 성장 단계마다 흔들림 없이 확장합니다.",
     },
     {
       icon: Users,
@@ -56,7 +56,7 @@ const valuesData = {
       icon: Zap,
       title: "Scalability",
       description:
-        "We don't just write code, we build sustainable and scalable solutions.",
+        "Architectures designed to handle traffic growth and new features gracefully, so your service scales without friction.",
     },
     {
       icon: Users,

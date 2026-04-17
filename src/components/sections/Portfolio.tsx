@@ -5,6 +5,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ExternalLink, ChevronRight, X } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image";
 
 const projectsData = {
   ko: [
@@ -272,10 +273,12 @@ export default function Portfolio() {
                 }`}>
                   {/* Project image */}
                   <div className="absolute inset-0">
-                    <img
+                    <Image
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                   </div>
@@ -374,6 +377,9 @@ export default function Portfolio() {
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label={selectedProject.title}
               initial={{ scale: 0.9, y: 50 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 50 }}
@@ -383,6 +389,7 @@ export default function Portfolio() {
               {/* Close button */}
               <button
                 onClick={() => setSelectedProject(null)}
+                aria-label={language === "ko" ? "닫기" : "Close"}
                 className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-black/80 transition-colors"
               >
                 <X size={24} />
@@ -390,11 +397,13 @@ export default function Portfolio() {
 
               <div className="grid md:grid-cols-2">
                 {/* Image */}
-                <div className="relative h-64 md:h-auto">
-                  <img
+                <div className="relative h-64 md:h-auto min-h-[300px]">
+                  <Image
                     src={selectedProject.image}
                     alt={selectedProject.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${selectedProject.color} opacity-20`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 type Language = "ko" | "en";
 
@@ -46,7 +46,7 @@ const translations = {
     "about.value.stability": "안정성",
     "about.value.stability.desc": "대기업과 중견기업에서 쌓은 풍부한 경험을 바탕으로, 모든 프로젝트에 최고의 품질과 안정성을 보장합니다.",
     "about.value.scalability": "확장성",
-    "about.value.scalability.desc": "단순히 코드를 작성하는 것이 아니라, 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+    "about.value.scalability.desc": "트래픽 증가와 기능 추가에 유연하게 대응하는 아키텍처 설계로, 서비스 성장 단계마다 흔들림 없이 확장합니다.",
     "about.value.collaboration": "협업",
     "about.value.collaboration.desc": "'다리'라는 이름처럼 고객과 기술을 안전하고 튼튼하게 연결합니다. 소통을 최우선으로 생각합니다.",
     "about.value.goal": "목표 지향",
@@ -137,7 +137,7 @@ const translations = {
     "about.value.stability": "Stability",
     "about.value.stability.desc": "Based on our extensive experience with large and mid-sized companies, we guarantee the highest quality and stability in every project.",
     "about.value.scalability": "Scalability",
-    "about.value.scalability.desc": "We don't just write code, we build sustainable and scalable solutions.",
+    "about.value.scalability.desc": "Architectures designed to handle traffic growth and new features gracefully, so your service scales without friction.",
     "about.value.collaboration": "Collaboration",
     "about.value.collaboration.desc": "Like our name 'bridge', we safely connect customers and technology. Communication is our top priority.",
     "about.value.goal": "Goal-Oriented",
@@ -197,24 +197,18 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>("ko");
+function getInitialLanguage(): Language {
+  if (typeof window === "undefined") return "ko";
+  const savedLang = localStorage.getItem("language") as Language;
+  if (savedLang && (savedLang === "ko" || savedLang === "en")) {
+    return savedLang;
+  }
+  const browserLang = navigator.language.toLowerCase();
+  return browserLang.startsWith("ko") ? "ko" : "en";
+}
 
-  useEffect(() => {
-    // Check localStorage or browser language
-    const savedLang = localStorage.getItem("language") as Language;
-    if (savedLang && (savedLang === "ko" || savedLang === "en")) {
-      setLanguageState(savedLang);
-    } else {
-      // Detect browser language
-      const browserLang = navigator.language.toLowerCase();
-      if (browserLang.startsWith("ko")) {
-        setLanguageState("ko");
-      } else {
-        setLanguageState("en");
-      }
-    }
-  }, []);
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguageState] = useState<Language>(getInitialLanguage);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

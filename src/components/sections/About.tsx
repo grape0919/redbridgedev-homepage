@@ -5,13 +5,13 @@ import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  ShieldCheck,
-  Lightning,
-  Users,
-  Target,
-  Code,
-  StackSimple,
-} from "@phosphor-icons/react";
+  RbdValueStability,
+  RbdValueScalability,
+  RbdValueCollaboration,
+  RbdValueGoal,
+  RbdValueExpertise,
+  RbdValueProcess,
+} from "@/components/icons/rbd-icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -20,37 +20,37 @@ gsap.registerPlugin(ScrollTrigger);
 const valuesData = {
   ko: [
     {
-      icon: ShieldCheck,
+      icon: RbdValueStability,
       title: "안정성",
       description:
         "대기업과 중견기업에서 쌓은 풍부한 경험을 바탕으로, 모든 프로젝트에 최고의 품질과 안정성을 보장합니다.",
     },
     {
-      icon: Lightning,
+      icon: RbdValueScalability,
       title: "확장성",
       description:
         "트래픽 증가와 기능 추가에 유연하게 대응하는 아키텍처 설계로, 서비스 성장 단계마다 흔들림 없이 확장합니다.",
     },
     {
-      icon: Users,
+      icon: RbdValueCollaboration,
       title: "협업",
       description:
         "'다리'라는 이름처럼 고객과 기술을 안전하고 튼튼하게 연결합니다. 소통을 최우선으로 생각합니다.",
     },
     {
-      icon: Target,
+      icon: RbdValueGoal,
       title: "목표 지향",
       description:
         "고객의 비즈니스 목표를 깊이 이해하고, 그 목표 달성을 위한 최적의 기술 솔루션을 제안합니다.",
     },
     {
-      icon: Code,
+      icon: RbdValueExpertise,
       title: "기술 전문성",
       description:
         "최신 기술 트렌드를 지속적으로 학습하고 적용하여, 항상 최선의 기술적 선택을 제공합니다.",
     },
     {
-      icon: StackSimple,
+      icon: RbdValueProcess,
       title: "체계적 프로세스",
       description:
         "체계적인 개발 프로세스와 철저한 품질 관리로 프로젝트의 성공을 보장합니다.",
@@ -58,37 +58,37 @@ const valuesData = {
   ],
   en: [
     {
-      icon: ShieldCheck,
+      icon: RbdValueStability,
       title: "Stability",
       description:
         "Based on extensive experience with large and mid-sized companies, we guarantee the highest quality and stability in every project.",
     },
     {
-      icon: Lightning,
+      icon: RbdValueScalability,
       title: "Scalability",
       description:
         "Architectures designed to handle traffic growth and new features gracefully, so your service scales without friction.",
     },
     {
-      icon: Users,
+      icon: RbdValueCollaboration,
       title: "Collaboration",
       description:
         "Like our name 'bridge', we safely connect customers and technology. Communication is our top priority.",
     },
     {
-      icon: Target,
+      icon: RbdValueGoal,
       title: "Goal-Oriented",
       description:
         "We deeply understand our clients' business goals and propose optimal technology solutions to achieve them.",
     },
     {
-      icon: Code,
+      icon: RbdValueExpertise,
       title: "Technical Expertise",
       description:
         "We continuously learn and apply the latest technology trends to always provide the best technical choices.",
     },
     {
-      icon: StackSimple,
+      icon: RbdValueProcess,
       title: "Systematic Process",
       description:
         "We ensure project success through a systematic development process and thorough quality management.",
@@ -259,7 +259,7 @@ export default function About() {
                       theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                     }`}
                   >
-                    <value.icon weight="duotone" className="w-6 h-6 text-red-500" />
+                    <value.icon className="w-8 h-8 text-red-500/85" />
                   </div>
                 </div>
                 <h3

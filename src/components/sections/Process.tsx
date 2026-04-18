@@ -5,14 +5,14 @@ import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  ChatCircleText,
-  FileText,
-  Palette,
-  Code,
-  TestTube,
-  RocketLaunch,
-  Headphones,
-} from "@phosphor-icons/react";
+  RbdProcessConsultation,
+  RbdProcessPlanning,
+  RbdProcessDesign,
+  RbdProcessDevelopment,
+  RbdProcessTesting,
+  RbdProcessLaunch,
+  RbdProcessMaintenance,
+} from "@/components/icons/rbd-icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -21,49 +21,49 @@ gsap.registerPlugin(ScrollTrigger);
 const processData = {
   ko: [
     {
-      icon: ChatCircleText,
+      icon: RbdProcessConsultation,
       step: "01",
       title: "상담 & 분석",
       description: "프로젝트 목표, 요구사항, 예산을 파악하고 최적의 솔루션을 제안합니다.",
       duration: "1-2일",
     },
     {
-      icon: FileText,
+      icon: RbdProcessPlanning,
       step: "02",
       title: "기획 & 설계",
       description: "상세 기능 명세서, 와이어프레임, 시스템 아키텍처를 설계합니다.",
       duration: "1-2주",
     },
     {
-      icon: Palette,
+      icon: RbdProcessDesign,
       step: "03",
       title: "디자인",
       description: "브랜드 아이덴티티를 반영한 UI/UX 디자인을 제작합니다.",
       duration: "1-2주",
     },
     {
-      icon: Code,
+      icon: RbdProcessDevelopment,
       step: "04",
       title: "개발",
       description: "최신 기술 스택으로 안정적이고 확장 가능한 코드를 작성합니다.",
       duration: "2-8주",
     },
     {
-      icon: TestTube,
+      icon: RbdProcessTesting,
       step: "05",
       title: "테스트 & QA",
       description: "철저한 테스트를 통해 버그를 수정하고 품질을 보장합니다.",
       duration: "1-2주",
     },
     {
-      icon: RocketLaunch,
+      icon: RbdProcessLaunch,
       step: "06",
       title: "배포 & 런칭",
       description: "최적화된 환경에서 서비스를 배포하고 모니터링을 시작합니다.",
       duration: "1-3일",
     },
     {
-      icon: Headphones,
+      icon: RbdProcessMaintenance,
       step: "07",
       title: "유지보수",
       description: "지속적인 모니터링과 업데이트로 서비스 안정성을 유지합니다.",
@@ -72,49 +72,49 @@ const processData = {
   ],
   en: [
     {
-      icon: ChatCircleText,
+      icon: RbdProcessConsultation,
       step: "01",
       title: "Consultation & Analysis",
       description: "Understand project goals, requirements, and budget to propose optimal solutions.",
       duration: "1-2 days",
     },
     {
-      icon: FileText,
+      icon: RbdProcessPlanning,
       step: "02",
       title: "Planning & Design",
       description: "Design detailed specifications, wireframes, and system architecture.",
       duration: "1-2 weeks",
     },
     {
-      icon: Palette,
+      icon: RbdProcessDesign,
       step: "03",
       title: "Design",
       description: "Create UI/UX design reflecting brand identity.",
       duration: "1-2 weeks",
     },
     {
-      icon: Code,
+      icon: RbdProcessDevelopment,
       step: "04",
       title: "Development",
       description: "Write stable and scalable code with the latest technology stack.",
       duration: "2-8 weeks",
     },
     {
-      icon: TestTube,
+      icon: RbdProcessTesting,
       step: "05",
       title: "Testing & QA",
       description: "Fix bugs and ensure quality through thorough testing.",
       duration: "1-2 weeks",
     },
     {
-      icon: RocketLaunch,
+      icon: RbdProcessLaunch,
       step: "06",
       title: "Deployment & Launch",
       description: "Deploy service in an optimized environment and start monitoring.",
       duration: "1-3 days",
     },
     {
-      icon: Headphones,
+      icon: RbdProcessMaintenance,
       step: "07",
       title: "Maintenance",
       description: "Maintain service stability with continuous monitoring and updates.",
@@ -281,7 +281,7 @@ export default function Process() {
                           theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                         }`}
                       >
-                        <step.icon weight="duotone" className="w-8 h-8 text-red-500" />
+                        <step.icon className="w-10 h-10 text-red-500/85" />
                       </div>
                     </div>
                     <span className="text-6xl font-extrabold text-red-500/20 tracking-tighter">
@@ -466,7 +466,7 @@ export default function Process() {
                       theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                     }`}
                   >
-                    <step.icon weight="duotone" className="w-6 h-6 text-red-500" />
+                    <step.icon className="w-7 h-7 text-red-500/85" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">

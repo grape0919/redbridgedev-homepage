@@ -196,6 +196,79 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased noise-overlay`}
       >
+        {/* SVG filters for Liquid Glass refraction (iOS 26 style) */}
+        <svg
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: 0,
+            height: 0,
+            overflow: "hidden",
+            pointerEvents: "none",
+          }}
+        >
+          <defs>
+            {/* Soft lens-like refraction — smooth displacement, not noise */}
+            <filter
+              id="glass-distort"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.006 0.008"
+                numOctaves="1"
+                seed="3"
+                result="turbulence"
+              />
+              <feGaussianBlur
+                in="turbulence"
+                stdDeviation="2"
+                result="softMap"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="softMap"
+                scale="110"
+                xChannelSelector="R"
+                yChannelSelector="G"
+                result="displaced"
+              />
+              <feGaussianBlur in="displaced" stdDeviation="0.5" />
+            </filter>
+
+            {/* Stronger refraction for large glass surfaces (Hero stats, FAQ) */}
+            <filter
+              id="glass-distort-strong"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+            >
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.004 0.006"
+                numOctaves="1"
+                seed="11"
+                result="turbulence"
+              />
+              <feGaussianBlur
+                in="turbulence"
+                stdDeviation="3"
+                result="softMap"
+              />
+              <feDisplacementMap
+                in="SourceGraphic"
+                in2="softMap"
+                scale="160"
+                xChannelSelector="R"
+                yChannelSelector="G"
+              />
+            </filter>
+          </defs>
+        </svg>
         <ThemeProvider>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>

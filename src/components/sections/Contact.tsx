@@ -282,14 +282,19 @@ export default function Contact() {
         ? "bg-gradient-to-b from-black to-gray-950"
         : "bg-gradient-to-b from-gray-50 to-white"
     }`}>
-      {/* Background elements */}
-      <div className="absolute inset-0">
-        <div className={`absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl ${
-          theme === "dark" ? "bg-red-900/10" : "bg-red-100/50"
-        }`} />
-        <div className={`absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-3xl ${
-          theme === "dark" ? "bg-red-800/10" : "bg-red-50/50"
-        }`} />
+      {/* Ambient liquid-glass refraction source */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className={`glass-ambient animate-drift top-[5%] left-[10%] w-[560px] h-[560px] ${
+            theme === "dark" ? "bg-red-600" : "bg-red-300"
+          }`}
+        />
+        <div
+          className={`glass-ambient animate-drift-reverse bottom-[5%] right-[10%] w-[560px] h-[560px] ${
+            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
+          }`}
+          style={{ animationDelay: "-8s" }}
+        />
       </div>
 
       <div ref={ref} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -326,18 +331,22 @@ export default function Contact() {
                   <a
                     key={info.label}
                     href={info.href}
-                    className="flex items-center gap-4 group"
+                    className="glass-panel flex items-center gap-4 group p-4 rounded-2xl"
                   >
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
-                      theme === "dark"
-                        ? "bg-red-900/30 group-hover:bg-red-900/50"
-                        : "bg-red-100 group-hover:bg-red-200"
-                    }`}>
-                      <info.icon className="w-5 h-5 text-red-500" />
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 shadow-[0_4px_16px_rgba(220,38,38,0.3)] flex-shrink-0">
+                      <div
+                        className={`w-full h-full rounded-xl flex items-center justify-center backdrop-blur-xl ${
+                          theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
+                        }`}
+                      >
+                        <info.icon className="w-5 h-5 text-red-500" />
+                      </div>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">{info.label}</p>
-                      <p className={`group-hover:text-red-400 transition-colors ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+                      <p className={`text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
+                        {info.label}
+                      </p>
+                      <p className={`group-hover:text-red-400 transition-colors font-medium ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
                         {info.value}
                       </p>
                     </div>
@@ -363,22 +372,18 @@ export default function Contact() {
             </div>
 
             {/* Business hours */}
-            <div className={`p-6 rounded-2xl border ${
-              theme === "dark"
-                ? "bg-gray-900/50 border-gray-800"
-                : "bg-white border-gray-200 shadow-sm"
-            }`}>
+            <div className="glass-panel p-6 rounded-2xl">
               <h4 className={`text-lg font-semibold mb-4 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
                 {t.businessHours}
               </h4>
-              <div className={`space-y-2 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+              <div className={`space-y-2 ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
                 <p>
-                  <span className="text-gray-500">{t.weekdays}:</span> 09:00 - 18:00
+                  <span className={theme === "dark" ? "text-gray-400" : "text-gray-500"}>{t.weekdays}:</span> 09:00 - 18:00
                 </p>
                 <p>
-                  <span className="text-gray-500">{t.lunchTime}:</span> 12:00 - 13:00
+                  <span className={theme === "dark" ? "text-gray-400" : "text-gray-500"}>{t.lunchTime}:</span> 12:00 - 13:00
                 </p>
-                <p className="text-sm text-gray-500 mt-4">
+                <p className={`text-sm mt-4 ${theme === "dark" ? "text-gray-400" : "text-gray-500"}`}>
                   {t.urgentNotice}
                 </p>
               </div>
@@ -392,7 +397,7 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="glass-panel rounded-3xl p-6 sm:p-8 space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className={`block text-sm font-medium mb-2 ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
@@ -404,11 +409,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors ${
-                      theme === "dark"
-                        ? "bg-gray-900/50 border border-gray-800 text-white placeholder-gray-500"
-                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400"
-                    }`}
+                    className={`glass-input ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                     placeholder={t.form.namePlaceholder}
                   />
                 </div>
@@ -422,11 +423,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors ${
-                      theme === "dark"
-                        ? "bg-gray-900/50 border border-gray-800 text-white placeholder-gray-500"
-                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400"
-                    }`}
+                    className={`glass-input ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                     placeholder="email@example.com"
                   />
                 </div>
@@ -442,11 +439,7 @@ export default function Contact() {
                     name="company"
                     value={formData.company}
                     onChange={handleInputChange}
-                    className={`w-full px-4 py-3 rounded-xl focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors ${
-                      theme === "dark"
-                        ? "bg-gray-900/50 border border-gray-800 text-white placeholder-gray-500"
-                        : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400"
-                    }`}
+                    className={`glass-input ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                     placeholder={t.form.companyPlaceholder}
                   />
                 </div>
@@ -459,11 +452,7 @@ export default function Contact() {
                     value={formData.projectType}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-4 py-3 rounded-xl focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors ${
-                      theme === "dark"
-                        ? "bg-gray-900/50 border border-gray-800 text-white"
-                        : "bg-white border border-gray-300 text-gray-900"
-                    }`}
+                    className={`glass-input ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                   >
                     <option value="" className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
                       {t.form.selectPlaceholder}
@@ -495,11 +484,7 @@ export default function Contact() {
                   name="budget"
                   value={formData.budget}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-3 rounded-xl focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors ${
-                    theme === "dark"
-                      ? "bg-gray-900/50 border border-gray-800 text-white"
-                      : "bg-white border border-gray-300 text-gray-900"
-                  }`}
+                  className={`glass-input ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                 >
                   <option value="" className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
                     {t.form.selectPlaceholder}
@@ -535,11 +520,7 @@ export default function Contact() {
                   onChange={handleInputChange}
                   required
                   rows={5}
-                  className={`w-full px-4 py-3 rounded-xl focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors resize-none ${
-                    theme === "dark"
-                      ? "bg-gray-900/50 border border-gray-800 text-white placeholder-gray-500"
-                      : "bg-white border border-gray-300 text-gray-900 placeholder-gray-400"
-                  }`}
+                  className={`glass-input resize-none ${theme === "dark" ? "text-white" : "text-gray-900"}`}
                   placeholder={t.form.messagePlaceholder}
                 />
               </div>

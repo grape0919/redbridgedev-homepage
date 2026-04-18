@@ -1,10 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Shield, Zap, Users, Target, Code, Layers } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const valuesData = {
   ko: [
@@ -125,12 +129,50 @@ const content = {
 
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
+  const valuesGridRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const { theme } = useTheme();
   const { language } = useLanguage();
 
   const t = content[language];
   const values = valuesData[language];
+
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      const grid = valuesGridRef.current;
+      if (!grid) return;
+
+      const ctx = gsap.context(() => {
+        gsap.utils
+          .toArray<HTMLElement>(".value-card")
+          .forEach((card) => {
+            gsap.fromTo(
+              card,
+              { opacity: 0, y: 80, rotationX: 8, scale: 0.96 },
+              {
+                opacity: 1,
+                y: 0,
+                rotationX: 0,
+                scale: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: card,
+                  start: "top 85%",
+                  end: "top 55%",
+                  scrub: 0.8,
+                },
+              }
+            );
+          });
+      }, grid);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, [language]);
 
   return (
     <section
@@ -139,17 +181,24 @@ export default function About() {
         theme === "dark" ? "bg-black" : "bg-gray-50"
       }`}
     >
-      {/* Background elements */}
-      <div className="absolute inset-0">
+      {/* Ambient liquid-glass refraction source */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className={`absolute top-0 left-1/4 w-96 h-96 rounded-full blur-3xl ${
-            theme === "dark" ? "bg-red-900/10" : "bg-red-100/50"
+          className={`glass-ambient animate-drift top-[5%] left-[10%] w-[520px] h-[520px] ${
+            theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
         />
         <div
-          className={`absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-3xl ${
-            theme === "dark" ? "bg-red-800/10" : "bg-red-50/50"
+          className={`glass-ambient animate-drift-reverse bottom-[5%] right-[10%] w-[520px] h-[520px] ${
+            theme === "dark" ? "bg-orange-600" : "bg-amber-300"
           }`}
+          style={{ animationDelay: "-7s" }}
+        />
+        <div
+          className={`glass-ambient animate-drift top-[50%] right-[35%] w-[380px] h-[380px] ${
+            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
+          }`}
+          style={{ animationDelay: "-12s" }}
         />
       </div>
 
@@ -184,35 +233,27 @@ export default function About() {
         </motion.div>
 
         {/* Values grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
-          {values.map((value, index) => (
-            <motion.div
+        <div
+          ref={valuesGridRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32"
+          style={{ perspective: "1200px" }}
+        >
+          {values.map((value) => (
+            <div
               key={value.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`group relative p-8 rounded-2xl border transition-all duration-300 ${
-                theme === "dark"
-                  ? "bg-gradient-to-br from-gray-900/50 to-gray-900/30 border-gray-800 hover:border-red-900/50"
-                  : "bg-white border-gray-200 hover:border-red-300 shadow-sm hover:shadow-md"
-              }`}
+              className="value-card glass-panel group relative p-8 rounded-3xl overflow-hidden"
             >
-              <div
-                className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity ${
-                  theme === "dark"
-                    ? "bg-gradient-to-br from-red-900/0 to-red-900/10"
-                    : "bg-gradient-to-br from-red-50/0 to-red-50/50"
-                }`}
-              />
+              <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br from-red-500 to-red-700 blur-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none" />
+
               <div className="relative">
-                <div
-                  className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors ${
-                    theme === "dark"
-                      ? "bg-red-900/30 group-hover:bg-red-900/50"
-                      : "bg-red-100 group-hover:bg-red-200"
-                  }`}
-                >
-                  <value.icon className="w-7 h-7 text-red-500" />
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 mb-6 shadow-[0_6px_20px_rgba(220,38,38,0.3)]">
+                  <div
+                    className={`w-full h-full rounded-2xl flex items-center justify-center backdrop-blur-xl ${
+                      theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
+                    }`}
+                  >
+                    <value.icon className="w-6 h-6 text-red-500" />
+                  </div>
                 </div>
                 <h3
                   className={`text-xl font-semibold mb-3 ${
@@ -223,13 +264,13 @@ export default function About() {
                 </h3>
                 <p
                   className={`leading-relaxed ${
-                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
                   }`}
                 >
                   {value.description}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -251,18 +292,16 @@ export default function About() {
             {t.techTitle}
           </h3>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             {techStack.map((tech, index) => (
               <motion.div
                 key={tech.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 0.8 + index * 0.05 }}
-                whileHover={{ scale: 1.1, y: -5 }}
-                className={`px-6 py-3 border rounded-full transition-all cursor-default ${
-                  theme === "dark"
-                    ? "bg-gray-900/50 border-gray-800 text-gray-300 hover:border-red-700 hover:text-white hover:bg-red-900/20"
-                    : "bg-white border-gray-200 text-gray-700 hover:border-red-400 hover:text-red-600 hover:bg-red-50"
+                whileHover={{ scale: 1.08, y: -4 }}
+                className={`glass-panel px-6 py-3 rounded-full cursor-default ${
+                  theme === "dark" ? "text-gray-200" : "text-gray-800"
                 }`}
               >
                 {tech.name}

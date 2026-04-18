@@ -77,14 +77,13 @@ export default function Navigation() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? theme === "dark"
-              ? "bg-black/80 backdrop-blur-lg border-b border-red-900/20"
-              : "bg-white/80 backdrop-blur-lg border-b border-red-200/50 shadow-sm"
-            : "bg-transparent"
-        }`}
+        className="fixed top-4 left-4 right-4 sm:left-6 sm:right-6 z-50"
       >
+        <div
+          className={`transition-all duration-500 rounded-2xl ${
+            isScrolled ? "glass-panel" : "bg-transparent"
+          }`}
+        >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
@@ -170,6 +169,7 @@ export default function Navigation() {
             </div>
           </div>
         </div>
+        </div>
       </motion.nav>
 
       {/* Mobile Menu */}
@@ -183,8 +183,8 @@ export default function Navigation() {
             className="fixed inset-0 z-40 lg:hidden"
           >
             <div
-              className={`absolute inset-0 backdrop-blur-lg ${
-                theme === "dark" ? "bg-black/90" : "bg-white/90"
+              className={`absolute inset-0 backdrop-blur-xl ${
+                theme === "dark" ? "bg-black/60" : "bg-white/60"
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             />
@@ -193,12 +193,9 @@ export default function Navigation() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className={`absolute right-0 top-0 h-full w-80 p-8 pt-24 ${
-                theme === "dark"
-                  ? "bg-black/95 border-l border-red-900/30"
-                  : "bg-white border-l border-gray-200"
-              }`}
+              className="absolute right-4 top-4 bottom-4 w-80"
             >
+              <div className="glass-panel h-full p-8 pt-20 rounded-2xl overflow-y-auto">
               <div className="flex flex-col gap-6">
                 {items.map((item, index) => (
                   <motion.a
@@ -247,6 +244,7 @@ export default function Navigation() {
                   <LanguageToggle />
                   <ThemeToggle />
                 </motion.div>
+              </div>
               </div>
             </motion.div>
           </motion.div>

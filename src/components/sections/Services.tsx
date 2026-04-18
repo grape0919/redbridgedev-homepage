@@ -206,17 +206,23 @@ export default function Services() {
           : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
       }`}
     >
-      {/* Background decorations */}
-      <div className="absolute inset-0">
+      {/* Ambient color field for liquid glass refraction */}
+      <div className="absolute inset-0 overflow-hidden">
         <div
-          className={`absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full blur-3xl ${
-            theme === "dark" ? "bg-red-900/5" : "bg-red-100/30"
+          className={`glass-ambient animate-drift top-[-10%] right-[-5%] w-[640px] h-[640px] ${
+            theme === "dark" ? "bg-red-600" : "bg-red-400"
           }`}
         />
         <div
-          className={`absolute bottom-1/4 left-0 w-[600px] h-[600px] rounded-full blur-3xl ${
-            theme === "dark" ? "bg-red-800/5" : "bg-red-50/50"
+          className={`glass-ambient animate-drift-reverse bottom-[-10%] left-[-5%] w-[640px] h-[640px] ${
+            theme === "dark" ? "bg-orange-600" : "bg-amber-300"
           }`}
+        />
+        <div
+          className={`glass-ambient animate-drift top-[30%] left-[20%] w-[480px] h-[480px] ${
+            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
+          }`}
+          style={{ animationDelay: "-6s" }}
         />
       </div>
 
@@ -260,26 +266,20 @@ export default function Services() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative"
             >
-              <div
-                className={`h-full p-8 backdrop-blur-sm rounded-2xl border transition-all duration-500 overflow-hidden ${
-                  theme === "dark"
-                    ? "bg-gray-900/30 border-gray-800 hover:border-red-900/50"
-                    : "bg-white border-gray-200 hover:border-red-300 shadow-sm hover:shadow-lg"
-                }`}
-              >
-                {/* Gradient background on hover */}
+              <div className="glass-panel h-full p-8 rounded-3xl overflow-hidden">
+                {/* Specular highlight on hover */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                  className={`absolute -top-20 -right-20 w-48 h-48 rounded-full bg-gradient-to-br ${service.gradient} blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none`}
                 />
 
                 {/* Icon */}
                 <div className="relative">
                   <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6`}
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 shadow-lg`}
                   >
                     <div
-                      className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                        theme === "dark" ? "bg-gray-900" : "bg-white"
+                      className={`w-full h-full rounded-2xl flex items-center justify-center backdrop-blur-xl ${
+                        theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                       }`}
                     >
                       <service.icon className="w-8 h-8 text-red-500" />
@@ -296,7 +296,7 @@ export default function Services() {
                   </h3>
                   <p
                     className={`mb-6 leading-relaxed ${
-                      theme === "dark" ? "text-gray-400" : "text-gray-600"
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
                     }`}
                   >
                     {service.description}
@@ -308,18 +308,15 @@ export default function Services() {
                       <li
                         key={feature}
                         className={`flex items-center gap-3 ${
-                          theme === "dark" ? "text-gray-300" : "text-gray-700"
+                          theme === "dark" ? "text-gray-200" : "text-gray-800"
                         }`}
                       >
-                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full" />
+                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
-
-                {/* Hover glow effect */}
-                <div className="absolute -inset-px bg-gradient-to-r from-red-500/0 via-red-500/10 to-red-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </div>
             </motion.div>
           ))}

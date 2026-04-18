@@ -224,6 +224,252 @@ body {
   transform: translateY(0);
 }
 
+/* ===== Liquid Glass (iOS 26 style) ===== */
+.glass-panel {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  /* Fallback for Safari/Firefox: heavier blur to simulate refraction */
+  backdrop-filter: blur(28px) saturate(200%) contrast(1.15) brightness(1.08);
+  -webkit-backdrop-filter: blur(28px) saturate(200%) contrast(1.15)
+    brightness(1.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 10px 40px 0 rgba(0, 0, 0, 0.45),
+    0 2px 8px 0 rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 24px 0 rgba(255, 255, 255, 0.04);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* True refraction on Chrome 120+ (SVG displacement on backdrop) */
+@supports (backdrop-filter: url(#glass-distort)) {
+  .glass-panel {
+    backdrop-filter: url(#glass-distort) blur(6px) saturate(180%) contrast(1.12)
+      brightness(1.05);
+  }
+}
+
+/* Larger surfaces use stronger refraction pattern */
+.glass-panel-strong {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(32px) saturate(210%) contrast(1.18) brightness(1.1);
+  -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(1.18)
+    brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 14px 48px 0 rgba(0, 0, 0, 0.5),
+    0 2px 8px 0 rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 28px 0 rgba(255, 255, 255, 0.05);
+}
+
+@supports (backdrop-filter: url(#glass-distort-strong)) {
+  .glass-panel-strong {
+    backdrop-filter: url(#glass-distort-strong) blur(8px) saturate(200%)
+      contrast(1.15) brightness(1.08);
+  }
+}
+
+/* Edge highlight: specular top-left + subtle bottom rim (simulates glass thickness) */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0) 65%,
+    rgba(255, 255, 255, 0.08) 85%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Inner specular highlights for surface curvature illusion */
+.glass-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      ellipse 80% 40% at 25% 0%,
+      rgba(255, 255, 255, 0.18) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 30% at 80% 100%,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 55%
+    );
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.glass-panel > * {
+  position: relative;
+  z-index: 3;
+}
+
+.glass-panel:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 24px 60px 0 rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(220, 38, 38, 0.18),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .glass-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 10px 40px 0 rgba(15, 23, 42, 0.1),
+    0 2px 8px 0 rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 0 rgba(15, 23, 42, 0.02);
+}
+
+[data-theme="light"] .glass-panel::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.4) 25%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(15, 23, 42, 0.02) 75%,
+    rgba(15, 23, 42, 0.06) 100%
+  );
+}
+
+[data-theme="light"] .glass-panel::after {
+  background:
+    radial-gradient(
+      ellipse 80% 40% at 25% 0%,
+      rgba(255, 255, 255, 0.6) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 30% at 80% 100%,
+      rgba(15, 23, 42, 0.04) 0%,
+      transparent 55%
+    );
+  mix-blend-mode: normal;
+  opacity: 0.6;
+}
+
+[data-theme="light"] .glass-panel:hover {
+  box-shadow:
+    0 24px 60px 0 rgba(15, 23, 42, 0.15),
+    0 0 0 1px rgba(220, 38, 38, 0.2),
+    inset 0 1px 0 0 rgba(255, 255, 255, 1);
+}
+
+/* Glass form input */
+.glass-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: inherit;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: rgba(220, 38, 38, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+[data-theme="light"] .glass-input {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+[data-theme="light"] .glass-input::placeholder {
+  color: rgba(15, 23, 42, 0.4);
+}
+
+[data-theme="light"] .glass-input:focus {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(220, 38, 38, 0.5);
+}
+
+/* Ambient color blobs that liquid glass refracts over */
+.glass-ambient {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  opacity: 0.4;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+[data-theme="light"] .glass-ambient {
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+}
+
+@keyframes drift-slow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -30px) scale(1.05);
+  }
+  66% {
+    transform: translate(-30px, 40px) scale(0.95);
+  }
+}
+
+.animate-drift {
+  animation: drift-slow 18s ease-in-out infinite;
+}
+
+.animate-drift-reverse {
+  animation: drift-slow 22s ease-in-out infinite reverse;
+}
+
 /* Theme transition */
 * {
   transition-property: background-color, border-color, color;

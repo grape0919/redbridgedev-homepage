@@ -1,11 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ExternalLink, ChevronRight, X } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projectsData = {
   ko: [
@@ -176,6 +180,9 @@ const content = {
 
 export default function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const parallaxBackRef = useRef<HTMLDivElement>(null);
+  const parallaxMidRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeCategory, setActiveCategory] = useState(0);
   const [selectedProject, setSelectedProject] = useState<typeof projectsData.ko[0] | null>(null);
@@ -192,15 +199,75 @@ export default function Portfolio() {
       ? projects
       : projects.filter((p) => p.category === categoriesData.en[activeCategory]);
 
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const section = sectionRef.current;
+      const back = parallaxBackRef.current;
+      const mid = parallaxMidRef.current;
+      if (!section || !back || !mid) return;
+
+      const ctx = gsap.context(() => {
+        gsap.to(back, {
+          yPercent: -20,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+        gsap.to(mid, {
+          yPercent: -10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }, section);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <section
       id="portfolio"
+      ref={sectionRef}
       className={`relative py-32 overflow-hidden ${
         theme === "dark" ? "bg-black" : "bg-gray-50"
       }`}
     >
-      {/* Background */}
-      <div className="absolute inset-0 grid-pattern opacity-30" />
+      {/* Parallax layer 1 — deepest (ambient color field) */}
+      <div
+        ref={parallaxBackRef}
+        className="absolute inset-0 overflow-hidden pointer-events-none will-change-transform"
+      >
+        <div
+          className={`glass-ambient animate-drift top-[5%] right-[-8%] w-[640px] h-[640px] ${
+            theme === "dark" ? "bg-red-600" : "bg-red-300"
+          }`}
+        />
+        <div
+          className={`glass-ambient animate-drift-reverse bottom-[5%] left-[-8%] w-[640px] h-[640px] ${
+            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
+          }`}
+          style={{ animationDelay: "-9s" }}
+        />
+      </div>
+
+      {/* Parallax layer 2 — mid (grid pattern) */}
+      <div
+        ref={parallaxMidRef}
+        className="absolute inset-0 grid-pattern opacity-30 will-change-transform"
+      />
 
       <div ref={ref} className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}

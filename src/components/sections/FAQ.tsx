@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -117,7 +117,7 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
               : "bg-gray-900/5 text-gray-600 border border-gray-900/10"
           }`}
         >
-          {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+          {isOpen ? <Minus size={18} weight="bold" /> : <Plus size={18} weight="bold" />}
         </motion.div>
       </button>
 

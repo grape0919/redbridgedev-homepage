@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { CaretDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -101,7 +101,7 @@ export default function Hero() {
         });
 
         tl.to(video, { scale: 1.12, yPercent: 8, ease: "none" }, 0)
-          .to(contentEl, { yPercent: -20, opacity: 0, ease: "none" }, 0)
+          .to(contentEl, { yPercent: -20, ease: "none" }, 0)
           .to(scrim, { opacity: 1.4, ease: "none" }, 0);
       }, section);
 
@@ -156,7 +156,7 @@ export default function Hero() {
       {/* Content */}
       <div
         ref={contentRef}
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 text-center"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -164,11 +164,11 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex items-center justify-center gap-2 mb-6"
         >
-          <Sparkles className="w-5 h-5 text-red-400" />
+          <Sparkle weight="fill" className="w-5 h-5 text-red-400" />
           <span className="text-red-400 text-sm tracking-widest uppercase font-medium drop-shadow-[0_0_12px_rgba(220,38,38,0.6)]">
             {t.subtitle}
           </span>
-          <Sparkles className="w-5 h-5 text-red-400" />
+          <Sparkle weight="fill" className="w-5 h-5 text-red-400" />
         </motion.div>
 
         <motion.div
@@ -247,7 +247,7 @@ export default function Hero() {
                 .getElementById("portfolio")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="glass-panel px-8 py-4 rounded-full font-medium text-white"
+            className="px-8 py-4 rounded-full font-medium text-white border border-white/25 bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/40 transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -260,7 +260,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="mt-20 glass-panel rounded-3xl p-6 sm:p-8 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 max-w-4xl mx-auto"
+          className="mt-20 rounded-3xl p-6 sm:p-8 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 max-w-4xl mx-auto border border-white/15 bg-white/5 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
         >
           {t.stats.map((stat, index) => (
             <div key={stat.label} className="text-center">
@@ -293,7 +293,7 @@ export default function Hero() {
           className="flex flex-col items-center gap-2"
         >
           <span className="text-xs tracking-widest uppercase">{t.scroll}</span>
-          <ChevronDown size={24} />
+          <CaretDown size={24} weight="bold" />
         </motion.div>
       </motion.button>
     </section>

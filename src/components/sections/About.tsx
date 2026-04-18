@@ -4,7 +4,14 @@ import { useLayoutEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Shield, Zap, Users, Target, Code, Layers } from "lucide-react";
+import {
+  ShieldCheck,
+  Lightning,
+  Users,
+  Target,
+  Code,
+  StackSimple,
+} from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -13,13 +20,13 @@ gsap.registerPlugin(ScrollTrigger);
 const valuesData = {
   ko: [
     {
-      icon: Shield,
+      icon: ShieldCheck,
       title: "안정성",
       description:
         "대기업과 중견기업에서 쌓은 풍부한 경험을 바탕으로, 모든 프로젝트에 최고의 품질과 안정성을 보장합니다.",
     },
     {
-      icon: Zap,
+      icon: Lightning,
       title: "확장성",
       description:
         "트래픽 증가와 기능 추가에 유연하게 대응하는 아키텍처 설계로, 서비스 성장 단계마다 흔들림 없이 확장합니다.",
@@ -43,7 +50,7 @@ const valuesData = {
         "최신 기술 트렌드를 지속적으로 학습하고 적용하여, 항상 최선의 기술적 선택을 제공합니다.",
     },
     {
-      icon: Layers,
+      icon: StackSimple,
       title: "체계적 프로세스",
       description:
         "체계적인 개발 프로세스와 철저한 품질 관리로 프로젝트의 성공을 보장합니다.",
@@ -51,13 +58,13 @@ const valuesData = {
   ],
   en: [
     {
-      icon: Shield,
+      icon: ShieldCheck,
       title: "Stability",
       description:
         "Based on extensive experience with large and mid-sized companies, we guarantee the highest quality and stability in every project.",
     },
     {
-      icon: Zap,
+      icon: Lightning,
       title: "Scalability",
       description:
         "Architectures designed to handle traffic growth and new features gracefully, so your service scales without friction.",
@@ -81,7 +88,7 @@ const valuesData = {
         "We continuously learn and apply the latest technology trends to always provide the best technical choices.",
     },
     {
-      icon: Layers,
+      icon: StackSimple,
       title: "Systematic Process",
       description:
         "We ensure project success through a systematic development process and thorough quality management.",
@@ -252,7 +259,7 @@ export default function About() {
                       theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                     }`}
                   >
-                    <value.icon className="w-6 h-6 text-red-500" />
+                    <value.icon weight="duotone" className="w-6 h-6 text-red-500" />
                   </div>
                 </div>
                 <h3

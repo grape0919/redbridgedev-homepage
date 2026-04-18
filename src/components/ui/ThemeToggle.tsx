@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function ThemeToggle() {
@@ -24,7 +24,7 @@ export default function ThemeToggle() {
         animate={{ rotate: theme === "dark" ? 0 : 180 }}
         transition={{ duration: 0.3 }}
       >
-        {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+        {theme === "dark" ? <Sun size={20} weight="fill" /> : <Moon size={20} weight="fill" />}
       </motion.div>
     </motion.button>
   );

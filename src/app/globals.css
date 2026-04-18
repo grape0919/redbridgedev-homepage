@@ -228,6 +228,9 @@ body {
 .glass-panel {
   position: relative;
   isolation: isolate;
+  /* Force GPU compositing layer so backdrop-filter is applied from first paint
+     (Chrome otherwise defers url() filter activation until first repaint) */
+  transform: translate3d(0, 0, 0);
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.06) 0%,

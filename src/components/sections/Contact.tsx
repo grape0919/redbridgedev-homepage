@@ -3,15 +3,15 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import {
-  Mail,
+  Envelope,
   Phone,
   MapPin,
-  MessageCircle,
-  Send,
+  ChatCircle,
+  PaperPlaneTilt,
   CheckCircle,
-  AlertCircle,
-  Loader2,
-} from "lucide-react";
+  WarningCircle,
+  CircleNotch,
+} from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { openChannelTalk } from "@/components/ui/ChannelTalk";
@@ -19,7 +19,7 @@ import { openChannelTalk } from "@/components/ui/ChannelTalk";
 const contactInfoData = {
   ko: [
     {
-      icon: Mail,
+      icon: Envelope,
       label: "이메일",
       value: "contact@redbridgedev.ai.kr",
       href: "mailto:contact@redbridgedev.ai.kr",
@@ -39,7 +39,7 @@ const contactInfoData = {
   ],
   en: [
     {
-      icon: Mail,
+      icon: Envelope,
       label: "Email",
       value: "contact@redbridgedev.ai.kr",
       href: "mailto:contact@redbridgedev.ai.kr",
@@ -339,7 +339,7 @@ export default function Contact() {
                           theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                         }`}
                       >
-                        <info.icon className="w-5 h-5 text-red-500" />
+                        <info.icon weight="duotone" className="w-5 h-5 text-red-500" />
                       </div>
                     </div>
                     <div>
@@ -365,7 +365,7 @@ export default function Contact() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <MessageCircle className="w-5 h-5" />
+                  <ChatCircle weight="duotone" className="w-5 h-5" />
                   {t.chatButton}
                 </motion.button>
               </div>
@@ -543,22 +543,22 @@ export default function Contact() {
               >
                 {formStatus === "loading" ? (
                   <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <CircleNotch weight="bold" className="w-5 h-5 animate-spin" />
                     {t.submit.loading}
                   </>
                 ) : formStatus === "success" ? (
                   <>
-                    <CheckCircle className="w-5 h-5" />
+                    <CheckCircle weight="duotone" className="w-5 h-5" />
                     {t.submit.success}
                   </>
                 ) : formStatus === "error" ? (
                   <>
-                    <AlertCircle className="w-5 h-5" />
+                    <WarningCircle weight="duotone" className="w-5 h-5" />
                     {errorMessage || t.submit.error}
                   </>
                 ) : (
                   <>
-                    <Send className="w-5 h-5" />
+                    <PaperPlaneTilt weight="fill" className="w-5 h-5" />
                     {t.submit.idle}
                   </>
                 )}

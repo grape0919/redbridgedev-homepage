@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { List, X } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -164,7 +164,7 @@ export default function Navigation() {
                 aria-expanded={isMobileMenuOpen}
                 whileTap={{ scale: 0.9 }}
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {isMobileMenuOpen ? <X size={24} weight="bold" /> : <List size={24} weight="bold" />}
               </motion.button>
             </div>
           </div>

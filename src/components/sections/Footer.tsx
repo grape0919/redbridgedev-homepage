@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Mail, ArrowUp } from "lucide-react";
+import {
+  GithubLogo,
+  LinkedinLogo,
+  XLogo,
+  Envelope,
+  ArrowUp,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -36,10 +42,10 @@ const footerLinksData = {
 };
 
 const socialLinks = [
-  { name: "Github", icon: Github, href: "https://github.com" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
-  { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
-  { name: "Email", icon: Mail, href: "mailto:contact@redbridgedev.ai.kr" },
+  { name: "Github", icon: GithubLogo, href: "https://github.com" },
+  { name: "LinkedIn", icon: LinkedinLogo, href: "https://linkedin.com" },
+  { name: "Twitter", icon: XLogo, href: "https://twitter.com" },
+  { name: "Email", icon: Envelope, href: "mailto:contact@redbridgedev.ai.kr" },
 ];
 
 const content = {
@@ -136,7 +142,7 @@ export default function Footer() {
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon weight="duotone" className="w-5 h-5" />
                 </motion.a>
               ))}
             </div>
@@ -254,7 +260,7 @@ export default function Footer() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        <ArrowUp className="w-5 h-5" />
+        <ArrowUp weight="bold" className="w-5 h-5" />
       </motion.button>
     </footer>
   );

@@ -2,7 +2,14 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { Globe, Smartphone, Server, Database, Cloud, Cog } from "lucide-react";
+import {
+  Globe,
+  DeviceMobile,
+  HardDrives,
+  Database,
+  Cloud,
+  Gear,
+} from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -22,7 +29,7 @@ const servicesData = {
       gradient: "from-red-500 to-orange-500",
     },
     {
-      icon: Smartphone,
+      icon: DeviceMobile,
       title: "앱 개발",
       description:
         "iOS와 Android를 위한 네이티브 및 크로스 플랫폼 모바일 앱을 개발합니다.",
@@ -35,7 +42,7 @@ const servicesData = {
       gradient: "from-red-500 to-pink-500",
     },
     {
-      icon: Server,
+      icon: HardDrives,
       title: "백엔드 개발",
       description:
         "확장 가능하고 안정적인 서버 아키텍처와 API를 설계하고 구축합니다.",
@@ -74,7 +81,7 @@ const servicesData = {
       gradient: "from-red-500 to-violet-500",
     },
     {
-      icon: Cog,
+      icon: Gear,
       title: "솔루션 개발",
       description:
         "기업 맞춤형 소프트웨어 솔루션 및 자동화 시스템을 개발합니다.",
@@ -102,7 +109,7 @@ const servicesData = {
       gradient: "from-red-500 to-orange-500",
     },
     {
-      icon: Smartphone,
+      icon: DeviceMobile,
       title: "App Development",
       description:
         "We develop native and cross-platform mobile apps for iOS and Android.",
@@ -115,7 +122,7 @@ const servicesData = {
       gradient: "from-red-500 to-pink-500",
     },
     {
-      icon: Server,
+      icon: HardDrives,
       title: "Backend Development",
       description:
         "We design and build scalable and reliable server architectures and APIs.",
@@ -154,7 +161,7 @@ const servicesData = {
       gradient: "from-red-500 to-violet-500",
     },
     {
-      icon: Cog,
+      icon: Gear,
       title: "Solution Development",
       description:
         "We develop custom enterprise software solutions and automation systems.",
@@ -282,7 +289,7 @@ export default function Services() {
                         theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                       }`}
                     >
-                      <service.icon className="w-8 h-8 text-red-500" />
+                      <service.icon weight="duotone" className="w-8 h-8 text-red-500" />
                     </div>
                   </div>
 

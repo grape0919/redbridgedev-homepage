@@ -5,14 +5,14 @@ import { motion, useInView } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  MessageSquare,
+  ChatCircleText,
   FileText,
   Palette,
   Code,
   TestTube,
-  Rocket,
+  RocketLaunch,
   Headphones,
-} from "lucide-react";
+} from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -21,7 +21,7 @@ gsap.registerPlugin(ScrollTrigger);
 const processData = {
   ko: [
     {
-      icon: MessageSquare,
+      icon: ChatCircleText,
       step: "01",
       title: "상담 & 분석",
       description: "프로젝트 목표, 요구사항, 예산을 파악하고 최적의 솔루션을 제안합니다.",
@@ -56,7 +56,7 @@ const processData = {
       duration: "1-2주",
     },
     {
-      icon: Rocket,
+      icon: RocketLaunch,
       step: "06",
       title: "배포 & 런칭",
       description: "최적화된 환경에서 서비스를 배포하고 모니터링을 시작합니다.",
@@ -72,7 +72,7 @@ const processData = {
   ],
   en: [
     {
-      icon: MessageSquare,
+      icon: ChatCircleText,
       step: "01",
       title: "Consultation & Analysis",
       description: "Understand project goals, requirements, and budget to propose optimal solutions.",
@@ -107,7 +107,7 @@ const processData = {
       duration: "1-2 weeks",
     },
     {
-      icon: Rocket,
+      icon: RocketLaunch,
       step: "06",
       title: "Deployment & Launch",
       description: "Deploy service in an optimized environment and start monitoring.",
@@ -281,7 +281,7 @@ export default function Process() {
                           theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                         }`}
                       >
-                        <step.icon className="w-8 h-8 text-red-500" />
+                        <step.icon weight="duotone" className="w-8 h-8 text-red-500" />
                       </div>
                     </div>
                     <span className="text-6xl font-extrabold text-red-500/20 tracking-tighter">
@@ -466,7 +466,7 @@ export default function Process() {
                       theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                     }`}
                   >
-                    <step.icon className="w-6 h-6 text-red-500" />
+                    <step.icon weight="duotone" className="w-6 h-6 text-red-500" />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">

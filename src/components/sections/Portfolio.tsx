@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ExternalLink, ChevronRight, X } from "lucide-react";
+import { ArrowSquareOut, CaretRight, X } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
@@ -396,7 +396,7 @@ export default function Portfolio() {
                       className="flex items-center gap-2 text-red-400 text-sm font-medium"
                     >
                       {t.viewMore}
-                      <ExternalLink size={16} />
+                      <ArrowSquareOut size={16} weight="duotone" />
                     </motion.div>
                   </div>
 
@@ -428,7 +428,7 @@ export default function Portfolio() {
             whileHover={{ x: 5 }}
           >
             {t.contactUs}
-            <ChevronRight size={20} />
+            <CaretRight size={20} weight="bold" />
           </motion.a>
         </motion.div>
       </div>
@@ -459,7 +459,7 @@ export default function Portfolio() {
                 aria-label={language === "ko" ? "닫기" : "Close"}
                 className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-black/80 transition-colors"
               >
-                <X size={24} />
+                <X size={24} weight="bold" />
               </button>
 
               <div className="grid md:grid-cols-2">

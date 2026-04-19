@@ -2,8 +2,7 @@
 
 import { useRef, useLayoutEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import {
   RbdProcessConsultation,
   RbdProcessPlanning,
@@ -16,7 +15,6 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const processData = {
   ko: [

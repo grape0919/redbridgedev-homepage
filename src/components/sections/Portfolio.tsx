@@ -2,14 +2,12 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import { ArrowSquareOut, CaretRight, X } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const projectsData = {
   ko: [

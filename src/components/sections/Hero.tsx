@@ -1,14 +1,23 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CaretDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { gsap } from "@/lib/gsap";
 
-gsap.registerPlugin(ScrollTrigger);
+// Desktop-only gate so mobile skips the 1.7MB video (keeps LCP low on small screens).
+const subscribeMediaQuery = () => () => {};
+const getDesktopSnapshot = () =>
+  window.matchMedia("(min-width: 768px)").matches;
+const getServerSnapshot = () => false;
 
 const content = {
   ko: {
@@ -51,6 +60,11 @@ export default function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
+  const isDesktop = useSyncExternalStore(
+    subscribeMediaQuery,
+    getDesktopSnapshot,
+    getServerSnapshot
+  );
   const { language } = useLanguage();
 
   const t = content[language];
@@ -124,18 +138,30 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* Background video — preload=metadata로 LCP 경쟁 최소화 */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        className="absolute inset-0 w-full h-full object-cover"
-      >
-        <source src="/Cinematic_Tech_Brand_Hero_Video.mp4" type="video/mp4" />
-      </video>
+      {/* Background — 데스크톱은 비디오, 모바일은 포스터 이미지만 (LCP 개선) */}
+      {isDesktop ? (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="/hero-poster.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/Cinematic_Tech_Brand_Hero_Video.mp4" type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src="/hero-poster.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      )}
 
       {/* Cinematic scrim — darkens edges, keeps center slightly clearer */}
       <div

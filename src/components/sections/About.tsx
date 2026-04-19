@@ -2,8 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap";
 import {
   RbdValueStability,
   RbdValueScalability,
@@ -15,7 +14,6 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
-gsap.registerPlugin(ScrollTrigger);
 
 const valuesData = {
   ko: [

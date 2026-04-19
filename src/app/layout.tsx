@@ -179,11 +179,17 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        {/* Hero 포스터 우선 로드 (LCP 후보) */}
+        {/* Hero LCP 후보 사전 로드 */}
         <link
           rel="preload"
           as="image"
           href="/hero-poster.jpg"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/logo_white.png"
           fetchPriority="high"
         />
         <script

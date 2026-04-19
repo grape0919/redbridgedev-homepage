@@ -124,14 +124,14 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* Background video */}
+      {/* Background video — preload=metadata로 LCP 경쟁 최소화 */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover"
       >
         <source src="/Cinematic_Tech_Brand_Hero_Video.mp4" type="video/mp4" />
@@ -158,6 +158,13 @@ export default function Hero() {
         ref={contentRef}
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 text-center"
       >
+        {/* SEO: primary H1 for search engines (visually replaced by logo + tagline below) */}
+        <h1 className="sr-only">
+          {language === "ko"
+            ? "RED BRIDGE DEV — 웹 · 앱 · 솔루션 외주 개발"
+            : "RED BRIDGE DEV — Web / App / Solution Outsourcing Development"}
+        </h1>
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

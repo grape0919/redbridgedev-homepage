@@ -107,17 +107,13 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: "google-site-verification-code", // Replace with actual code
+    // Google Search Console: DNS TXT record 방식으로 인증 완료 (meta 태그 불필요)
     other: {
       "naver-site-verification": "729940fb4ad85f837a18692f85177c4588519e37",
     },
   },
   alternates: {
     canonical: "https://redbridgedev.ai.kr",
-    languages: {
-      "ko-KR": "https://redbridgedev.ai.kr",
-      "en-US": "https://redbridgedev.ai.kr",
-    },
   },
   category: "technology",
 };

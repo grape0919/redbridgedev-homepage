@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { CaretRight } from "@phosphor-icons/react";
+import { CaretDown, CaretRight } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
-import Mermaid from "./Mermaid";
-import { overviewChart } from "./charts";
 import { projects } from "./meta";
 import {
   FadeIn,
@@ -116,10 +114,88 @@ export default function PortfolioIndex() {
         </div>
       </FadeIn>
 
-      {/* 전체 지도 */}
+      {/* 담당 영역 지도 — 레이어 카드 */}
       <FadeIn className="mt-16">
-        <SubTitle>담당 영역 전체 지도</SubTitle>
-        <Mermaid chart={overviewChart} caption="직접 설계·구축한 백엔드/인프라 레이어와 연동 관계" />
+        <SubTitle>담당 영역 한눈에 보기</SubTitle>
+        <div
+          className={`rounded-xl border p-5 sm:p-6 space-y-3 ${
+            dark ? "bg-gray-950 border-gray-800" : "bg-white border-gray-200"
+          }`}
+        >
+          {[
+            {
+              label: "사용자 접점",
+              items: ["모바일 앱", "매장 POS", "파트너 웹"],
+              note: "고객·매장·파트너가 쓰는 화면",
+            },
+            {
+              label: "직접 설계·구축한 백엔드",
+              items: ["AI 대화", "간편결제", "본인인증", "검색", "앱 메인 API"],
+              note: "이 포트폴리오의 핵심 영역",
+              accent: true,
+            },
+            {
+              label: "데이터 · 인프라",
+              items: ["데이터베이스", "검색 인덱스", "DB 변경 관리 플랫폼"],
+              note: "안전한 데이터 운영의 기반",
+            },
+            {
+              label: "외부 연동",
+              items: ["AI(OpenAI)", "결제사(PG)", "본인인증사"],
+              note: "검증된 외부 서비스와 연결",
+            },
+          ].map((layer, i, arr) => (
+            <div key={layer.label}>
+              <div
+                className={`rounded-lg border p-4 ${
+                  layer.accent
+                    ? dark
+                      ? "border-red-900/60 bg-red-950/20"
+                      : "border-red-200 bg-red-50"
+                    : dark
+                    ? "border-gray-800 bg-gray-900/40"
+                    : "border-gray-200 bg-gray-50"
+                }`}
+              >
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span
+                    className={`text-sm font-bold ${
+                      layer.accent ? "text-red-500" : dark ? "text-gray-200" : "text-gray-800"
+                    }`}
+                  >
+                    {layer.label}
+                  </span>
+                  <span className={`text-xs ${dark ? "text-gray-500" : "text-gray-400"}`}>
+                    {layer.note}
+                  </span>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {layer.items.map((item) => (
+                    <span
+                      key={item}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-medium border ${
+                        layer.accent
+                          ? dark
+                            ? "bg-gray-900 border-red-900/50 text-gray-200"
+                            : "bg-white border-red-200 text-gray-700"
+                          : dark
+                          ? "bg-gray-900 border-gray-800 text-gray-400"
+                          : "bg-white border-gray-200 text-gray-500"
+                      }`}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              {i < arr.length - 1 && (
+                <div className={`flex justify-center py-1 ${dark ? "text-gray-700" : "text-gray-300"}`}>
+                  <CaretDown size={16} weight="bold" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </FadeIn>
 
       {/* 기술 역량 요약 */}

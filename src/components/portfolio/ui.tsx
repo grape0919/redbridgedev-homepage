@@ -194,6 +194,119 @@ export function Code({ children }: { children: ReactNode }) {
   );
 }
 
+/* ---------- 고객 친화 시각 자료 ---------- */
+
+export interface Step {
+  icon: ReactNode;
+  title: string;
+  desc?: string;
+}
+
+/** 좌→우(모바일: 위→아래) 단계 카드 흐름 — 시퀀스 다이어그램 대체 */
+export function StepFlow({ steps }: { steps: Step[] }) {
+  const { theme } = useTheme();
+  const dark = theme === "dark";
+  return (
+    <div className="my-6 flex flex-col md:flex-row md:items-stretch gap-2">
+      {steps.map((step, i) => (
+        <div key={step.title} className="contents">
+          <div
+            className={`flex-1 rounded-xl border p-4 text-center ${
+              dark ? "bg-gray-900/40 border-gray-800" : "bg-white border-gray-200"
+            }`}
+          >
+            <div className="mx-auto w-11 h-11 rounded-full bg-red-600/10 text-red-500 flex items-center justify-center">
+              {step.icon}
+            </div>
+            <div className={`mt-1 text-[11px] font-semibold tracking-widest text-red-500`}>
+              {String(i + 1).padStart(2, "0")}
+            </div>
+            <div className={`mt-1 text-sm font-bold ${dark ? "text-white" : "text-gray-900"}`}>
+              {step.title}
+            </div>
+            {step.desc && (
+              <div className={`mt-1.5 text-xs leading-relaxed ${dark ? "text-gray-500" : "text-gray-500"}`}>
+                {step.desc}
+              </div>
+            )}
+          </div>
+          {i < steps.length - 1 && (
+            <div
+              className={`self-center shrink-0 rotate-90 md:rotate-0 ${
+                dark ? "text-gray-700" : "text-gray-300"
+              }`}
+              aria-hidden
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export interface Highlight {
+  icon: ReactNode;
+  title: string;
+  desc: string;
+}
+
+/** 아이콘 + 제목 + 한 줄 설명 카드 그리드 — 상세 불릿/표 대체 */
+export function HighlightGrid({ items }: { items: Highlight[] }) {
+  const { theme } = useTheme();
+  const dark = theme === "dark";
+  return (
+    <div className="my-6 grid sm:grid-cols-2 gap-4">
+      {items.map((item) => (
+        <div
+          key={item.title}
+          className={`rounded-xl border p-5 ${
+            dark ? "bg-gray-900/40 border-gray-800" : "bg-white border-gray-200"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 shrink-0 rounded-lg bg-red-600/10 text-red-500 flex items-center justify-center">
+              {item.icon}
+            </div>
+            <h3 className={`font-bold text-sm ${dark ? "text-white" : "text-gray-900"}`}>
+              {item.title}
+            </h3>
+          </div>
+          <p className={`mt-3 text-sm leading-relaxed ${dark ? "text-gray-400" : "text-gray-600"}`}>
+            {item.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** 성과 숫자 타일 */
+export function StatCards({ stats }: { stats: { value: string; label: string }[] }) {
+  const { theme } = useTheme();
+  const dark = theme === "dark";
+  return (
+    <div className="my-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+      {stats.map((s) => (
+        <div
+          key={s.label}
+          className={`rounded-xl border p-5 text-center ${
+            dark ? "bg-gray-900/40 border-gray-800" : "bg-white border-gray-200"
+          }`}
+        >
+          <div className="text-2xl font-extrabold text-red-500">{s.value}</div>
+          <div className={`mt-2 text-xs leading-snug ${dark ? "text-gray-400" : "text-gray-600"}`}>
+            {s.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- 페이지 셸 (상단 바 + 배경 + 컨테이너) ---------- */
 
 interface ShellProps {

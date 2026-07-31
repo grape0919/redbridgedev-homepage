@@ -24,9 +24,9 @@ export const projects: ProjectMeta[] = [
       "FastAPI 기반 SSE 프록시, ReAct 툴 에이전트 전환, Whisper STT/TTS 음성 파이프라인까지 — 운영 가능한 AI 서비스 백엔드를 단독 구축한 프로젝트 기록입니다.",
   },
   {
-    slug: "plly-pay",
+    slug: "payments",
     num: "②",
-    title: "자체 간편결제 'Plly Pay' & PG 공통모듈",
+    title: "자체 간편결제 & PG 공통모듈",
     tagline: "오프라인 QR 결제 시스템을 바닥부터, PG는 갈아끼울 수 있게",
     oneLiner: "오프라인 QR 결제 시스템 구축 + PG-중립 온라인 결제 게이트웨이",
     role: "최다 기여자(85/107 커밋)",

@@ -120,9 +120,9 @@ function AiBackendContent() {
   );
 }
 
-/* ---------- ② Plly Pay ---------- */
+/* ---------- ② 자체 간편결제 ---------- */
 
-function PllyPayContent() {
+function PaymentsContent() {
   return (
     <>
       <MetaTable
@@ -497,7 +497,7 @@ function DbMigrationContent() {
 
 export const projectContent: Record<string, () => ReactNode> = {
   "ai-backend": AiBackendContent,
-  "plly-pay": PllyPayContent,
+  payments: PaymentsContent,
   identity: IdentityContent,
   search: SearchContent,
   "db-migration": DbMigrationContent,

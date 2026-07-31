@@ -10,7 +10,7 @@ export const overviewChart = `graph TB
     subgraph Mine["직접 설계·구축한 백엔드 레이어"]
         AIBE["① AI 백엔드<br/>SSE 프록시·영속화"]
         AGENT["① AI 에이전트<br/>자체 DAG → ReAct 전환"]
-        PAY["② Plly Pay<br/>QR 결제·PG 게이트웨이"]
+        PAY["② 자체 간편결제<br/>QR 결제·PG 게이트웨이"]
         IDN["③ 통합 본인인증<br/>tx_id 기반 KCP V2"]
         SEARCH["④ 검색엔진<br/>OpenSearch + nori"]
         APPBE["앱 메인 백엔드<br/>20개 도메인"]
@@ -78,7 +78,7 @@ export const voiceChart = `graph LR
 export const qrPayChart = `sequenceDiagram
     participant User as 고객 앱
     participant POS as 매장 POS
-    participant Pay as Plly Pay 서버
+    participant Pay as 간편결제 서버
     participant Nice as NicePos (JVM)
     participant Card as 카드사/VAN
 

@@ -23,6 +23,7 @@ const footerLinksData = {
     company: [
       { name: "회사 소개", href: "#about" },
       { name: "포트폴리오", href: "#portfolio" },
+      { name: "엔지니어 포트폴리오", href: "/portfolio/" },
       { name: "문의하기", href: "#contact" },
     ],
   },
@@ -36,6 +37,7 @@ const footerLinksData = {
     company: [
       { name: "About Us", href: "#about" },
       { name: "Portfolio", href: "#portfolio" },
+      { name: "Engineer Portfolio", href: "/portfolio/" },
       { name: "Contact", href: "#contact" },
     ],
   },
@@ -157,8 +159,10 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(link.href);
+                      if (link.href.startsWith("#")) {
+                        e.preventDefault();
+                        scrollToSection(link.href);
+                      }
                     }}
                     className={`hover:text-red-400 transition-colors text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}
                   >
@@ -178,8 +182,10 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(link.href);
+                      if (link.href.startsWith("#")) {
+                        e.preventDefault();
+                        scrollToSection(link.href);
+                      }
                     }}
                     className={`hover:text-red-400 transition-colors text-sm ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}
                   >

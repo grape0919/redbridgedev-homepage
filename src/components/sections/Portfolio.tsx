@@ -7,6 +7,7 @@ import { ArrowSquareOut, CaretRight, X } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
+import Link from "next/link";
 
 
 const projectsData = {
@@ -163,6 +164,7 @@ const content = {
     contactUs: "문의하기",
     techStack: "기술 스택",
     similarProject: "비슷한 프로젝트 문의",
+    leadPortfolio: "대표 엔지니어 상세 포트폴리오 보기",
   },
   en: {
     subtitle: "Our Work",
@@ -173,6 +175,7 @@ const content = {
     contactUs: "Contact Us",
     techStack: "Tech Stack",
     similarProject: "Inquire About Similar Project",
+    leadPortfolio: "View Lead Engineer's Full Portfolio",
   },
 };
 
@@ -428,6 +431,19 @@ export default function Portfolio() {
             {t.contactUs}
             <CaretRight size={20} weight="bold" />
           </motion.a>
+          <div className="mt-6">
+            <Link
+              href="/portfolio/"
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium border transition-all hover:border-red-500 hover:text-red-500 ${
+                theme === "dark"
+                  ? "border-gray-700 text-gray-300"
+                  : "border-gray-300 text-gray-600"
+              }`}
+            >
+              {t.leadPortfolio}
+              <CaretRight size={16} weight="bold" />
+            </Link>
+          </div>
         </motion.div>
       </div>
 

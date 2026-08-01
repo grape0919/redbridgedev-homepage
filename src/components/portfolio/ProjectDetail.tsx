@@ -5,6 +5,7 @@ import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { projects } from "./meta";
 import { projectContent } from "./projects-content";
+import { projectVisuals } from "./visuals";
 import { FadeIn, PortfolioShell, PortfolioFootnote } from "./ui";
 
 export default function ProjectDetail({ slug }: { slug: string }) {
@@ -53,6 +54,15 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           </div>
         </div>
       </FadeIn>
+
+      {(() => {
+        const Visual = projectVisuals[slug];
+        return Visual ? (
+          <FadeIn className="mt-8">
+            <Visual />
+          </FadeIn>
+        ) : null;
+      })()}
 
       <FadeIn className="mt-8">
         <Content />

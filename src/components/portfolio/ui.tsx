@@ -373,22 +373,24 @@ export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
 
 /* ---------- 하단 공통: 비공개 저장소 각주 + 문의 CTA ---------- */
 
-export function PortfolioFootnote() {
+export function PortfolioFootnote({ confidential = true }: { confidential?: boolean }) {
   const { theme } = useTheme();
   const dark = theme === "dark";
   return (
     <FadeIn>
-      <div
-        className={`mt-8 rounded-xl border p-6 text-sm leading-relaxed ${
-          dark
-            ? "bg-gray-900/40 border-gray-800 text-gray-500"
-            : "bg-white border-gray-200 text-gray-500"
-        }`}
-      >
-        본 문서의 프로젝트는 모두 재직 중 수행한 실서비스 개발 건으로, 코드는 사내 비공개
-        저장소에 있습니다. 아키텍처·수치는 보안에 문제없는 수준으로 재구성했으며, 상세 내용은
-        미팅에서 설명 가능합니다.
-      </div>
+      {confidential && (
+        <div
+          className={`mt-8 rounded-xl border p-6 text-sm leading-relaxed ${
+            dark
+              ? "bg-gray-900/40 border-gray-800 text-gray-500"
+              : "bg-white border-gray-200 text-gray-500"
+          }`}
+        >
+          기업 실서비스 프로젝트는 재직 중 수행한 개발 건으로, 코드는 사내 비공개 저장소에
+          있습니다. 아키텍처·수치는 보안에 문제없는 수준으로 재구성했으며, 상세 내용은 미팅에서
+          설명 가능합니다.
+        </div>
+      )}
       <div className="mt-12 text-center">
         <Link
           href="/#contact"

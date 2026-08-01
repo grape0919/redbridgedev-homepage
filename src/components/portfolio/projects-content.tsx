@@ -2,6 +2,8 @@
 
 import { ReactNode } from "react";
 import {
+  AndroidLogo,
+  Article,
   ArrowCounterClockwise,
   ArrowsClockwise,
   BellRinging,
@@ -10,26 +12,45 @@ import {
   Broadcast,
   Bug,
   Buildings,
+  Camera,
+  ChartLineUp,
   ChatCircleDots,
+  ChatText,
   CheckCircle,
+  ClipboardText,
+  Clock,
   CreditCard,
   Database,
   DeviceMobile,
+  Drop,
+  FilePdf,
   FloppyDisk,
+  GameController,
   GitPullRequest,
   IdentificationCard,
   Key,
+  Lightning,
   LockKey,
+  MagnifyingGlass,
   MapPin,
   Microphone,
+  Notebook,
+  PaintBrush,
+  PencilSimple,
   QrCode,
   Receipt,
+  Robot,
+  Scales,
   ShieldCheck,
   Sliders,
+  Sparkle,
   Stack,
   Storefront,
   Swap,
+  Table,
   TextAa,
+  Timer,
+  Wine,
 } from "@phosphor-icons/react";
 import { MetaTable, Prose, Strong, SubTitle, StepFlow, HighlightGrid, StatCards } from "./ui";
 
@@ -455,10 +476,464 @@ function DbMigrationContent() {
   );
 }
 
+/* ---------- ⑥ Vocaro ---------- */
+
+function VocaroContent() {
+  return (
+    <>
+      <MetaTable
+        rows={[
+          ["기간", "2025.12 ~ 운영 중"],
+          ["역할", "단독 기획·개발·운영 — 제품 기획부터 결제·마케팅 자동화까지"],
+          ["기술", "Next.js · React · Supabase · TossPayments · OpenAI"],
+          [
+            "서비스",
+            <a
+              key="link"
+              href="https://e-vocaro.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-red-500 hover:text-red-400 transition-colors font-medium"
+            >
+              e-vocaro.com ↗
+            </a>,
+          ],
+        ]}
+      />
+
+      <Prose>
+        선생님이 단어장을 만들면 AI가 예문과 문제를 생성해 <Strong>시험지(PDF·Excel·Word)로
+        출력</Strong>하고, 학생은 같은 단어장으로 온라인 학습을 하는 영어 학습 플랫폼입니다.
+        구독 결제, 안드로이드 앱, 검색 유입 자동화까지 갖춰{" "}
+        <Strong>실제 매출이 발생하는 서비스</Strong>로 운영하고 있습니다.
+      </Prose>
+
+      <SubTitle>서비스 흐름</SubTitle>
+      <StepFlow
+        steps={[
+          {
+            icon: <Notebook size={iconSize} weight="duotone" />,
+            title: "단어장 만들기",
+            desc: "텍스트·엑셀로 간편 등록",
+          },
+          {
+            icon: <Sparkle size={iconSize} weight="duotone" />,
+            title: "AI 문제 생성",
+            desc: "예문·문제를 자동으로 생성",
+          },
+          {
+            icon: <FilePdf size={iconSize} weight="duotone" />,
+            title: "시험지 출력",
+            desc: "PDF·Excel·Word 3종 지원",
+          },
+          {
+            icon: <ChartLineUp size={iconSize} weight="duotone" />,
+            title: "온라인 학습",
+            desc: "채점·숙달도 추적까지",
+          },
+        ]}
+      />
+
+      <SubTitle>핵심 특징</SubTitle>
+      <HighlightGrid
+        items={[
+          {
+            icon: <CreditCard size={iconSize} weight="duotone" />,
+            title: "구독·결제 실가동",
+            desc: "정기결제, 무료체험 전환, 자동갱신, 환불까지 — 결제 전 과정을 직접 구현해 운영합니다.",
+          },
+          {
+            icon: <Robot size={iconSize} weight="duotone" />,
+            title: "AI 학습 기능",
+            desc: "예문 자동 생성, 사진에서 단어 추출, 지문 빈칸 학습 등 AI 기능을 사용량 기반으로 제공합니다.",
+          },
+          {
+            icon: <AndroidLogo size={iconSize} weight="duotone" />,
+            title: "웹 + 안드로이드 앱",
+            desc: "웹을 배포하면 앱도 함께 업데이트되는 구조로, 하나의 코드로 두 채널을 운영합니다.",
+          },
+          {
+            icon: <MagnifyingGlass size={iconSize} weight="duotone" />,
+            title: "검색 유입 자동화",
+            desc: "AI로 학습 콘텐츠 페이지를 자동 생성·검수하는 SEO 파이프라인으로 방문자를 늘립니다.",
+          },
+        ]}
+      />
+
+      <SubTitle>성과</SubTitle>
+      <StatCards
+        stats={[
+          { value: "1인", label: "기획→개발→운영 전체" },
+          { value: "운영 중", label: "구독 결제 실가동" },
+          { value: "3종", label: "시험지 출력 포맷" },
+          { value: "웹+앱", label: "동시 서비스 채널" },
+        ]}
+      />
+    </>
+  );
+}
+
+/* ---------- ⑦ 병원 대기열 ---------- */
+
+function HospitalQueueContent() {
+  return (
+    <>
+      <MetaTable
+        rows={[
+          ["기간", "2025.08 ~ 운영 중"],
+          ["역할", "단독 개발 — 기획·개발·배포·운영"],
+          ["기술", "Next.js · PostgreSQL · Docker · SMS 연동"],
+          ["고객", "정형외과 의원 (실서비스 운영 중)"],
+        ]}
+      />
+
+      <Prose>
+        병원 접수부터 호출까지를 <Strong>담당의별 대기열</Strong>로 관리하는 시스템입니다. 환자는
+        앱 설치나 로그인 없이 문자로 받은 <Strong>개인 링크·QR</Strong>로 자기 순번과 예상
+        대기시간을 실시간 확인하고, 순서가 다가오면 문자로 자동 안내를 받습니다.
+      </Prose>
+
+      <SubTitle>이용 흐름</SubTitle>
+      <StepFlow
+        steps={[
+          {
+            icon: <ClipboardText size={iconSize} weight="duotone" />,
+            title: "접수",
+            desc: "직원이 진료항목과 담당의 지정",
+          },
+          {
+            icon: <DeviceMobile size={iconSize} weight="duotone" />,
+            title: "실시간 확인",
+            desc: "개인 링크·QR로 순번·대기시간",
+          },
+          {
+            icon: <ChatText size={iconSize} weight="duotone" />,
+            title: "호출 임박 문자",
+            desc: "10분 전 자동 알림",
+          },
+          {
+            icon: <Timer size={iconSize} weight="duotone" />,
+            title: "진료·자동 정리",
+            desc: "영업 종료 후 대기열 자동 초기화",
+          },
+        ]}
+      />
+
+      <SubTitle>핵심 특징</SubTitle>
+      <HighlightGrid
+        items={[
+          {
+            icon: <Clock size={iconSize} weight="duotone" />,
+            title: "살아있는 예상 대기시간",
+            desc: "진료 시작·완료 때마다 전체 대기열을 재계산해, 화면의 대기시간이 실제 진행에 맞춰 줄어듭니다.",
+          },
+          {
+            icon: <ChartLineUp size={iconSize} weight="duotone" />,
+            title: "실측 기반 자동 보정",
+            desc: "실제 진료 소요시간을 통계로 집계해 항목별 예상 시간을 자동으로 정확하게 다듬습니다.",
+          },
+          {
+            icon: <ChatText size={iconSize} weight="duotone" />,
+            title: "문자 비용까지 설계",
+            desc: "중복 발송을 막고, 조건이 겹치면 문자 한 통으로 합쳐 보내 병원의 문자 비용을 아낍니다.",
+          },
+          {
+            icon: <ShieldCheck size={iconSize} weight="duotone" />,
+            title: "안정 운영 체계",
+            desc: "자동 배포, 상태 점검, 매일 백업까지 — 작은 시스템에도 운영 안전장치를 갖췄습니다.",
+          },
+        ]}
+      />
+
+      <SubTitle>성과</SubTitle>
+      <StatCards
+        stats={[
+          { value: "실운영", label: "병원 현장에서 사용 중" },
+          { value: "무설치", label: "링크·QR만으로 환자 접근" },
+          { value: "10분 전", label: "호출 임박 자동 문자" },
+          { value: "매일", label: "자동 백업·상태 점검" },
+        ]}
+      />
+    </>
+  );
+}
+
+/* ---------- ⑧ 골드럭와인 ---------- */
+
+function GoldluckwineContent() {
+  return (
+    <>
+      <MetaTable
+        rows={[
+          ["기간", "2024.03 ~ 운영 중 (2026.07 전면 리뉴얼)"],
+          ["역할", "단독 개발 — 디자인 시안 구현 · CMS 구축 · SEO/성능 개선"],
+          ["기술", "React · TypeScript · Supabase · Vercel"],
+          [
+            "서비스",
+            <a
+              key="link"
+              href="https://goldluckwine.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-red-500 hover:text-red-400 transition-colors font-medium"
+            >
+              goldluckwine.com ↗
+            </a>,
+          ],
+        ]}
+      />
+
+      <Prose>
+        내추럴 와인 수입사의 <Strong>공식 브랜드 사이트이자 와인 카탈로그</Strong>입니다. 디자이너
+        시안을 그대로 구현한 랜딩과 함께, 개발자 없이도 수입사 담당자가{" "}
+        <Strong>직접 와인·와이너리를 등록·수정</Strong>할 수 있는 관리자 화면을 내장해 운영
+        부담을 없앴습니다.
+      </Prose>
+
+      <SubTitle>구성</SubTitle>
+      <StepFlow
+        steps={[
+          {
+            icon: <PaintBrush size={iconSize} weight="duotone" />,
+            title: "브랜드 랜딩",
+            desc: "디자이너 시안 그대로 구현",
+          },
+          {
+            icon: <Wine size={iconSize} weight="duotone" />,
+            title: "와인 카탈로그",
+            desc: "타입·품종·생산자 필터 검색",
+          },
+          {
+            icon: <PencilSimple size={iconSize} weight="duotone" />,
+            title: "관리자 CMS",
+            desc: "운영자가 직접 등록·수정",
+          },
+          {
+            icon: <MagnifyingGlass size={iconSize} weight="duotone" />,
+            title: "검색 노출",
+            desc: "SEO·사이트맵 자동화",
+          },
+        ]}
+      />
+
+      <SubTitle>핵심 특징</SubTitle>
+      <HighlightGrid
+        items={[
+          {
+            icon: <PencilSimple size={iconSize} weight="duotone" />,
+            title: "운영자 셀프 관리",
+            desc: "와인 등록·이미지 업로드·홈 노출 설정까지 — 콘텐츠 수정에 개발자 개입이 필요 없습니다.",
+          },
+          {
+            icon: <Lightning size={iconSize} weight="duotone" />,
+            title: "성능 최적화",
+            desc: "이미지 경량화(WebP)와 관리자 화면 분리 로딩으로 방문자 화면을 가볍고 빠르게 유지합니다.",
+          },
+          {
+            icon: <MagnifyingGlass size={iconSize} weight="duotone" />,
+            title: "SEO 구조화",
+            desc: "페이지별 메타데이터, 구조화 데이터, 와인 상세까지 포함하는 자동 사이트맵을 갖췄습니다.",
+          },
+          {
+            icon: <ShieldCheck size={iconSize} weight="duotone" />,
+            title: "서버 없는 보안 설계",
+            desc: "별도 서버 없이도 열람은 누구나, 수정은 인증된 운영자만 가능하도록 데이터 권한을 분리했습니다.",
+          },
+        ]}
+      />
+
+      <SubTitle>성과</SubTitle>
+      <StatCards
+        stats={[
+          { value: "운영 중", label: "goldluckwine.com 라이브" },
+          { value: "3주", label: "전면 리뉴얼 완료" },
+          { value: "셀프", label: "운영자 직접 콘텐츠 관리" },
+          { value: "자동", label: "사이트맵·검색엔진 등록" },
+        ]}
+      />
+    </>
+  );
+}
+
+/* ---------- ⑨ PetBlood ---------- */
+
+function PetbloodContent() {
+  return (
+    <>
+      <MetaTable
+        rows={[
+          ["기간", "2026.07 ~ (MVP 개발 중)"],
+          ["역할", "단독 기획·설계·개발 — 사업 기획서부터 제품 명세·구현까지"],
+          ["기술", "Python · Flutter · 멀티모달 AI(Claude/GPT/Gemini) · OCR"],
+        ]}
+      />
+
+      <Prose>
+        동물병원에서 받은 혈액검사지는 수치와 영문 약어뿐이라 보호자가 읽을 수 없습니다. 검사지를
+        사진으로 올리면 AI가 수치를 추출하고, <Strong>판정은 AI가 아닌 검증된 규칙</Strong>으로만
+        수행해 보호자가 이해할 수 있는 한국어 리포트로 바꿔주는 서비스입니다.
+      </Prose>
+
+      <SubTitle>동작 방식</SubTitle>
+      <StepFlow
+        steps={[
+          {
+            icon: <Camera size={iconSize} weight="duotone" />,
+            title: "검사지 촬영",
+            desc: "사진·PDF 업로드",
+          },
+          {
+            icon: <Robot size={iconSize} weight="duotone" />,
+            title: "AI 수치 추출",
+            desc: "이중 추출 교차검증",
+          },
+          {
+            icon: <CheckCircle size={iconSize} weight="duotone" />,
+            title: "규칙 기반 판정",
+            desc: "AI 오류가 판정에 못 끼어듦",
+          },
+          {
+            icon: <Article size={iconSize} weight="duotone" />,
+            title: "쉬운 리포트",
+            desc: "시계열 추이까지 한국어로",
+          },
+        ]}
+      />
+
+      <SubTitle>핵심 특징</SubTitle>
+      <HighlightGrid
+        items={[
+          {
+            icon: <ShieldCheck size={iconSize} weight="duotone" />,
+            title: "AI 오류 원천 차단",
+            desc: "판정은 검증된 규칙 엔진만 수행하고 AI는 문장 다듬기만 담당 — 틀린 해석이 나갈 경로 자체를 없앴습니다.",
+          },
+          {
+            icon: <Scales size={iconSize} weight="duotone" />,
+            title: "규제 준수를 코드로",
+            desc: "진단·투약 표현을 자동 차단하고, 수의사 감수 완료 전에는 판정을 내보내지 않는 게이트를 두었습니다.",
+          },
+          {
+            icon: <Drop size={iconSize} weight="duotone" />,
+            title: "검사항목 사전 구축",
+            desc: "42개 검사항목과 211개 동의어, 종별 참고치를 사전으로 정리해 다양한 검사지 양식을 소화합니다.",
+          },
+          {
+            icon: <DeviceMobile size={iconSize} weight="duotone" />,
+            title: "앱·웹 동시 개발",
+            desc: "하나의 Flutter 코드로 모바일과 웹을 함께 만들고, 촬영 화질 판정으로 재촬영을 안내합니다.",
+          },
+        ]}
+      />
+
+      <SubTitle>성과</SubTitle>
+      <StatCards
+        stats={[
+          { value: "395개", label: "자동 테스트로 검증" },
+          { value: "42항목", label: "검사항목·참고치 사전" },
+          { value: "4종", label: "교체 가능한 AI 엔진" },
+          { value: "MVP", label: "종단 파이프라인 완성" },
+        ]}
+      />
+    </>
+  );
+}
+
+/* ---------- ⑩ Frontline 게임 ---------- */
+
+function FrontlineContent() {
+  return (
+    <>
+      <MetaTable
+        rows={[
+          ["기간", "2026.07 ~ (개발 중)"],
+          ["역할", "1인 개발 — 기획·프로그래밍·절차적 그래픽"],
+          ["기술", "Godot 4 · GDScript · Phaser(웹 프로토타입)"],
+          ["플랫폼", "PC(Windows·Linux) + 웹, 모바일 대응 설계"],
+        ]}
+      />
+
+      <Prose>
+        끝없이 전진하며 적을 상대하는 <Strong>2D 횡스크롤 런앤건 슈터</Strong>입니다. 먼저 웹
+        프로토타입을 하루 만에 만들어 재미를 검증한 뒤, Godot 엔진으로{" "}
+        <Strong>데이터 파이프라인과 자동 테스트를 갖춘 본편</Strong>으로 다시 만들었습니다.
+        그래픽은 외부 에셋 없이 전부 코드로 그립니다.
+      </Prose>
+
+      <SubTitle>개발 과정</SubTitle>
+      <StepFlow
+        steps={[
+          {
+            icon: <Lightning size={iconSize} weight="duotone" />,
+            title: "빠른 검증",
+            desc: "하루 만에 웹 프로토타입 완성",
+          },
+          {
+            icon: <GameController size={iconSize} weight="duotone" />,
+            title: "본편 재구축",
+            desc: "Godot로 멀티플랫폼 개발",
+          },
+          {
+            icon: <Table size={iconSize} weight="duotone" />,
+            title: "데이터 밸런싱",
+            desc: "엑셀 수정만으로 난이도 조정",
+          },
+          {
+            icon: <CheckCircle size={iconSize} weight="duotone" />,
+            title: "자동 검증",
+            desc: "게임 로직 자동 테스트 통과",
+          },
+        ]}
+      />
+
+      <SubTitle>핵심 특징</SubTitle>
+      <HighlightGrid
+        items={[
+          {
+            icon: <Table size={iconSize} weight="duotone" />,
+            title: "엑셀 기반 밸런싱",
+            desc: "무기·적·난이도 수치를 엑셀에서 고치면 코드 수정 없이 게임에 반영되는 데이터 파이프라인을 만들었습니다.",
+          },
+          {
+            icon: <PaintBrush size={iconSize} weight="duotone" />,
+            title: "100% 코드 그래픽",
+            desc: "캐릭터·이펙트를 외부 이미지 없이 절차적으로 그려, 용량은 작고 스타일은 일관되게 유지합니다.",
+          },
+          {
+            icon: <GameController size={iconSize} weight="duotone" />,
+            title: "무한 생성 레벨",
+            desc: "구간별 가중치로 지형과 적을 계속 생성하고, 자리만 지키는 플레이는 시스템이 견제합니다.",
+          },
+          {
+            icon: <CheckCircle size={iconSize} weight="duotone" />,
+            title: "게임에도 자동 테스트",
+            desc: "핵심 로직을 화면 없이 검증하는 자동 테스트 55개를 통과해야 빌드하는 개발 문화를 적용했습니다.",
+          },
+        ]}
+      />
+
+      <SubTitle>성과</SubTitle>
+      <StatCards
+        stats={[
+          { value: "1일", label: "프로토타입 재미 검증" },
+          { value: "3주", label: "본편 아키텍처 재구축" },
+          { value: "3종", label: "플랫폼 빌드(Win·Linux·웹)" },
+          { value: "55개", label: "자동 테스트 통과" },
+        ]}
+      />
+    </>
+  );
+}
+
 export const projectContent: Record<string, () => ReactNode> = {
   "ai-backend": AiBackendContent,
   payments: PaymentsContent,
   identity: IdentityContent,
   search: SearchContent,
   "db-migration": DbMigrationContent,
+  vocaro: VocaroContent,
+  "hospital-queue": HospitalQueueContent,
+  goldluckwine: GoldluckwineContent,
+  petblood: PetbloodContent,
+  frontline: FrontlineContent,
 };

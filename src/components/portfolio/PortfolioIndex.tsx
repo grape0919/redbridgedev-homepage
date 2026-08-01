@@ -58,8 +58,9 @@ export default function PortfolioIndex() {
             프로젝트 기록입니다.
           </Prose>
           <Prose>
-            모든 프로젝트는 실서비스(위치기반 매장 탐색·결제·리워드 플랫폼) 프로덕션 코드이며, 사내
-            비공개 저장소 특성상 코드 대신 <Strong>문제 → 설계 → 결과</Strong> 중심으로 정리했습니다.
+            기업 실서비스에서 담당한 프로젝트와, RED BRIDGE가 직접 기획해 운영하는 자체 서비스를
+            함께 정리했습니다. 비공개 저장소 프로젝트는 코드 대신{" "}
+            <Strong>문제 → 설계 → 결과</Strong> 중심으로 소개합니다.
           </Prose>
         </div>
         <div className="mt-8 flex flex-wrap gap-2">
@@ -69,13 +70,16 @@ export default function PortfolioIndex() {
         </div>
       </FadeIn>
 
-      {/* 프로젝트 목록 */}
+      {/* 기업 실서비스 프로젝트 */}
       <FadeIn className="mt-20">
         <h2 className={`text-2xl sm:text-3xl font-bold ${dark ? "text-white" : "text-gray-900"}`}>
-          프로젝트
+          기업 실서비스 프로젝트
         </h2>
+        <p className={`mt-3 text-sm ${dark ? "text-gray-500" : "text-gray-500"}`}>
+          위치기반 매장 탐색·결제·리워드 플랫폼의 백엔드를 재직 중 담당한 기록입니다.
+        </p>
         <div className="mt-8 grid gap-4">
-          {projects.map((p) => (
+          {projects.filter((p) => p.group === "production").map((p) => (
             <Link
               key={p.slug}
               href={`/portfolio/${p.slug}/`}
@@ -194,6 +198,54 @@ export default function PortfolioIndex() {
                 </div>
               )}
             </div>
+          ))}
+        </div>
+      </FadeIn>
+
+      {/* RED BRIDGE 자체 프로젝트 */}
+      <FadeIn className="mt-20">
+        <h2 className={`text-2xl sm:text-3xl font-bold ${dark ? "text-white" : "text-gray-900"}`}>
+          RED BRIDGE 자체 프로젝트
+        </h2>
+        <p className={`mt-3 text-sm ${dark ? "text-gray-500" : "text-gray-500"}`}>
+          직접 기획하고 개발해 운영까지 책임지는 자체 서비스와 고객 프로젝트입니다.
+        </p>
+        <div className="mt-8 grid gap-4">
+          {projects.filter((p) => p.group === "redbridge").map((p) => (
+            <Link
+              key={p.slug}
+              href={`/portfolio/${p.slug}/`}
+              className={`group rounded-xl border p-5 transition-all ${
+                dark
+                  ? "bg-gray-900/40 border-gray-800 hover:border-red-900/60"
+                  : "bg-white border-gray-200 hover:border-red-300 hover:shadow-md"
+              }`}
+            >
+              <div className="flex items-start gap-4">
+                <span className="text-2xl font-extrabold text-red-600/80">{p.num}</span>
+                <div className="min-w-0 flex-1">
+                  <h3
+                    className={`font-bold group-hover:text-red-500 transition-colors ${
+                      dark ? "text-white" : "text-gray-900"
+                    }`}
+                  >
+                    {p.title}
+                  </h3>
+                  <p className={`mt-1 text-sm ${dark ? "text-gray-400" : "text-gray-600"}`}>
+                    {p.oneLiner}
+                  </p>
+                  <p className="mt-2 text-xs font-medium text-red-500">{p.role}</p>
+                </div>
+                <span
+                  className={`self-center inline-flex items-center gap-1 text-sm font-medium transition-colors group-hover:text-red-500 ${
+                    dark ? "text-gray-500" : "text-gray-400"
+                  }`}
+                >
+                  자세히
+                  <CaretRight size={14} weight="bold" />
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
       </FadeIn>

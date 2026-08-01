@@ -116,7 +116,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
         </div>
       </FadeIn>
 
-      <PortfolioFootnote />
+      <PortfolioFootnote confidential={project.group === "production"} />
     </PortfolioShell>
   );
 }

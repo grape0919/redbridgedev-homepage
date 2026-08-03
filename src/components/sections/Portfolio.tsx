@@ -164,7 +164,7 @@ const content = {
     contactUs: "문의하기",
     techStack: "기술 스택",
     similarProject: "비슷한 프로젝트 문의",
-    leadPortfolio: "대표 엔지니어 상세 포트폴리오 보기",
+    leadPortfolio: "엔지니어링 포트폴리오 보기",
   },
   en: {
     subtitle: "Our Work",
@@ -175,7 +175,7 @@ const content = {
     contactUs: "Contact Us",
     techStack: "Tech Stack",
     similarProject: "Inquire About Similar Project",
-    leadPortfolio: "View Lead Engineer's Full Portfolio",
+    leadPortfolio: "View Engineering Portfolio",
   },
 };
 

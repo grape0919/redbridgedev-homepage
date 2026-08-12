@@ -122,18 +122,6 @@ export const projects: ProjectMeta[] = [
       "반려동물 혈액검사지를 사진으로 올리면 AI가 수치를 추출하고, 판정은 규칙 기반으로만 수행해 보호자가 이해할 수 있는 한국어 리포트를 만드는 서비스 MVP입니다.",
     group: "redbridge",
   },
-  {
-    slug: "frontline",
-    num: "⑩",
-    title: "2D 슈터 게임 'Flashback: Front Line'",
-    tagline: "하루 만에 재미를 검증하고, 3주 만에 본편 아키텍처로",
-    oneLiner: "웹 프로토타입으로 검증 후 Godot로 재구축한 멀티플랫폼 런앤건 슈터 (개발 중)",
-    role: "1인 개발 — 기획·프로그래밍·절차적 그래픽",
-    period: "2026.07 ~ (개발 중)",
-    seoDescription:
-      "2D 횡스크롤 런앤건 슈터 게임. 웹 프로토타입으로 재미를 검증한 뒤 Godot 4로 재구축 — 엑셀 기반 밸런스 파이프라인과 헤드리스 자동 테스트를 갖춘 1인 게임 개발 프로젝트입니다.",
-    group: "redbridge",
-  },
 ];
 
 export function getProject(slug: string): ProjectMeta | undefined {

@@ -25,7 +25,6 @@ import {
   Drop,
   FilePdf,
   FloppyDisk,
-  GameController,
   GitPullRequest,
   IdentificationCard,
   Key,
@@ -47,7 +46,6 @@ import {
   Stack,
   Storefront,
   Swap,
-  Table,
   TextAa,
   Timer,
   Wine,
@@ -839,92 +837,6 @@ function PetbloodContent() {
   );
 }
 
-/* ---------- ⑩ Frontline 게임 ---------- */
-
-function FrontlineContent() {
-  return (
-    <>
-      <MetaTable
-        rows={[
-          ["기간", "2026.07 ~ (개발 중)"],
-          ["역할", "1인 개발 — 기획·프로그래밍·절차적 그래픽"],
-          ["기술", "Godot 4 · GDScript · Phaser(웹 프로토타입)"],
-          ["플랫폼", "PC(Windows·Linux) + 웹, 모바일 대응 설계"],
-        ]}
-      />
-
-      <Prose>
-        끝없이 전진하며 적을 상대하는 <Strong>2D 횡스크롤 런앤건 슈터</Strong>입니다. 먼저 웹
-        프로토타입을 하루 만에 만들어 재미를 검증한 뒤, Godot 엔진으로{" "}
-        <Strong>데이터 파이프라인과 자동 테스트를 갖춘 본편</Strong>으로 다시 만들었습니다.
-        그래픽은 외부 에셋 없이 전부 코드로 그립니다.
-      </Prose>
-
-      <SubTitle>개발 과정</SubTitle>
-      <StepFlow
-        steps={[
-          {
-            icon: <Lightning size={iconSize} weight="duotone" />,
-            title: "빠른 검증",
-            desc: "하루 만에 웹 프로토타입 완성",
-          },
-          {
-            icon: <GameController size={iconSize} weight="duotone" />,
-            title: "본편 재구축",
-            desc: "Godot로 멀티플랫폼 개발",
-          },
-          {
-            icon: <Table size={iconSize} weight="duotone" />,
-            title: "데이터 밸런싱",
-            desc: "엑셀 수정만으로 난이도 조정",
-          },
-          {
-            icon: <CheckCircle size={iconSize} weight="duotone" />,
-            title: "자동 검증",
-            desc: "게임 로직 자동 테스트 통과",
-          },
-        ]}
-      />
-
-      <SubTitle>핵심 특징</SubTitle>
-      <HighlightGrid
-        items={[
-          {
-            icon: <Table size={iconSize} weight="duotone" />,
-            title: "엑셀 기반 밸런싱",
-            desc: "무기·적·난이도 수치를 엑셀에서 고치면 코드 수정 없이 게임에 반영되는 데이터 파이프라인을 만들었습니다.",
-          },
-          {
-            icon: <PaintBrush size={iconSize} weight="duotone" />,
-            title: "100% 코드 그래픽",
-            desc: "캐릭터·이펙트를 외부 이미지 없이 절차적으로 그려, 용량은 작고 스타일은 일관되게 유지합니다.",
-          },
-          {
-            icon: <GameController size={iconSize} weight="duotone" />,
-            title: "무한 생성 레벨",
-            desc: "구간별 가중치로 지형과 적을 계속 생성하고, 자리만 지키는 플레이는 시스템이 견제합니다.",
-          },
-          {
-            icon: <CheckCircle size={iconSize} weight="duotone" />,
-            title: "게임에도 자동 테스트",
-            desc: "핵심 로직을 화면 없이 검증하는 자동 테스트 55개를 통과해야 빌드하는 개발 문화를 적용했습니다.",
-          },
-        ]}
-      />
-
-      <SubTitle>성과</SubTitle>
-      <StatCards
-        stats={[
-          { value: "1일", label: "프로토타입 재미 검증" },
-          { value: "3주", label: "본편 아키텍처 재구축" },
-          { value: "3종", label: "플랫폼 빌드(Win·Linux·웹)" },
-          { value: "55개", label: "자동 테스트 통과" },
-        ]}
-      />
-    </>
-  );
-}
-
 export const projectContent: Record<string, () => ReactNode> = {
   "ai-backend": AiBackendContent,
   payments: PaymentsContent,
@@ -935,5 +847,4 @@ export const projectContent: Record<string, () => ReactNode> = {
   "hospital-queue": HospitalQueueContent,
   goldluckwine: GoldluckwineContent,
   petblood: PetbloodContent,
-  frontline: FrontlineContent,
 };

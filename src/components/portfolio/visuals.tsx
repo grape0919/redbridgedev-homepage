@@ -627,72 +627,6 @@ function PetbloodVisual() {
   );
 }
 
-/* ---------- ⑩ 게임 장면 ---------- */
-
-function FrontlineVisual() {
-  const { theme } = useTheme();
-  const dark = theme === "dark";
-  const reduce = useReducedMotion();
-  return (
-    <Frame label="2D 슈터 게임 플레이 장면 일러스트">
-      <div className="w-full max-w-md">
-        <div className="relative h-40 rounded-xl overflow-hidden bg-gradient-to-b from-gray-900 via-gray-950 to-black border border-gray-800">
-          {/* HUD */}
-          <div className="absolute top-2 left-3 right-3 flex justify-between text-[10px] font-mono text-gray-400">
-            <span>
-              SCORE <span className="text-red-400 font-bold">1,240</span>
-            </span>
-            <span>
-              DIST <span className="text-red-400 font-bold">356m</span>
-            </span>
-          </div>
-          {/* 지형 */}
-          <div className="absolute bottom-0 inset-x-0 h-9 bg-gray-800" />
-          <div className="absolute bottom-9 left-[58%] w-16 h-5 bg-gray-800 rounded-sm" />
-          {/* 스틱맨 (절차적 그래픽 느낌) */}
-          <motion.svg
-            width="46"
-            height="60"
-            viewBox="0 0 46 60"
-            className="absolute bottom-9 left-[16%]"
-            animate={reduce ? undefined : { y: [0, -2, 0] }}
-            transition={{ duration: 0.5, repeat: Infinity }}
-            aria-hidden
-          >
-            <circle cx="18" cy="10" r="7" fill="none" stroke="#fafafa" strokeWidth="2.5" />
-            <line x1="18" y1="17" x2="18" y2="38" stroke="#fafafa" strokeWidth="2.5" />
-            <line x1="18" y1="24" x2="36" y2="21" stroke="#fafafa" strokeWidth="2.5" />
-            <line x1="30" y1="21" x2="40" y2="21" stroke="#ef4444" strokeWidth="3.5" />
-            <line x1="18" y1="38" x2="9" y2="56" stroke="#fafafa" strokeWidth="2.5" />
-            <line x1="18" y1="38" x2="28" y2="54" stroke="#fafafa" strokeWidth="2.5" />
-          </motion.svg>
-          {/* 트레이서 */}
-          {!reduce && (
-            <motion.div
-              aria-hidden
-              className="absolute h-0.5 w-10 bg-gradient-to-r from-transparent to-red-500"
-              style={{ bottom: "74px" }}
-              animate={{ left: ["24%", "80%"], opacity: [1, 0] }}
-              transition={{ duration: 0.55, repeat: Infinity, ease: "linear" }}
-            />
-          )}
-          {/* 적 */}
-          <svg width="36" height="50" viewBox="0 0 36 50" className="absolute bottom-[56px] right-[10%]" aria-hidden>
-            <circle cx="18" cy="9" r="6" fill="none" stroke="#71717a" strokeWidth="2.5" />
-            <line x1="18" y1="15" x2="18" y2="33" stroke="#71717a" strokeWidth="2.5" />
-            <line x1="18" y1="21" x2="4" y2="19" stroke="#71717a" strokeWidth="2.5" />
-            <line x1="18" y1="33" x2="11" y2="48" stroke="#71717a" strokeWidth="2.5" />
-            <line x1="18" y1="33" x2="26" y2="47" stroke="#71717a" strokeWidth="2.5" />
-          </svg>
-        </div>
-        <p className={`mt-2 text-center text-[11px] ${dark ? "text-gray-500" : "text-gray-400"}`}>
-          그래픽 전량 코드로 생성 — 외부 아트 에셋 0개
-        </p>
-      </div>
-    </Frame>
-  );
-}
-
 export const projectVisuals: Record<string, () => ReactNode> = {
   "ai-backend": AiBackendVisual,
   payments: PaymentsVisual,
@@ -703,5 +637,4 @@ export const projectVisuals: Record<string, () => ReactNode> = {
   "hospital-queue": HospitalQueueVisual,
   goldluckwine: GoldluckwineVisual,
   petblood: PetbloodVisual,
-  frontline: FrontlineVisual,
 };

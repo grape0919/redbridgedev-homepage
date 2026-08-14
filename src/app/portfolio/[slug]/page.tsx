@@ -37,6 +37,31 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  if (!getProject(slug)) notFound();
-  return <ProjectDetail slug={slug} />;
+  const project = getProject(slug);
+  if (!project) notFound();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "홈", item: "https://redbridgedev.ai.kr/" },
+      { "@type": "ListItem", position: 2, name: "포트폴리오", item: "https://redbridgedev.ai.kr/portfolio/" },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: `https://redbridgedev.ai.kr/portfolio/${project.slug}/`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProjectDetail slug={slug} />
+    </>
+  );
 }

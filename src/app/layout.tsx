@@ -173,8 +173,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ko" data-theme="dark" suppressHydrationWarning>
       <head>
+        {/* 첫 페인트 전에 저장된 테마/언어를 적용 (FOUC 방지) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}var l=localStorage.getItem('language');if(l==='en'||(!l&&navigator.language&&!navigator.language.toLowerCase().startsWith('ko'))){document.documentElement.lang='en';}}catch(e){}})();",
+          }}
+        />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

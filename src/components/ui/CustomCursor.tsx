@@ -1,16 +1,27 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useSyncExternalStore } from "react";
 import { motion, useMotionValue } from "framer-motion";
+
+// hover 지원 여부 — 서버 스냅샷은 false라 SSR HTML과 첫 hydration이 일치하고,
+// hover 가능한 기기에서는 hydration 직후 재렌더로 커서가 나타난다.
+function subscribeHover(callback: () => void) {
+  const mql = window.matchMedia("(hover: hover)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+const getHoverSnapshot = () => window.matchMedia("(hover: hover)").matches;
+const getHoverServerSnapshot = () => false;
 
 export default function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [cursorText, setCursorText] = useState("");
-  const [isVisible] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(hover: hover)").matches;
-  });
+  const isVisible = useSyncExternalStore(
+    subscribeHover,
+    getHoverSnapshot,
+    getHoverServerSnapshot
+  );
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);

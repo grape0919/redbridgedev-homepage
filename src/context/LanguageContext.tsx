@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useSyncExternalStore, ReactNode } from "react";
 
 type Language = "ko" | "en";
 
@@ -197,23 +197,49 @@ const translations = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-function getInitialLanguage(): Language {
-  if (typeof window === "undefined") return "ko";
-  const savedLang = localStorage.getItem("language") as Language;
-  if (savedLang && (savedLang === "ko" || savedLang === "en")) {
-    return savedLang;
+// 외부 스토어: 서버는 "ko"로 본문을 렌더하고, 클라이언트는 hydration 후
+// 저장값/브라우저 언어로 전환된다 (useSyncExternalStore가 불일치 없이 처리).
+const listeners = new Set<() => void>();
+let cachedLanguage: Language | null = null;
+
+function readStoredLanguage(): Language {
+  try {
+    const savedLang = localStorage.getItem("language");
+    if (savedLang === "ko" || savedLang === "en") return savedLang;
+    return navigator.language.toLowerCase().startsWith("ko") ? "ko" : "en";
+  } catch {
+    return "ko";
   }
-  const browserLang = navigator.language.toLowerCase();
-  return browserLang.startsWith("ko") ? "ko" : "en";
+}
+
+function getSnapshot(): Language {
+  if (cachedLanguage === null) cachedLanguage = readStoredLanguage();
+  return cachedLanguage;
+}
+
+function getServerSnapshot(): Language {
+  return "ko";
+}
+
+function subscribe(callback: () => void) {
+  listeners.add(callback);
+  return () => {
+    listeners.delete(callback);
+  };
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(getInitialLanguage);
+  const language = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem("language", lang);
+    cachedLanguage = lang;
+    try {
+      localStorage.setItem("language", lang);
+    } catch {
+      // 저장 실패는 무시
+    }
     document.documentElement.lang = lang;
+    listeners.forEach((listener) => listener());
   };
 
   const t = (key: string): string => {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PortfolioIndex from "@/components/portfolio/PortfolioIndex";
+import { projects } from "@/components/portfolio/meta";
 
 export const metadata: Metadata = {
   title: "RED BRIDGE 엔지니어링 포트폴리오",
@@ -16,6 +17,37 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "홈", item: "https://redbridgedev.ai.kr/" },
+      { "@type": "ListItem", position: 2, name: "포트폴리오", item: "https://redbridgedev.ai.kr/portfolio/" },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "RED BRIDGE 엔지니어링 포트폴리오",
+    itemListElement: projects.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: p.title,
+      description: p.oneLiner,
+      url: `https://redbridgedev.ai.kr/portfolio/${p.slug}/`,
+    })),
+  },
+];
+
 export default function PortfolioPage() {
-  return <PortfolioIndex />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <PortfolioIndex />
+    </>
+  );
 }

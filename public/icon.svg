@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0a0a0a"/>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <defs>
+    <radialGradient id="g" cx="0.75" cy="0.25" r="0.9">
+      <stop offset="0" stop-color="#dc2626" stop-opacity="0.45"/>
+      <stop offset="0.6" stop-color="#dc2626" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <text x="32" y="43" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="800" fill="#ffffff" letter-spacing="-1">R<tspan fill="#ef4444">B</tspan></text>
+</svg>

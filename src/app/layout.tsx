@@ -144,10 +144,7 @@ const jsonLd = {
     addressRegion: "Jung-gu",
     addressCountry: "KR",
   },
-  sameAs: [
-    "https://github.com/redbridgedev",
-    "https://linkedin.com/company/redbridgedev",
-  ],
+  sameAs: ["https://github.com/grape0919"],
   service: [
     {
       "@type": "Service",

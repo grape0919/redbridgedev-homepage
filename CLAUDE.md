@@ -18,11 +18,12 @@ No test runner is configured.
 Firebase Hosting, static-exported site:
 
 ```bash
-npm run build
+npm run build     # prebuild가 scripts/generate-sitemap.mjs로 public/sitemap.xml을 재생성 (lastmod = git 커밋 날짜)
 firebase deploy --only hosting --project prod   # alias in .firebaserc → red-bridge-dev-homepage
+npm run indexnow  # 배포 후 실행 — sitemap의 전체 URL을 IndexNow(Bing·Naver)에 제출
 ```
 
-`firebase.json` serves `out/` with SPA rewrite (`**` → `/index.html`).
+`firebase.json` serves `out/` (`trailingSlash: true`, no SPA rewrite — unknown URLs return real 404s).
 
 ## Architecture
 

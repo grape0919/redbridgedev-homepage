@@ -3,8 +3,6 @@
 import { motion } from "framer-motion";
 import {
   GithubLogo,
-  LinkedinLogo,
-  XLogo,
   Envelope,
   ArrowUp,
 } from "@phosphor-icons/react";
@@ -46,9 +44,7 @@ const footerLinksData = {
 };
 
 const socialLinks = [
-  { name: "Github", icon: GithubLogo, href: "https://github.com" },
-  { name: "LinkedIn", icon: LinkedinLogo, href: "https://linkedin.com" },
-  { name: "Twitter", icon: XLogo, href: "https://twitter.com" },
+  { name: "Github", icon: GithubLogo, href: "https://github.com/grape0919" },
   { name: "Email", icon: Envelope, href: "mailto:contact@redbridgedev.ai.kr" },
 ];
 

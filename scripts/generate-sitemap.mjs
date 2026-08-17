@@ -21,22 +21,26 @@ function lastCommitDate(paths) {
   return new Date().toISOString().slice(0, 10);
 }
 
-const metaSource = readFileSync(
-  resolve(root, "src/components/portfolio/meta.ts"),
-  "utf8"
-);
-const slugs = [...metaSource.matchAll(/slug:\s*"([^"]+)"/g)]
-  .map((m) => m[1])
-  .filter((s, i, a) => a.indexOf(s) === i);
-
-if (slugs.length === 0) {
-  throw new Error("portfolio meta.ts에서 slug을 찾지 못했습니다");
+function slugsFrom(metaPath) {
+  const src = readFileSync(resolve(root, metaPath), "utf8");
+  const found = [...src.matchAll(/slug:\s*"([^"]+)"/g)]
+    .map((m) => m[1])
+    .filter((s, i, a) => a.indexOf(s) === i);
+  if (found.length === 0) {
+    throw new Error(`${metaPath}에서 slug을 찾지 못했습니다`);
+  }
+  return found;
 }
+
+const slugs = slugsFrom("src/components/portfolio/meta.ts");
+const guideSlugs = slugsFrom("src/components/guides/meta.ts");
 
 const portfolioSources = [
   "src/app/portfolio",
   "src/components/portfolio",
 ];
+
+const guideSources = ["src/app/guides", "src/components/guides"];
 
 const urls = [
   {
@@ -54,6 +58,18 @@ const urls = [
   ...slugs.map((slug) => ({
     loc: `${BASE}/portfolio/${slug}/`,
     lastmod: lastCommitDate(portfolioSources),
+    changefreq: "monthly",
+    priority: "0.7",
+  })),
+  {
+    loc: `${BASE}/guides/`,
+    lastmod: lastCommitDate(guideSources),
+    changefreq: "monthly",
+    priority: "0.8",
+  },
+  ...guideSlugs.map((slug) => ({
+    loc: `${BASE}/guides/${slug}/`,
+    lastmod: lastCommitDate(guideSources),
     changefreq: "monthly",
     priority: "0.7",
   })),

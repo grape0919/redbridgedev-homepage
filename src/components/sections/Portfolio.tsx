@@ -375,13 +375,13 @@ export default function Portfolio() {
                       {project.tech.slice(0, 3).map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs text-gray-300 border border-gray-700"
+                          className="px-3 py-1 bg-black/70 rounded-full text-xs text-gray-300 border border-gray-700"
                         >
                           {tech}
                         </span>
                       ))}
                       {project.tech.length > 3 && (
-                        <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-xs text-gray-500 border border-gray-700">
+                        <span className="px-3 py-1 bg-black/70 rounded-full text-xs text-gray-500 border border-gray-700">
                           +{project.tech.length - 3}
                         </span>
                       )}

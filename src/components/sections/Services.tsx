@@ -285,7 +285,7 @@ export default function Services() {
                     className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 shadow-lg`}
                   >
                     <div
-                      className={`w-full h-full rounded-2xl flex items-center justify-center backdrop-blur-xl ${
+                      className={`w-full h-full rounded-2xl flex items-center justify-center ${
                         theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                       }`}
                     >

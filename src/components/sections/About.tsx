@@ -253,7 +253,7 @@ export default function About() {
               <div className="relative">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 mb-6 shadow-[0_6px_20px_rgba(220,38,38,0.3)]">
                   <div
-                    className={`w-full h-full rounded-2xl flex items-center justify-center backdrop-blur-xl ${
+                    className={`w-full h-full rounded-2xl flex items-center justify-center ${
                       theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                     }`}
                   >

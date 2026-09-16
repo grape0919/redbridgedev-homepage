@@ -109,7 +109,7 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-xl ${
+          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
             isOpen
               ? "bg-gradient-to-br from-red-500 to-red-700 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)]"
               : theme === "dark"

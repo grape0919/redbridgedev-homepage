@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import PerfWatchdog from "@/components/ui/PerfWatchdog";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 const geistSans = Geist({
@@ -277,6 +278,7 @@ export default function RootLayout({
             </filter>
           </defs>
         </svg>
+        <PerfWatchdog />
         <ThemeProvider>
           <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>

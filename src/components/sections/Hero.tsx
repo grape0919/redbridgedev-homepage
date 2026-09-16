@@ -4,7 +4,6 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
-  useState,
   useSyncExternalStore,
 } from "react";
 import { motion } from "framer-motion";
@@ -18,6 +17,18 @@ const subscribeMediaQuery = () => () => {};
 const getDesktopSnapshot = () =>
   window.matchMedia("(min-width: 768px)").matches;
 const getServerSnapshot = () => false;
+
+// 저사양 기기 감지 — 코어 수·메모리가 적거나 모션 최소화 설정이면
+// 비디오 대신 포스터 이미지를 쓰고 스크롤 scrub 변형을 생략한다.
+const getLowPowerSnapshot = () => {
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  return (
+    (navigator.hardwareConcurrency || 8) <= 4 ||
+    (nav.deviceMemory !== undefined && nav.deviceMemory <= 4) ||
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+};
+const getLowPowerServerSnapshot = () => true;
 
 const content = {
   ko: {
@@ -55,33 +66,55 @@ const content = {
 };
 
 export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const isDesktop = useSyncExternalStore(
     subscribeMediaQuery,
     getDesktopSnapshot,
     getServerSnapshot
   );
+  const lowPower = useSyncExternalStore(
+    subscribeMediaQuery,
+    getLowPowerSnapshot,
+    getLowPowerServerSnapshot
+  );
   const { language } = useLanguage();
 
   const t = content[language];
 
+  // 마우스 글로우: setState 대신 rAF 스로틀 + 직접 스타일 갱신 —
+  // mousemove마다 Hero 전체가 리렌더되는 것을 막는다.
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: (e.clientX - rect.left - rect.width / 2) / rect.width,
-          y: (e.clientY - rect.top - rect.height / 2) / rect.height,
-        });
-      }
+    let rafId = 0;
+    let pending: MouseEvent | null = null;
+
+    const apply = () => {
+      rafId = 0;
+      const e = pending;
+      const container = containerRef.current;
+      const glow = glowRef.current;
+      if (!e || !container || !glow) return;
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+      glow.style.background = `radial-gradient(circle at ${50 + x * 20}% ${
+        50 + y * 20
+      }%, rgba(220, 38, 38, 0.18) 0%, transparent 55%)`;
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    const handleMouseMove = (e: MouseEvent) => {
+      pending = e;
+      if (!rafId) rafId = requestAnimationFrame(apply);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   useEffect(() => {
@@ -102,6 +135,7 @@ export default function Hero() {
       const video = videoRef.current;
       const contentEl = contentRef.current;
       const scrim = scrimRef.current;
+      // 저사양 모드에서는 video가 렌더되지 않으므로 scrub 타임라인 전체가 생략된다.
       if (!section || !video || !contentEl || !scrim) return;
 
       const ctx = gsap.context(() => {
@@ -138,8 +172,8 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* Background — 데스크톱은 비디오, 모바일은 포스터 이미지만 (LCP 개선) */}
-      {isDesktop ? (
+      {/* Background — 고성능 데스크톱만 비디오, 모바일·저사양은 포스터 이미지 (LCP·프레임 확보) */}
+      {isDesktop && !lowPower ? (
         <video
           ref={videoRef}
           autoPlay
@@ -170,12 +204,13 @@ export default function Hero() {
       />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(0,0,0,0.6)_80%)]" />
 
-      {/* Mouse-tracked red glow */}
+      {/* Mouse-tracked red glow (rAF로 직접 갱신 — React 리렌더 없음) */}
       <div
+        ref={glowRef}
         className="absolute inset-0 opacity-60 pointer-events-none"
         style={{
-          background: `radial-gradient(circle at ${50 + mousePosition.x * 20}% ${50 + mousePosition.y * 20
-            }%, rgba(220, 38, 38, 0.18) 0%, transparent 55%)`,
+          background:
+            "radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.18) 0%, transparent 55%)",
         }}
       />
 
@@ -280,7 +315,7 @@ export default function Hero() {
                 .getElementById("portfolio")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="px-8 py-4 rounded-full font-medium text-white border border-white/25 bg-white/5 backdrop-blur-xl hover:bg-white/10 hover:border-white/40 transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+            className="px-8 py-4 rounded-full font-medium text-white border border-white/25 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -293,7 +328,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.5 }}
-          className="mt-20 rounded-3xl p-6 sm:p-8 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 max-w-4xl mx-auto border border-white/15 bg-white/5 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+          className="mt-20 rounded-3xl p-6 sm:p-8 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4 max-w-4xl mx-auto border border-white/15 bg-white/5 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
         >
           {t.stats.map((stat, index) => (
             <div key={stat.label} className="text-center">

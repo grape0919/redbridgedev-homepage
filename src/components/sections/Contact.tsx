@@ -335,7 +335,7 @@ export default function Contact() {
                   >
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 shadow-[0_4px_16px_rgba(220,38,38,0.3)] flex-shrink-0">
                       <div
-                        className={`w-full h-full rounded-xl flex items-center justify-center backdrop-blur-xl ${
+                        className={`w-full h-full rounded-xl flex items-center justify-center ${
                           theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                         }`}
                       >

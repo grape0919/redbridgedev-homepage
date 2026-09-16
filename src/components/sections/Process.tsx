@@ -275,7 +275,7 @@ export default function Process() {
                   <div className="flex items-start justify-between mb-6">
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 shadow-[0_8px_24px_rgba(220,38,38,0.35)]">
                       <div
-                        className={`w-full h-full rounded-2xl flex items-center justify-center backdrop-blur-xl ${
+                        className={`w-full h-full rounded-2xl flex items-center justify-center ${
                           theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
                         }`}
                       >

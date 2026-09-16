@@ -438,30 +438,32 @@ body {
   border-color: rgba(220, 38, 38, 0.5);
 }
 
-/* Ambient color blobs that liquid glass refracts over */
+/* Ambient color blobs that liquid glass refracts over.
+   NOTE: blur(100px) + mix-blend-mode는 저사양 GPU에서 프레임을 크게 깎아
+   radial-gradient 마스크로 동일한 소프트 글로우를 필터 없이 만든다. */
 .glass-ambient {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(100px);
-  opacity: 0.4;
+  opacity: 0.35;
   pointer-events: none;
-  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
 }
 
 [data-theme="light"] .glass-ambient {
-  opacity: 0.35;
-  mix-blend-mode: multiply;
+  opacity: 0.3;
 }
 
+/* transform은 translate만 — scale이 섞이면 래스터 캐시가 무효화되어 매 프레임 다시 그린다 */
 @keyframes drift-slow {
   0%, 100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate(0, 0);
   }
   33% {
-    transform: translate(40px, -30px) scale(1.05);
+    transform: translate(40px, -30px);
   }
   66% {
-    transform: translate(-30px, 40px) scale(0.95);
+    transform: translate(-30px, 40px);
   }
 }
 
@@ -473,17 +475,15 @@ body {
   animation: drift-slow 22s ease-in-out infinite reverse;
 }
 
-/* Theme transition */
-* {
+/* Theme transition: 전역 `*` 셀렉터는 모든 DOM 노드에 트랜지션을 걸어
+   스타일 리캘크 비용이 페이지 전체로 번지므로 큰 표면에만 적용한다.
+   개별 인터랙션은 각 컴포넌트의 Tailwind transition-* 클래스가 담당. */
+body,
+main,
+section,
+header,
+footer {
   transition-property: background-color, border-color, color;
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
-}
-
-/* Disable transition for elements that shouldn't animate */
-.no-transition,
-canvas,
-video,
-img {
-  transition: none !important;
 }

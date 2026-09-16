@@ -18,7 +18,7 @@ const projectsData = {
       category: "Web Development",
       description:
         "대규모 트래픽을 처리하는 글로벌 이커머스 플랫폼. 마이크로서비스 아키텍처 기반으로 설계되어 높은 확장성과 안정성을 제공합니다.",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=640&h=480&fit=crop&q=60",
       tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "AWS"],
       color: "from-red-500 to-orange-500",
       metrics: { users: "100만+", performance: "99.9%", response: "< 100ms" },
@@ -29,7 +29,7 @@ const projectsData = {
       category: "App Development",
       description:
         "보안이 중요한 금융 서비스를 위한 크로스 플랫폼 모바일 앱. 생체 인증, 암호화, 실시간 거래 처리 기능을 포함합니다.",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=640&h=480&fit=crop&q=60",
       tech: ["React Native", "TypeScript", "Firebase", "Stripe"],
       color: "from-red-500 to-pink-500",
       metrics: { downloads: "50만+", rating: "4.8★", transactions: "1M+/일" },
@@ -40,7 +40,7 @@ const projectsData = {
       category: "Solution Development",
       description:
         "기업용 데이터 분석 및 시각화 플랫폼. 머신러닝 기반 예측 분석과 실시간 대시보드를 제공합니다.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&h=480&fit=crop&q=60",
       tech: ["React", "Python", "TensorFlow", "D3.js", "MongoDB"],
       color: "from-red-500 to-rose-500",
       metrics: { accuracy: "95%+", dataPoints: "10억+", realtime: "실시간" },
@@ -51,7 +51,7 @@ const projectsData = {
       category: "Web Development",
       description:
         "팀 협업을 위한 올인원 프로젝트 관리 SaaS 솔루션. 실시간 협업, 간트 차트, 자동화 워크플로우를 제공합니다.",
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=640&h=480&fit=crop&q=60",
       tech: ["Next.js", "GraphQL", "Prisma", "WebSocket"],
       color: "from-red-500 to-amber-500",
       metrics: { teams: "5,000+", tasks: "100만+/월", uptime: "99.99%" },
@@ -62,7 +62,7 @@ const projectsData = {
       category: "Solution Development",
       description:
         "의료 기기와 연동되는 헬스케어 IoT 플랫폼. 실시간 모니터링과 알림 시스템을 통해 환자 케어를 지원합니다.",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&h=480&fit=crop&q=60",
       tech: ["Flutter", "Go", "InfluxDB", "MQTT", "AWS IoT"],
       color: "from-red-500 to-violet-500",
       metrics: { devices: "10,000+", latency: "< 50ms", reliability: "99.95%" },
@@ -73,7 +73,7 @@ const projectsData = {
       category: "App Development",
       description:
         "소셜 미디어와 쇼핑을 결합한 차세대 커머스 앱. 라이브 스트리밍, 인플루언서 마케팅 기능을 포함합니다.",
-      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=640&h=480&fit=crop&q=60",
       tech: ["React Native", "Node.js", "WebRTC", "Elasticsearch"],
       color: "from-red-500 to-red-700",
       metrics: { MAU: "200만+", engagement: "45분/일", conversion: "8.5%" },
@@ -86,7 +86,7 @@ const projectsData = {
       category: "Web Development",
       description:
         "A global e-commerce platform handling large-scale traffic. Designed with microservices architecture for high scalability and reliability.",
-      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=640&h=480&fit=crop&q=60",
       tech: ["Next.js", "Node.js", "PostgreSQL", "Redis", "AWS"],
       color: "from-red-500 to-orange-500",
       metrics: { users: "1M+", performance: "99.9%", response: "< 100ms" },
@@ -97,7 +97,7 @@ const projectsData = {
       category: "App Development",
       description:
         "Cross-platform mobile app for security-critical financial services. Includes biometric authentication, encryption, and real-time transaction processing.",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=640&h=480&fit=crop&q=60",
       tech: ["React Native", "TypeScript", "Firebase", "Stripe"],
       color: "from-red-500 to-pink-500",
       metrics: { downloads: "500K+", rating: "4.8★", transactions: "1M+/day" },
@@ -108,7 +108,7 @@ const projectsData = {
       category: "Solution Development",
       description:
         "Enterprise data analytics and visualization platform. Provides machine learning-based predictive analytics and real-time dashboards.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&h=480&fit=crop&q=60",
       tech: ["React", "Python", "TensorFlow", "D3.js", "MongoDB"],
       color: "from-red-500 to-rose-500",
       metrics: { accuracy: "95%+", dataPoints: "1B+", realtime: "Real-time" },
@@ -119,7 +119,7 @@ const projectsData = {
       category: "Web Development",
       description:
         "All-in-one project management SaaS solution for team collaboration. Provides real-time collaboration, Gantt charts, and automated workflows.",
-      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=640&h=480&fit=crop&q=60",
       tech: ["Next.js", "GraphQL", "Prisma", "WebSocket"],
       color: "from-red-500 to-amber-500",
       metrics: { teams: "5,000+", tasks: "1M+/mo", uptime: "99.99%" },
@@ -130,7 +130,7 @@ const projectsData = {
       category: "Solution Development",
       description:
         "Healthcare IoT platform integrated with medical devices. Supports patient care through real-time monitoring and alert systems.",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&h=480&fit=crop&q=60",
       tech: ["Flutter", "Go", "InfluxDB", "MQTT", "AWS IoT"],
       color: "from-red-500 to-violet-500",
       metrics: { devices: "10,000+", latency: "< 50ms", reliability: "99.95%" },
@@ -141,7 +141,7 @@ const projectsData = {
       category: "App Development",
       description:
         "Next-generation commerce app combining social media and shopping. Includes live streaming and influencer marketing features.",
-      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=800&h=600&fit=crop",
+      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=640&h=480&fit=crop&q=60",
       tech: ["React Native", "Node.js", "WebRTC", "Elasticsearch"],
       color: "from-red-500 to-red-700",
       metrics: { MAU: "2M+", engagement: "45min/day", conversion: "8.5%" },

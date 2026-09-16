@@ -11,6 +11,11 @@ import { CaretDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { gsap } from "@/lib/gsap";
+import {
+  subscribePerfMode,
+  getPerfLowSnapshot,
+  getPerfLowServerSnapshot,
+} from "@/lib/perfMode";
 
 // Desktop-only gate so mobile skips the 1.7MB video (keeps LCP low on small screens).
 const subscribeMediaQuery = () => () => {};
@@ -81,6 +86,13 @@ export default function Hero() {
     getLowPowerSnapshot,
     getLowPowerServerSnapshot
   );
+  // 실측 FPS 워치독이 켠 저성능 모드 — 스펙 추정 게이트를 통과한 약한 GPU도 잡는다
+  const perfLow = useSyncExternalStore(
+    subscribePerfMode,
+    getPerfLowSnapshot,
+    getPerfLowServerSnapshot
+  );
+  const showVideo = isDesktop && !lowPower && !perfLow;
   const { language } = useLanguage();
 
   const t = content[language];
@@ -157,7 +169,7 @@ export default function Hero() {
     });
 
     return () => mm.revert();
-  }, []);
+  }, [showVideo]);
 
   const scrollToAbout = () => {
     const element = document.getElementById("about");
@@ -173,7 +185,7 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
       {/* Background — 고성능 데스크톱만 비디오, 모바일·저사양은 포스터 이미지 (LCP·프레임 확보) */}
-      {isDesktop && !lowPower ? (
+      {showVideo ? (
         <video
           ref={videoRef}
           autoPlay

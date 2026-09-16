@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useState, useCallback, useSyncExternalStore } from "react";
+import {
+  subscribePerfMode,
+  getPerfLowSnapshot,
+  getPerfLowServerSnapshot,
+} from "@/lib/perfMode";
 import { motion, useMotionValue } from "framer-motion";
 
 // hover 지원 여부 — 서버 스냅샷은 false라 SSR HTML과 첫 hydration이 일치하고,
@@ -21,6 +26,11 @@ export default function CustomCursor() {
     subscribeHover,
     getHoverSnapshot,
     getHoverServerSnapshot
+  );
+  const perfLow = useSyncExternalStore(
+    subscribePerfMode,
+    getPerfLowSnapshot,
+    getPerfLowServerSnapshot
   );
 
   const cursorX = useMotionValue(-100);
@@ -103,7 +113,7 @@ export default function CustomCursor() {
     };
   }, [moveCursor]);
 
-  if (!isVisible) return null;
+  if (!isVisible || perfLow) return null;
 
   return (
     <>

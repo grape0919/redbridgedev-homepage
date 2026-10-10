@@ -4,6 +4,89 @@ import { ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CheckCircle, ShieldCheck, MapPin, ChatText, DeviceMobile, Globe, HardDrives } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
+
+/* 일러스트 내부 문구 ko/en */
+const visualCopy = {
+  ko: {
+    aiQ: "{v.aiQ}",
+    aiA1: "지금 위치에서 도보 5분 거리에 ",
+    aiA2: "카페 3곳",
+    aiA3: "을 찾았어요. 첫 번째는…",
+    aiBadge: "{v.aiBadge}",
+    payQr: "고객 앱 QR",
+    payOk: "승인 완료",
+    payPos: "매장 POS · 영수증 출력",
+    idnChannels: ["모바일 앱", "파트너 웹", "백엔드"],
+    idnServer: "통합 본인인증 서버",
+    idnNote: "개인정보는 밖으로 나가지 않음",
+    searchQ: "강남 파스타 맛집",
+    searchT: "0.05초",
+    searchBadge: "매장 40만 곳 검색",
+    migSteps: ["변경 요청", "자동 검증", "수동 승인", "운영 반영"],
+    migBadges: ["백업 완료", "롤백 경로 확보", "불일치 감시 중"],
+    vocaTitle: "Voca Test — 3회차",
+    vocaCount: "20문항",
+    vocaAnswer: "풍부한",
+    vocaProgress: "학습 진행률 65%",
+    qAhead: "내 앞 대기",
+    qCount: "3명",
+    qEta: "예상 대기 약 15분",
+    qRefresh: "1분마다 자동 갱신",
+    qSms: "문자 알림",
+    qSmsBody: "곧 호출됩니다. 대기실로 와주세요. (약 10분 전)",
+    wineTitle: "내추럴 와인 카탈로그",
+    wineLine1: "타입 · 품종 · 생산자로 찾고,",
+    wineLine2: "운영자가 직접 채워가는 사이트",
+    petName: "🐾 초코 (말티즈 · 4살)",
+    petReport: "혈액검사 리포트",
+    petRows: ["ALT (간수치)", "BUN (신장)", "GLU (혈당)"],
+    petOk: "참고치 안",
+    petFlag: "참고치 위 · 확인 필요",
+    petNote: "혈당이 참고치보다 높게 측정됐어요. 판정은 AI가 아닌 검증된 규칙으로만 수행합니다.",
+  },
+  en: {
+    aiQ: "Recommend a quiet cafe nearby",
+    aiA1: "I found ",
+    aiA2: "3 cafes",
+    aiA3: " within a 5-minute walk. The first one is…",
+    aiBadge: "Conversations survive disconnects",
+    payQr: "Customer app QR",
+    payOk: "Approved",
+    payPos: "Store POS · receipt printed",
+    idnChannels: ["Mobile App", "Partner Web", "Backend"],
+    idnServer: "Unified Identity Server",
+    idnNote: "Personal data never leaves",
+    searchQ: "best pasta near Gangnam",
+    searchT: "0.05s",
+    searchBadge: "Searching 400K stores",
+    migSteps: ["Request", "Auto-Verify", "Approval", "Rollout"],
+    migBadges: ["Backup done", "Rollback ready", "Drift watch on"],
+    vocaTitle: "Voca Test — Round 3",
+    vocaCount: "20 items",
+    vocaAnswer: "abundant",
+    vocaProgress: "Study progress 65%",
+    qAhead: "Ahead of me",
+    qCount: "3",
+    qEta: "About 15 min wait",
+    qRefresh: "Auto-refreshes every minute",
+    qSms: "SMS Alert",
+    qSmsBody: "You're up soon — please come to the waiting room. (~10 min)",
+    wineTitle: "Natural Wine Catalog",
+    wineLine1: "Browse by type, grape, and producer —",
+    wineLine2: "a site the owner curates directly",
+    petName: "🐾 Choco (Maltese · 4y)",
+    petReport: "Blood Test Report",
+    petRows: ["ALT (liver)", "BUN (kidney)", "GLU (glucose)"],
+    petOk: "In range",
+    petFlag: "Above range · check",
+    petNote: "Glucose measured above the reference range. Verdicts come only from validated rules — never from AI.",
+  },
+};
+function useVisualCopy() {
+  const { language } = useLanguage();
+  return visualCopy[language];
+}
 
 /* 각 프로젝트 상세 상단의 히어로 비주얼 — 서비스 장면을 그린 목업형 일러스트 */
 
@@ -30,6 +113,7 @@ function Frame({ children, label }: { children: ReactNode; label: string }) {
 
 function AiBackendVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   const reduce = useReducedMotion();
   return (
@@ -42,7 +126,7 @@ function AiBackendVisual() {
           className="flex justify-end"
         >
           <div className="px-4 py-2.5 rounded-2xl rounded-br-sm bg-red-600 text-white text-sm shadow-lg shadow-red-900/20">
-            근처에 조용한 카페 추천해줘
+            {v.aiQ}
           </div>
         </motion.div>
         <motion.div
@@ -57,9 +141,9 @@ function AiBackendVisual() {
               dark ? "bg-gray-900 border-gray-800 text-gray-300" : "bg-white border-gray-200 text-gray-700 shadow-sm"
             }`}
           >
-            <span>지금 위치에서 도보 5분 거리에 </span>
-            <span className="text-red-500 font-medium">카페 3곳</span>
-            <span>을 찾았어요. 첫 번째는…</span>
+            <span>{v.aiA1}</span>
+            <span className="text-red-500 font-medium">{v.aiA2}</span>
+            <span>{v.aiA3}</span>
             {!reduce && (
               <motion.span
                 aria-hidden
@@ -83,7 +167,7 @@ function AiBackendVisual() {
             }`}
           >
             <ShieldCheck size={14} weight="duotone" className="text-red-500" />
-            연결이 끊겨도 대화는 안전하게 보존
+            {v.aiBadge}
           </span>
         </motion.div>
       </div>
@@ -95,6 +179,7 @@ function AiBackendVisual() {
 
 function PaymentsVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   const reduce = useReducedMotion();
   // 정적 의사 QR 패턴 (7x7)
@@ -126,7 +211,7 @@ function PaymentsVisual() {
             )}
           </div>
           <p className={`mt-2 text-center text-[10px] ${dark ? "text-gray-500" : "text-gray-400"}`}>
-            고객 앱 QR
+            {v.payQr}
           </p>
         </div>
 
@@ -162,8 +247,8 @@ function PaymentsVisual() {
           }`}
         >
           <CheckCircle size={36} weight="fill" className="mx-auto text-red-500" />
-          <p className={`mt-2 text-sm font-bold ${dark ? "text-white" : "text-gray-900"}`}>승인 완료</p>
-          <p className={`text-[11px] mt-0.5 ${dark ? "text-gray-500" : "text-gray-400"}`}>매장 POS · 영수증 출력</p>
+          <p className={`mt-2 text-sm font-bold ${dark ? "text-white" : "text-gray-900"}`}>{v.payOk}</p>
+          <p className={`text-[11px] mt-0.5 ${dark ? "text-gray-500" : "text-gray-400"}`}>{v.payPos}</p>
         </motion.div>
       </div>
     </Frame>
@@ -174,13 +259,11 @@ function PaymentsVisual() {
 
 function IdentityVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   const reduce = useReducedMotion();
-  const channels = [
-    { icon: DeviceMobile, label: "모바일 앱" },
-    { icon: Globe, label: "파트너 웹" },
-    { icon: HardDrives, label: "백엔드" },
-  ];
+  const channelIcons = [DeviceMobile, Globe, HardDrives];
+  const channels = channelIcons.map((icon, i) => ({ icon, label: v.idnChannels[i] }));
   return (
     <Frame label="3개 채널이 하나의 인증 서버로 수렴하는 일러스트">
       <div className="w-full max-w-md">
@@ -227,8 +310,8 @@ function IdentityVisual() {
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-600 to-red-700 flex items-center justify-center shadow-lg shadow-red-900/30">
               <ShieldCheck size={30} weight="duotone" className="text-white" />
             </div>
-            <span className={`text-xs font-bold ${dark ? "text-white" : "text-gray-900"}`}>통합 본인인증 서버</span>
-            <span className={`text-[11px] ${dark ? "text-gray-500" : "text-gray-400"}`}>개인정보는 밖으로 나가지 않음</span>
+            <span className={`text-xs font-bold ${dark ? "text-white" : "text-gray-900"}`}>{v.idnServer}</span>
+            <span className={`text-[11px] ${dark ? "text-gray-500" : "text-gray-400"}`}>{v.idnNote}</span>
           </div>
         </div>
       </div>
@@ -240,6 +323,7 @@ function IdentityVisual() {
 
 function SearchVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   const pins = [
     { left: "22%", top: "38%", d: 0.3 },
@@ -257,8 +341,8 @@ function SearchVisual() {
           }`}
         >
           <span className="text-red-500">🔍</span>
-          <span>강남 파스타 맛집</span>
-          <span className={`ml-auto text-[11px] ${dark ? "text-gray-600" : "text-gray-400"}`}>0.05초</span>
+          <span>{v.searchQ}</span>
+          <span className={`ml-auto text-[11px] ${dark ? "text-gray-600" : "text-gray-400"}`}>{v.searchT}</span>
         </div>
         {/* 지도 */}
         <div
@@ -292,7 +376,7 @@ function SearchVisual() {
               dark ? "bg-black/70 border-gray-800 text-gray-300" : "bg-white/90 border-gray-200 text-gray-600"
             }`}
           >
-            매장 40만 곳 검색
+            {v.searchBadge}
           </div>
         </div>
       </div>
@@ -304,8 +388,9 @@ function SearchVisual() {
 
 function DbMigrationVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
-  const steps = ["변경 요청", "자동 검증", "수동 승인", "운영 반영"];
+  const steps = v.migSteps;
   return (
     <Frame label="검증 게이트를 통과하는 배포 파이프라인 일러스트">
       <div className="w-full max-w-md">
@@ -350,7 +435,7 @@ function DbMigrationVisual() {
           transition={{ delay: 1.2 }}
           className="mt-6 flex justify-center gap-2"
         >
-          {["백업 완료", "롤백 경로 확보", "불일치 감시 중"].map((b) => (
+          {v.migBadges.map((b) => (
             <span
               key={b}
               className={`px-2.5 py-1 rounded-full text-[11px] border ${
@@ -370,6 +455,7 @@ function DbMigrationVisual() {
 
 function VocaroVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   return (
     <Frame label="영어 단어 시험지 목업 일러스트">
@@ -389,11 +475,11 @@ function VocaroVisual() {
           className="relative w-52 sm:w-60 rounded-lg bg-white border border-gray-200 shadow-xl p-4"
         >
           <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-            <span className="text-xs font-bold text-gray-900">Voca Test — 3회차</span>
-            <span className="text-[10px] text-red-500 font-bold">20문항</span>
+            <span className="text-xs font-bold text-gray-900">{v.vocaTitle}</span>
+            <span className="text-[10px] text-red-500 font-bold">{v.vocaCount}</span>
           </div>
           {[
-            ["1. abundant", "풍부한"],
+            ["1. abundant", v.vocaAnswer],
             ["2. deliberate", "____"],
             ["3. inevitable", "____"],
           ].map(([q, a], i) => (
@@ -411,7 +497,7 @@ function VocaroVisual() {
               transition={{ delay: 0.4, duration: 0.8 }}
             />
           </div>
-          <p className="mt-1 text-[10px] text-gray-400">학습 진행률 65%</p>
+          <p className="mt-1 text-[10px] text-gray-400">{v.vocaProgress}</p>
         </motion.div>
         {/* 포맷 칩 */}
         <motion.div
@@ -441,6 +527,7 @@ function VocaroVisual() {
 
 function HospitalQueueVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   return (
     <Frame label="병원 대기 순번 화면 목업 일러스트">
@@ -453,9 +540,9 @@ function HospitalQueueVisual() {
             dark ? "bg-gray-950 border-gray-700" : "bg-white border-gray-300 shadow-lg"
           }`}
         >
-          <p className={`text-[11px] ${dark ? "text-gray-500" : "text-gray-400"}`}>내 앞 대기</p>
-          <p className="text-4xl font-extrabold text-red-500 leading-tight">3명</p>
-          <p className={`mt-1 text-xs ${dark ? "text-gray-400" : "text-gray-500"}`}>예상 대기 약 15분</p>
+          <p className={`text-[11px] ${dark ? "text-gray-500" : "text-gray-400"}`}>{v.qAhead}</p>
+          <p className="text-4xl font-extrabold text-red-500 leading-tight">{v.qCount}</p>
+          <p className={`mt-1 text-xs ${dark ? "text-gray-400" : "text-gray-500"}`}>{v.qEta}</p>
           <div className={`mt-3 h-1.5 rounded-full overflow-hidden ${dark ? "bg-gray-800" : "bg-gray-100"}`}>
             <motion.div
               className="h-full bg-red-500"
@@ -465,7 +552,7 @@ function HospitalQueueVisual() {
               transition={{ delay: 0.4, duration: 1 }}
             />
           </div>
-          <p className={`mt-2 text-[10px] ${dark ? "text-gray-600" : "text-gray-400"}`}>1분마다 자동 갱신</p>
+          <p className={`mt-2 text-[10px] ${dark ? "text-gray-600" : "text-gray-400"}`}>{v.qRefresh}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 16 }}
@@ -477,10 +564,10 @@ function HospitalQueueVisual() {
           }`}
         >
           <span className="inline-flex items-center gap-1 text-red-500 font-bold">
-            <ChatText size={14} weight="duotone" /> 문자 알림
+            <ChatText size={14} weight="duotone" /> {v.qSms}
           </span>
           <br />
-          곧 호출됩니다. 대기실로 와주세요. (약 10분 전)
+          {v.qSmsBody}
         </motion.div>
       </div>
     </Frame>
@@ -491,6 +578,7 @@ function HospitalQueueVisual() {
 
 function GoldluckwineVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   return (
     <Frame label="와인 보틀과 글라스 일러스트">
@@ -555,9 +643,9 @@ function GoldluckwineVisual() {
           transition={{ delay: 0.9 }}
           className={`self-center text-xs leading-relaxed ${dark ? "text-gray-400" : "text-gray-500"}`}
         >
-          <p className={`font-bold text-sm mb-1 ${dark ? "text-white" : "text-gray-900"}`}>내추럴 와인 카탈로그</p>
-          <p>타입 · 품종 · 생산자로 찾고,</p>
-          <p>운영자가 직접 채워가는 사이트</p>
+          <p className={`font-bold text-sm mb-1 ${dark ? "text-white" : "text-gray-900"}`}>{v.wineTitle}</p>
+          <p>{v.wineLine1}</p>
+          <p>{v.wineLine2}</p>
         </motion.div>
       </div>
     </Frame>
@@ -568,13 +656,15 @@ function GoldluckwineVisual() {
 
 function PetbloodVisual() {
   const { theme } = useTheme();
+  const v = useVisualCopy();
   const dark = theme === "dark";
   // 참고치 범위 내 마커 위치 (%)
-  const rows = [
-    { name: "ALT (간수치)", pos: 42, flag: false },
-    { name: "BUN (신장)", pos: 55, flag: false },
-    { name: "GLU (혈당)", pos: 88, flag: true },
+  const rowDefs = [
+    { pos: 42, flag: false },
+    { pos: 55, flag: false },
+    { pos: 88, flag: true },
   ];
+  const rows = rowDefs.map((r, i) => ({ ...r, name: v.petRows[i] }));
   return (
     <Frame label="반려동물 혈액검사 리포트 목업 일러스트">
       <motion.div
@@ -586,8 +676,8 @@ function PetbloodVisual() {
         }`}
       >
         <div className="flex items-center justify-between">
-          <span className={`text-sm font-bold ${dark ? "text-white" : "text-gray-900"}`}>🐾 초코 (말티즈 · 4살)</span>
-          <span className={`text-[10px] ${dark ? "text-gray-500" : "text-gray-400"}`}>혈액검사 리포트</span>
+          <span className={`text-sm font-bold ${dark ? "text-white" : "text-gray-900"}`}>{v.petName}</span>
+          <span className={`text-[10px] ${dark ? "text-gray-500" : "text-gray-400"}`}>{v.petReport}</span>
         </div>
         <div className="mt-4 space-y-3.5">
           {rows.map((r, i) => (
@@ -595,7 +685,7 @@ function PetbloodVisual() {
               <div className="flex justify-between text-[11px] mb-1">
                 <span className={dark ? "text-gray-400" : "text-gray-500"}>{r.name}</span>
                 <span className={r.flag ? "text-red-500 font-bold" : dark ? "text-gray-500" : "text-gray-400"}>
-                  {r.flag ? "참고치 위 · 확인 필요" : "참고치 안"}
+                  {r.flag ? v.petFlag : v.petOk}
                 </span>
               </div>
               <div className={`relative h-2 rounded-full ${dark ? "bg-gray-800" : "bg-gray-100"}`}>
@@ -620,7 +710,7 @@ function PetbloodVisual() {
           ))}
         </div>
         <p className={`mt-4 text-[11px] leading-relaxed ${dark ? "text-gray-500" : "text-gray-400"}`}>
-          혈당이 참고치보다 높게 측정됐어요. 판정은 AI가 아닌 검증된 규칙으로만 수행합니다.
+          {v.petNote}
         </p>
       </motion.div>
     </Frame>

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { ArrowLeft, Moon, Sun } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 /* ---------- 포트폴리오 페이지 공용 빌딩 블록 ---------- */
 
@@ -317,6 +318,7 @@ interface ShellProps {
 
 export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
   const dark = theme === "dark";
 
   return (
@@ -343,6 +345,20 @@ export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
               className="h-8 w-auto"
             />
           </Link>
+          <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLanguage(language === "ko" ? "en" : "ko")}
+            aria-label={language === "ko" ? "Switch to English" : "한국어로 전환"}
+            className={`h-10 px-3 rounded-lg flex items-center gap-1 text-sm font-medium transition-colors ${
+              dark
+                ? "bg-gray-900 text-gray-400 hover:text-white"
+                : "bg-gray-100 text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            <span className={language === "ko" ? "text-red-500 font-bold" : ""}>KO</span>
+            <span className="opacity-40">/</span>
+            <span className={language === "en" ? "text-red-500 font-bold" : ""}>EN</span>
+          </button>
           <button
             onClick={toggleTheme}
             aria-label={dark ? "라이트 모드로 전환" : "다크 모드로 전환"}
@@ -354,6 +370,7 @@ export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
           >
             {dark ? <Sun size={20} weight="duotone" /> : <Moon size={20} weight="duotone" />}
           </button>
+          </div>
         </div>
       </header>
 
@@ -375,7 +392,12 @@ export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
 
 export function PortfolioFootnote({ confidential = true }: { confidential?: boolean }) {
   const { theme } = useTheme();
+  const { language } = useLanguage();
   const dark = theme === "dark";
+  const note =
+    language === "ko"
+      ? "기업 실서비스 프로젝트는 재직 중 수행한 개발 건으로, 코드는 사내 비공개 저장소에 있습니다. 아키텍처·수치는 보안에 문제없는 수준으로 재구성했으며, 상세 내용은 미팅에서 설명 가능합니다."
+      : "Production projects were delivered as an employee; the code lives in private company repositories. Architecture and figures have been reconstructed to a security-safe level — details can be discussed in a meeting.";
   return (
     <FadeIn>
       {confidential && (
@@ -386,9 +408,7 @@ export function PortfolioFootnote({ confidential = true }: { confidential?: bool
               : "bg-white border-gray-200 text-gray-500"
           }`}
         >
-          기업 실서비스 프로젝트는 재직 중 수행한 개발 건으로, 코드는 사내 비공개 저장소에
-          있습니다. 아키텍처·수치는 보안에 문제없는 수준으로 재구성했으며, 상세 내용은 미팅에서
-          설명 가능합니다.
+          {note}
         </div>
       )}
       <div className="mt-12 text-center">
@@ -396,7 +416,7 @@ export function PortfolioFootnote({ confidential = true }: { confidential?: bool
           href="/#contact"
           className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white font-medium hover:from-red-500 hover:to-red-600 transition-all"
         >
-          프로젝트 문의하기
+          {language === "ko" ? "프로젝트 문의하기" : "Start a Project"}
         </Link>
       </div>
     </FadeIn>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { CaretLeft, CaretRight } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { projects } from "./meta";
 import { projectContent } from "./projects-content";
 import { projectVisuals } from "./visuals";
@@ -10,6 +11,7 @@ import { FadeIn, PortfolioShell, PortfolioFootnote } from "./ui";
 
 export default function ProjectDetail({ slug }: { slug: string }) {
   const { theme } = useTheme();
+  const { language } = useLanguage();
   const dark = theme === "dark";
 
   const index = projects.findIndex((p) => p.slug === slug);
@@ -19,6 +21,11 @@ export default function ProjectDetail({ slug }: { slug: string }) {
 
   const prev = index > 0 ? projects[index - 1] : null;
   const next = index < projects.length - 1 ? projects[index + 1] : null;
+  const copy = language === "ko" ? project : project.en;
+  const labels =
+    language === "ko"
+      ? { breadcrumb: "포트폴리오", prev: "이전 프로젝트", next: "다음 프로젝트" }
+      : { breadcrumb: "Portfolio", prev: "Previous Project", next: "Next Project" };
 
   return (
     <PortfolioShell backHref="/portfolio/">
@@ -30,10 +37,10 @@ export default function ProjectDetail({ slug }: { slug: string }) {
               dark ? "text-gray-500" : "text-gray-400"
             }`}
           >
-            포트폴리오
+            {labels.breadcrumb}
           </Link>
           <span className={dark ? "text-gray-700" : "text-gray-300"}> / </span>
-          <span className={dark ? "text-gray-300" : "text-gray-600"}>{project.title}</span>
+          <span className={dark ? "text-gray-300" : "text-gray-600"}>{copy.title}</span>
         </nav>
 
         <div className="flex items-start gap-4">
@@ -46,10 +53,10 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                 dark ? "text-white" : "text-gray-900"
               }`}
             >
-              {project.title}
+              {copy.title}
             </h1>
             <p className="mt-3 text-red-500 font-medium text-sm sm:text-base">
-              &ldquo;{project.tagline}&rdquo;
+              &ldquo;{copy.tagline}&rdquo;
             </p>
           </div>
         </div>
@@ -85,14 +92,14 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                   dark ? "text-gray-500" : "text-gray-400"
                 }`}
               >
-                <CaretLeft size={12} weight="bold" /> 이전 프로젝트
+                <CaretLeft size={12} weight="bold" /> {labels.prev}
               </span>
               <p
                 className={`mt-2 text-sm font-bold group-hover:text-red-500 transition-colors ${
                   dark ? "text-white" : "text-gray-900"
                 }`}
               >
-                {prev.num} {prev.title}
+                {prev.num} {language === "ko" ? prev.title : prev.en.title}
               </p>
             </Link>
           ) : (
@@ -112,14 +119,14 @@ export default function ProjectDetail({ slug }: { slug: string }) {
                   dark ? "text-gray-500" : "text-gray-400"
                 }`}
               >
-                다음 프로젝트 <CaretRight size={12} weight="bold" />
+                {labels.next} <CaretRight size={12} weight="bold" />
               </span>
               <p
                 className={`mt-2 text-sm font-bold group-hover:text-red-500 transition-colors ${
                   dark ? "text-white" : "text-gray-900"
                 }`}
               >
-                {next.num} {next.title}
+                {next.num} {language === "ko" ? next.title : next.en.title}
               </p>
             </Link>
           )}

@@ -1,3 +1,26 @@
+# RED BRIDGE DEV
+
+홈페이지·랜딩페이지·웹서비스·MVP 개발 | Business websites, web applications and practical MVPs.
+
+스타트업 CTO 출신 9년 차 개발자가 고객과 직접 소통합니다. 프로젝트 범위에 따라 기획자·디자이너와 협업하며, 기능·제외 범위·검수 기준을 먼저 합의합니다.
+
+## 실제 개발 사례 / Selected work
+
+- [골드럭와인 — 브랜드 사이트·상품 카탈로그·CMS](https://redbridgedev.ai.kr/portfolio/goldluckwine/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 제공받은 디자인을 구현한 웹 개발 사례입니다.
+- [Vocaro — 영어 학습 SaaS](https://redbridgedev.ai.kr/portfolio/vocaro/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 자체 기획·개발·운영 서비스이며 외부 고객의 의뢰 사례가 아닙니다.
+- [병원 대기열 관리 웹시스템](https://redbridgedev.ai.kr/portfolio/hospital-queue/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 고객명·환자정보를 제외한 실제 담당 범위만 소개합니다.
+
+## 개발 상담 / Project inquiries
+
+- [개발 분야·상담 안내](https://redbridgedev.ai.kr/?utm_source=github&utm_medium=readme&utm_campaign=project_inquiry_20261022)
+- [무료 상담 준비 도구](https://redbridgedev.ai.kr/brief/?utm_source=github&utm_medium=readme&utm_campaign=project_brief_20261022): 회원가입 없이 문의 초안을 정리합니다. 자동 견적이나 상담 접수 기능은 아닙니다.
+
+기술: React · Next.js · TypeScript · Node.js · Python/FastAPI · Java/Spring Boot. 실제 비용·기간·유지보수 범위는 요구사항 확인 후 협의하며 외부 서비스 이용료는 별도입니다.
+
+이 저장소는 RED BRIDGE DEV 홈페이지의 공개 소스입니다. 아래 기존 개발 안내는 참고용으로 보존했습니다.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

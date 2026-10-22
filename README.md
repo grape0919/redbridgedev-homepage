@@ -6,7 +6,7 @@
 
 ## 실제 개발 사례 / Selected work
 
-- [골드럭와인 — 브랜드 사이트·상품 카탈로그·CMS](https://redbridgedev.ai.kr/portfolio/goldluckwine/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 제공받은 디자인을 구현한 웹 개발 사례입니다.
+- [와인수입사 — 브랜드 사이트·상품 카탈로그·CMS](https://redbridgedev.ai.kr/portfolio/wine-importer/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 제공받은 디자인 구현·상품 카탈로그·관리자 CMS 개발 사례입니다. 고객사 요청에 따라 익명화했으며, 링크는 고객 운영 사이트가 아닌 공개 개발 사례 페이지입니다.
 - [Vocaro — 영어 학습 SaaS](https://redbridgedev.ai.kr/portfolio/vocaro/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 자체 기획·개발·운영 서비스이며 외부 고객의 의뢰 사례가 아닙니다.
 - [병원 대기열 관리 웹시스템](https://redbridgedev.ai.kr/portfolio/hospital-queue/?utm_source=github&utm_medium=readme&utm_campaign=case_studies_20261022): 고객명·환자정보를 제외한 실제 담당 범위만 소개합니다.
 

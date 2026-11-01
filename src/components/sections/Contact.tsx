@@ -34,7 +34,7 @@ const contactInfoData = {
       icon: MapPin,
       label: "주소",
       value: "서울특별시 중구",
-      href: "#",
+      href: "",
     },
   ],
   en: [
@@ -54,7 +54,7 @@ const contactInfoData = {
       icon: MapPin,
       label: "Address",
       value: "Jung-gu, Seoul, Korea",
-      href: "#",
+      href: "",
     },
   ],
 };
@@ -72,7 +72,7 @@ const content = {
     businessHours: "운영 시간",
     weekdays: "평일",
     lunchTime: "점심시간",
-    urgentNotice: "* 긴급 문의는 카카오톡 채널로 연락주세요",
+    urgentNotice: "* 긴급 문의는 실시간 채팅을 이용해주세요",
     form: {
       name: "이름",
       email: "이메일",
@@ -131,7 +131,7 @@ const content = {
     businessHours: "Business Hours",
     weekdays: "Weekdays",
     lunchTime: "Lunch Break",
-    urgentNotice: "* For urgent inquiries, please contact via KakaoTalk",
+    urgentNotice: "* For urgent inquiries, please use live chat",
     form: {
       name: "Name",
       email: "Email",
@@ -228,21 +228,30 @@ export default function Contact() {
       : language === "ko" ? "미정" : "TBD";
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          projectType: projectTypeLabel,
-          budget: budgetLabel,
-          message: formData.message,
-          language,
-        }),
-      });
+      // 정적 export 사이트라 자체 API 라우트가 없음 — FormSubmit(이메일 전달 서비스)로 전송.
+      // 최초 1회, 수신함에 도착하는 활성화 메일을 승인해야 이후 제출이 전달된다.
+      const response = await fetch(
+        "https://formsubmit.co/ajax/contact@redbridgedev.ai.kr",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            _subject: `[RED BRIDGE DEV 문의] ${formData.name} — ${projectTypeLabel}`,
+            _template: "table",
+            _captcha: "false",
+            이름: formData.name,
+            이메일: formData.email,
+            회사명: formData.company || "-",
+            프로젝트유형: projectTypeLabel,
+            예상예산: budgetLabel,
+            내용: formData.message,
+            언어: language,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
@@ -328,9 +337,10 @@ export default function Contact() {
               <h3 className={`text-2xl font-bold mb-6 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{t.contactTitle}</h3>
               <div className="space-y-6">
                 {contactInfo.map((info) => (
+                  // 주소처럼 연결할 곳이 없는 항목은 링크 대신 일반 카드로 렌더
                   <a
                     key={info.label}
-                    href={info.href}
+                    {...(info.href ? { href: info.href } : { role: "presentation" })}
                     className="glass-panel flex items-center gap-4 group p-4 rounded-2xl"
                   >
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 shadow-[0_4px_16px_rgba(220,38,38,0.3)] flex-shrink-0">

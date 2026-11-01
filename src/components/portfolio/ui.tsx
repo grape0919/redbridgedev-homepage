@@ -314,9 +314,11 @@ interface ShellProps {
   children: ReactNode;
   /** 상단 바 뒤로가기 목적지 (기본: 홈) */
   backHref?: string;
+  /** 헤더 중앙 내비 링크 (가이드 등 다른 서브페이지에서 셸을 공유할 때 사용) */
+  navLinks?: { href: string; label: string }[];
 }
 
-export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
+export function PortfolioShell({ children, backHref = "/", navLinks }: ShellProps) {
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
   const dark = theme === "dark";
@@ -345,6 +347,21 @@ export function PortfolioShell({ children, backHref = "/" }: ShellProps) {
               className="h-8 w-auto"
             />
           </Link>
+          {navLinks && (
+            <nav className="hidden sm:flex items-center gap-6 text-sm">
+              {navLinks.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`transition-colors hover:text-red-500 ${
+                    dark ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+          )}
           <div className="flex items-center gap-2">
           <button
             onClick={() => setLanguage(language === "ko" ? "en" : "ko")}

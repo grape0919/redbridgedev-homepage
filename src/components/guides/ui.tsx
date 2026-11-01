@@ -1,47 +1,10 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { GuideChrome } from "./chrome";
 
-// 서버 컴포넌트 셸 — 테마는 globals.css의 CSS 변수(data-theme)로 자동 대응한다.
+// 셸 — 포트폴리오와 동일한 헤더/토글을 공유하는 클라이언트 크롬으로 감싼다.
+// 본문(children)은 서버 컴포넌트로 렌더되어 SEO용 정적 HTML에 그대로 포함된다.
 export function GuideShell({ children }: { children: ReactNode }) {
-  return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <header className="border-b border-[var(--border)]">
-        <div className="mx-auto max-w-3xl px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="font-bold tracking-tight hover:text-red-500 transition-colors">
-            RED BRIDGE <span className="text-red-600">DEV</span>
-          </Link>
-          <nav className="text-sm flex gap-5">
-            <Link href="/guides/" className="text-[var(--text-secondary)] hover:text-red-500 transition-colors">
-              가이드
-            </Link>
-            <Link href="/portfolio/" className="text-[var(--text-secondary)] hover:text-red-500 transition-colors">
-              포트폴리오
-            </Link>
-            <Link href="/#contact" className="text-[var(--text-secondary)] hover:text-red-500 transition-colors">
-              문의
-            </Link>
-          </nav>
-        </div>
-      </header>
-      <main className="mx-auto max-w-3xl px-6 py-12">{children}</main>
-      <footer className="border-t border-[var(--border)] mt-16">
-        <div className="mx-auto max-w-3xl px-6 py-10 text-center">
-          <p className="text-lg font-semibold">
-            프로젝트를 구상 중이신가요?
-          </p>
-          <p className="mt-2 text-sm text-[var(--text-secondary)]">
-            RED BRIDGE DEV가 견적 산정부터 출시까지 함께합니다.
-          </p>
-          <Link
-            href="/#contact"
-            className="mt-5 inline-block rounded-full bg-red-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition-colors"
-          >
-            무료 상담 문의하기
-          </Link>
-        </div>
-      </footer>
-    </div>
-  );
+  return <GuideChrome>{children}</GuideChrome>;
 }
 
 export function H2({ children }: { children: ReactNode }) {

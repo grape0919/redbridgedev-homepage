@@ -14,18 +14,20 @@ const navItems = {
     { name: "홈", href: "#hero" },
     { name: "소개", href: "#about" },
     { name: "서비스", href: "#services" },
-    { name: "프로세스", href: "#process" },
     { name: "포트폴리오", href: "#portfolio" },
+    { name: "프로세스", href: "#process" },
     { name: "FAQ", href: "#faq" },
+    { name: "가이드", href: "/guides/" },
     { name: "문의", href: "#contact" },
   ],
   en: [
     { name: "Home", href: "#hero" },
     { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
-    { name: "Process", href: "#process" },
     { name: "Portfolio", href: "#portfolio" },
+    { name: "Process", href: "#process" },
     { name: "FAQ", href: "#faq" },
+    { name: "Guides", href: "/guides/" },
     { name: "Contact", href: "#contact" },
   ],
 };
@@ -62,9 +64,14 @@ export default function Navigation() {
   }, [items]);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    // 섹션 앵커는 스크롤, 그 외(/guides/ 등)는 라우트 이동
+    if (href.startsWith("#")) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      window.location.href = href;
     }
     setIsMobileMenuOpen(false);
   };

@@ -46,10 +46,10 @@ const content = {
     ctaSecondary: "포트폴리오 보기",
     scroll: "Scroll",
     stats: [
-      { value: "10+", label: "경력" },
-      { value: "50+", label: "프로젝트" },
-      { value: "100%", label: "고객 만족도" },
-      { value: "24/7", label: "지원 가능" },
+      { value: "10+", label: "년 개발 경력" },
+      { value: "9개", label: "구축·운영 프로젝트" },
+      { value: "3개", label: "운영 중인 서비스" },
+      { value: "24h", label: "문의 회신" },
     ],
   },
   en: {
@@ -62,10 +62,10 @@ const content = {
     ctaSecondary: "View Portfolio",
     scroll: "Scroll",
     stats: [
-      { value: "10+", label: "Years Experience" },
-      { value: "50+", label: "Projects Completed" },
-      { value: "100%", label: "Client Satisfaction" },
-      { value: "24/7", label: "Support Available" },
+      { value: "10+", label: "Years of Experience" },
+      { value: "9", label: "Projects Built & Run" },
+      { value: "3", label: "Services in Production" },
+      { value: "24h", label: "Inquiry Response" },
     ],
   },
 };

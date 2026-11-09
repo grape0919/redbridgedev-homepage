@@ -32,12 +32,12 @@ Single-page marketing site for RED BRIDGE DEV (웹/앱/솔루션 외주 개발).
 ### Page composition
 
 [src/app/page.tsx](src/app/page.tsx) is a single `"use client"` component that stacks section components in order:
-`Hero → About → Services → Process → Portfolio → FAQ → Contact → Footer`, with `Navigation`, `CustomCursor`, and `ChannelTalk` as overlays. All sections live in [src/components/sections/](src/components/sections/) and are self-contained — each owns its copy (both `ko` and `en` objects inline) and its animation logic. There is no CMS or remote content source.
+`Hero → Services → Portfolio → Process → About(왜 RED BRIDGE) → FAQ → Contact → Footer`, with `Navigation` and `ChannelTalk` as overlays. `scripts/check-landing.mjs`(prebuild) enforces this order and the nav anchors — update `EXPECTED_ORDER` there when reordering. All sections live in [src/components/sections/](src/components/sections/) and are self-contained — each owns its copy (both `ko` and `en` objects inline) and its animation logic. There is no CMS or remote content source.
 
 ### i18n + theme
 
 - [src/context/LanguageContext.tsx](src/context/LanguageContext.tsx): `ko`/`en` via `useLanguage()`. Persists to `localStorage.language`, initial value from `navigator.language`. Also exposes a `t(key)` helper with a flat dictionary, but **most sections bypass `t()` and inline their own `content = { ko, en }` object** — keep this pattern when editing copy.
-- [src/context/ThemeContext.tsx](src/context/ThemeContext.tsx): `dark`/`light` via `useTheme()`. Persists to `localStorage.theme`, applies `data-theme` on `<html>`. Provider returns `null` until mounted (lazy init from `typeof window`) to avoid SSR hydration mismatch.
+- [src/context/ThemeContext.tsx](src/context/ThemeContext.tsx): `dark`/`light` via `useTheme()`. Persists to `localStorage.theme`, applies `data-theme` on `<html>`. Both providers use `useSyncExternalStore` (server snapshot `dark`/`ko`) so the full page prerenders for SEO; a head inline script applies the stored theme/lang before first paint.
 
 Both providers wrap the app in [src/app/layout.tsx](src/app/layout.tsx). Every section branches UI on `theme === "dark"` with conditional Tailwind classes — no CSS-variable-driven theming beyond `globals.css`.
 
@@ -45,7 +45,7 @@ Both providers wrap the app in [src/app/layout.tsx](src/app/layout.tsx). Every s
 
 - Framer Motion drives all section transitions (`useInView` + `motion.div`). Standard pattern: `initial={{opacity:0, y:50}}` + `animate={isInView ? {...} : {}}`.
 - [src/components/three/Bridge3D.tsx](src/components/three/Bridge3D.tsx) renders a wireframe bridge in the Hero via `@react-three/fiber`. It is **dynamically imported with `ssr: false`** and Hero gates rendering via `useSyncExternalStore` on `matchMedia("(max-width: 768px)")`, `prefers-reduced-motion`, and `navigator.hardwareConcurrency < 4` — do not render Bridge3D unconditionally.
-- [src/components/ui/CustomCursor.tsx](src/components/ui/CustomCursor.tsx) is gated by `matchMedia("(hover: hover)")` via a lazy `useState` initializer (avoid reintroducing `setState`-in-effect — ESLint rule `react-hooks/set-state-in-effect` is enforced).
+- The custom cursor was removed (2026-11): hiding the OS cursor and drawing it on the main thread made pointer movement stutter on low-end PCs. Do not reintroduce it. (ESLint rule `react-hooks/set-state-in-effect` is enforced — prefer `useSyncExternalStore` for browser-state reads.)
 
 ### Contact form → email
 

@@ -431,7 +431,7 @@ export function PortfolioFootnote({ confidential = true }: { confidential?: bool
       <div className="mt-12 text-center">
         <Link
           href="/#contact"
-          className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white font-medium hover:from-red-500 hover:to-red-600 transition-all"
+          className="btn-primary px-8 py-4"
         >
           {language === "ko" ? "프로젝트 문의하기" : "Start a Project"}
         </Link>

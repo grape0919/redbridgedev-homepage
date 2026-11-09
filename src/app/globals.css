@@ -520,3 +520,50 @@ footer {
     display: block !important;
   }
 }
+
+
+/* ===== 버튼 2종 — 사이트 전체 공용 ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  color: #fff;
+  background-image: linear-gradient(to right, #dc2626, #b91c1c);
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.35);
+  transition: background-image 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.btn-primary:hover {
+  background-image: linear-gradient(to right, #ef4444, #dc2626);
+  box-shadow: 0 10px 40px rgba(220, 38, 38, 0.5);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* 저성능 모드: 글래스 패널의 backdrop-filter(블러·SVG 굴절)는 가장 비싼 효과라 끈다 */
+[data-perf="low"] .glass-panel,
+[data-perf="low"] .glass-panel-strong {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(24, 24, 27, 0.85);
+}
+[data-theme="light"][data-perf="low"] .glass-panel,
+[data-theme="light"][data-perf="low"] .glass-panel-strong {
+  background: rgba(255, 255, 255, 0.9);
+}

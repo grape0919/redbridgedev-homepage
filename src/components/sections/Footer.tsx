@@ -19,7 +19,7 @@ const footerLinksData = {
       { name: "기술 컨설팅", href: "#contact" },
     ],
     company: [
-      { name: "회사 소개", href: "#about" },
+      { name: "왜 RED BRIDGE", href: "#about" },
       { name: "포트폴리오", href: "#portfolio" },
       { name: "엔지니어 포트폴리오", href: "/portfolio/" },
       { name: "외주 개발 가이드", href: "/guides/" },
@@ -34,7 +34,7 @@ const footerLinksData = {
       { name: "Technical Consulting", href: "#contact" },
     ],
     company: [
-      { name: "About Us", href: "#about" },
+      { name: "Why RED BRIDGE", href: "#about" },
       { name: "Portfolio", href: "#portfolio" },
       { name: "Engineer Portfolio", href: "/portfolio/" },
       { name: "Dev Guides", href: "/guides/" },

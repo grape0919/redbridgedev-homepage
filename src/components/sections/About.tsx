@@ -7,126 +7,89 @@ import {
   RbdValueStability,
   RbdValueScalability,
   RbdValueCollaboration,
-  RbdValueGoal,
-  RbdValueExpertise,
-  RbdValueProcess,
 } from "@/components/icons/rbd-icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeader from "@/components/ui/SectionHeader";
+import IconTile from "@/components/ui/IconTile";
+
 
 
 const valuesData = {
   ko: [
     {
       icon: RbdValueStability,
-      title: "안정성",
+      title: "끝까지 책임지는 오너십",
       description:
-        "대기업과 중견기업에서 쌓은 풍부한 경험을 바탕으로, 모든 프로젝트에 최고의 품질과 안정성을 보장합니다.",
+        "설계부터 배포·운영 알림·런북까지 한 팀이 한 사이클을 완결합니다. 납품하고 사라지지 않습니다.",
     },
     {
       icon: RbdValueScalability,
-      title: "확장성",
+      title: "운영 중인 서비스로 증명",
       description:
-        "트래픽 증가와 기능 추가에 유연하게 대응하는 아키텍처 설계로, 서비스 성장 단계마다 흔들림 없이 확장합니다.",
+        "결제·인증·검색·AI를 실서비스에서 직접 운영해 봤습니다. 포트폴리오는 데모가 아니라 지금 돌아가는 서비스입니다.",
     },
     {
       icon: RbdValueCollaboration,
-      title: "협업",
+      title: "실패하는 경로부터 설계",
       description:
-        "'다리'라는 이름처럼 고객과 기술을 안전하고 튼튼하게 연결합니다. 소통을 최우선으로 생각합니다.",
-    },
-    {
-      icon: RbdValueGoal,
-      title: "목표 지향",
-      description:
-        "고객의 비즈니스 목표를 깊이 이해하고, 그 목표 달성을 위한 최적의 기술 솔루션을 제안합니다.",
-    },
-    {
-      icon: RbdValueExpertise,
-      title: "기술 전문성",
-      description:
-        "최신 기술 트렌드를 지속적으로 학습하고 적용하여, 항상 최선의 기술적 선택을 제공합니다.",
-    },
-    {
-      icon: RbdValueProcess,
-      title: "체계적 프로세스",
-      description:
-        "체계적인 개발 프로세스와 철저한 품질 관리로 프로젝트의 성공을 보장합니다.",
+        "망취소, 드리프트 감시, 롤백 런북처럼 '잘못됐을 때'를 먼저 설계합니다. 서비스를 세우지 않고 갈아끼우는 데 익숙합니다.",
     },
   ],
   en: [
     {
       icon: RbdValueStability,
-      title: "Stability",
+      title: "Ownership to the End",
       description:
-        "Based on extensive experience with large and mid-sized companies, we guarantee the highest quality and stability in every project.",
+        "One team closes the full loop — design, deployment, ops alerts, runbooks. We don't deliver and disappear.",
     },
     {
       icon: RbdValueScalability,
-      title: "Scalability",
+      title: "Proven in Production",
       description:
-        "Architectures designed to handle traffic growth and new features gracefully, so your service scales without friction.",
+        "Payments, identity, search, and AI — we've run them in live services. Our portfolio isn't demos; it's services running today.",
     },
     {
       icon: RbdValueCollaboration,
-      title: "Collaboration",
+      title: "Failure Paths Designed First",
       description:
-        "Like our name 'bridge', we safely connect customers and technology. Communication is our top priority.",
-    },
-    {
-      icon: RbdValueGoal,
-      title: "Goal-Oriented",
-      description:
-        "We deeply understand our clients' business goals and propose optimal technology solutions to achieve them.",
-    },
-    {
-      icon: RbdValueExpertise,
-      title: "Technical Expertise",
-      description:
-        "We continuously learn and apply the latest technology trends to always provide the best technical choices.",
-    },
-    {
-      icon: RbdValueProcess,
-      title: "Systematic Process",
-      description:
-        "We ensure project success through a systematic development process and thorough quality management.",
+        "Net-cancel workers, drift monitoring, rollback runbooks — we design for when things go wrong, and swap parts without stopping the service.",
     },
   ],
 };
 
+// 포트폴리오에서 실제로 사용한 스택만 — 과장 없이
 const techStack = [
-  { name: "React", category: "Frontend" },
   { name: "Next.js", category: "Frontend" },
+  { name: "React", category: "Frontend" },
   { name: "TypeScript", category: "Language" },
-  { name: "Node.js", category: "Backend" },
   { name: "Python", category: "Backend" },
   { name: "FastAPI", category: "Backend" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "MongoDB", category: "Database" },
-  { name: "AWS", category: "Cloud" },
-  { name: "Docker", category: "DevOps" },
-  { name: "Kubernetes", category: "DevOps" },
-  { name: "React Native", category: "Mobile" },
   { name: "Flutter", category: "Mobile" },
-  { name: "GraphQL", category: "API" },
+  { name: "PostgreSQL", category: "Database" },
+  { name: "MySQL", category: "Database" },
+  { name: "Supabase", category: "Backend" },
+  { name: "OpenSearch", category: "Search" },
+  { name: "Docker", category: "DevOps" },
+  { name: "GitHub Actions", category: "DevOps" },
 ];
 
 const content = {
   ko: {
-    subtitle: "About Us",
-    title: "우리의",
-    titleHighlight: "개발 철학",
+    subtitle: "Why RED BRIDGE",
+    title: "왜",
+    titleHighlight: "RED BRIDGE인가",
     description:
-      "RED BRIDGE DEV(레드 브릿지 데브)는 '다리'라는 이름처럼 고객과 기술을 안전하고 튼튼하게 연결합니다. 우리는 단순히 코드를 작성하는 것이 아니라, 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+      "외주는 결국 '누가 끝까지 책임지느냐'의 문제입니다. 설계부터 배포·운영까지 한 팀이 책임지고, 지금 운영 중인 실제 서비스로 증명합니다.",
     techSubtitle: "Tech Stack",
     techTitle: "기술 스택",
   },
   en: {
-    subtitle: "About Us",
-    title: "Our",
-    titleHighlight: "Development Philosophy",
+    subtitle: "Why RED BRIDGE",
+    title: "Why",
+    titleHighlight: "RED BRIDGE",
     description:
-      "RED BRIDGE DEV, as the name 'bridge' suggests, safely and securely connects customers and technology. We don't just write code, we build sustainable and scalable solutions.",
+      "Outsourcing comes down to who owns the outcome. One team owns design through deployment and operations — proven by services running in production today.",
     techSubtitle: "Tech Stack",
     techTitle: "Technology Stack",
   },
@@ -193,18 +156,6 @@ export default function About() {
             theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
         />
-        <div
-          className={`glass-ambient animate-drift-reverse bottom-[5%] right-[10%] w-[520px] h-[520px] ${
-            theme === "dark" ? "bg-orange-600" : "bg-amber-300"
-          }`}
-          style={{ animationDelay: "-7s" }}
-        />
-        <div
-          className={`glass-ambient animate-drift top-[50%] right-[35%] w-[380px] h-[380px] ${
-            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
-          }`}
-          style={{ animationDelay: "-12s" }}
-        />
       </div>
 
       <div
@@ -218,23 +169,12 @@ export default function About() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2
-            className={`mt-4 text-4xl sm:text-5xl font-bold ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
-          >
-            {t.title} <span className="text-red-500">{t.titleHighlight}</span>
-          </h2>
-          <p
-            className={`mt-6 text-xl max-w-3xl mx-auto leading-relaxed ${
-              theme === "dark" ? "text-gray-400" : "text-gray-600"
-            }`}
-          >
-            {t.description}
-          </p>
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </motion.div>
 
         {/* Values grid */}
@@ -251,15 +191,9 @@ export default function About() {
               <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br from-red-500 to-red-700 blur-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none" />
 
               <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 p-0.5 mb-6 shadow-[0_6px_20px_rgba(220,38,38,0.3)]">
-                  <div
-                    className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                      theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
-                    }`}
-                  >
-                    <value.icon className="w-8 h-8 text-red-500/85" />
-                  </div>
-                </div>
+                <IconTile className="mb-6">
+                  <value.icon className="w-8 h-8" />
+                </IconTile>
                 <h3
                   className={`text-xl font-semibold mb-3 ${
                     theme === "dark" ? "text-white" : "text-gray-900"

@@ -14,6 +14,8 @@ import {
 } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeader from "@/components/ui/SectionHeader";
+
 import { openChannelTalk } from "@/components/ui/ChannelTalk";
 
 const contactInfoData = {
@@ -287,9 +289,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className={`relative py-32 overflow-hidden ${
-      theme === "dark"
-        ? "bg-gradient-to-b from-black to-gray-950"
-        : "bg-gradient-to-b from-gray-50 to-white"
+      theme === "dark" ? "bg-black" : "bg-gray-50"
     }`}>
       {/* Ambient liquid-glass refraction source */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -297,12 +297,6 @@ export default function Contact() {
           className={`glass-ambient animate-drift top-[5%] left-[10%] w-[560px] h-[560px] ${
             theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
-        />
-        <div
-          className={`glass-ambient animate-drift-reverse bottom-[5%] right-[10%] w-[560px] h-[560px] ${
-            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
-          }`}
-          style={{ animationDelay: "-8s" }}
         />
       </div>
 
@@ -314,15 +308,12 @@ export default function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2 className={`mt-4 text-4xl sm:text-5xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
-            {t.title} <span className="text-red-500">{t.titleHighlight}</span>
-          </h2>
-          <p className={`mt-6 text-xl max-w-3xl mx-auto ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-            {t.description}
-          </p>
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-12">

@@ -58,7 +58,7 @@ function GuideFooterCta() {
       <p className="mt-2 text-sm text-[var(--text-secondary)]">{t.sub}</p>
       <Link
         href="/#contact"
-        className="mt-5 inline-block rounded-full bg-gradient-to-r from-red-600 to-red-700 px-6 py-2.5 text-sm font-semibold text-white hover:from-red-500 hover:to-red-600 transition-all"
+        className="btn-primary mt-5 px-6 py-2.5 text-sm"
       >
         {t.cta}
       </Link>

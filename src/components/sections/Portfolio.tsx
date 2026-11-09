@@ -17,6 +17,9 @@ import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { projects } from "@/components/portfolio/meta";
+import SectionHeader from "@/components/ui/SectionHeader";
+import IconTile from "@/components/ui/IconTile";
+
 
 // 메인 페이지에 노출할 대표 프로젝트 — 데이터는 /portfolio 와 동일한 meta.ts 단일 소스
 const featured: {
@@ -35,7 +38,8 @@ const featured: {
 const content = {
   ko: {
     subtitle: "Our Work",
-    title: "포트폴리오",
+    title: "운영 중인",
+    titleHighlight: "포트폴리오",
     description: "직접 설계하고 구축해 운영까지 책임진 실제 프로젝트들입니다",
     viewMore: "자세히 보기",
     viewAll: "전체 포트폴리오 보기",
@@ -45,7 +49,8 @@ const content = {
   },
   en: {
     subtitle: "Our Work",
-    title: "Portfolio",
+    title: "Portfolio in",
+    titleHighlight: "Production",
     description: "Real projects we designed, built, and operate in production",
     viewMore: "View Details",
     viewAll: "View Full Portfolio",
@@ -125,12 +130,6 @@ export default function Portfolio() {
             theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
         />
-        <div
-          className={`glass-ambient animate-drift-reverse bottom-[5%] left-[-8%] w-[640px] h-[640px] ${
-            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
-          }`}
-          style={{ animationDelay: "-9s" }}
-        />
       </div>
 
       {/* Parallax layer 2 — mid (grid pattern) */}
@@ -147,15 +146,12 @@ export default function Portfolio() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2 className={`mt-4 text-4xl sm:text-5xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
-            {t.title}
-          </h2>
-          <p className={`mt-6 text-xl max-w-3xl mx-auto ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-            {t.description}
-          </p>
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </motion.div>
 
         {/* Featured project cards */}
@@ -174,24 +170,18 @@ export default function Portfolio() {
               >
                 <Link
                   href={`/portfolio/${f.slug}/`}
-                  className={`group relative flex flex-col h-full min-h-[300px] rounded-2xl overflow-hidden border p-7 transition-all duration-300 ${
-                    theme === "dark"
-                      ? "bg-gray-900/60 border-gray-800 hover:border-red-900/60"
-                      : "bg-white border-gray-200 hover:border-red-300 shadow-sm hover:shadow-lg"
-                  }`}
+                  className="glass-panel group relative flex flex-col h-full min-h-[300px] rounded-3xl overflow-hidden p-8 transition-all duration-300 hover:border-red-500/40"
                 >
                   {/* Corner gradient accent */}
                   <div
                     aria-hidden
-                    className={`absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gradient-to-br ${f.gradient} opacity-10 group-hover:opacity-25 transition-opacity duration-500`}
+                    className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${f.gradient} blur-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none`}
                   />
 
                   <div className="flex items-center justify-between">
-                    <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${f.gradient} text-white shadow-lg shadow-red-900/20`}
-                    >
-                      <Icon size={24} weight="duotone" />
-                    </div>
+                    <IconTile gradient={f.gradient}>
+                      <Icon size={26} weight="duotone" />
+                    </IconTile>
                     {liveSlugs.has(f.slug) && (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-red-600/10 text-red-500">
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
@@ -241,7 +231,7 @@ export default function Portfolio() {
         >
           <Link
             href="/portfolio/"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white font-medium hover:from-red-500 hover:to-red-600 transition-all"
+            className="btn-primary px-8 py-4"
           >
             {t.viewAll}
             <ArrowRight size={18} weight="bold" />

@@ -14,6 +14,8 @@ import {
 } from "@/components/icons/rbd-icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeader from "@/components/ui/SectionHeader";
+
 
 
 const processData = {
@@ -218,7 +220,7 @@ export default function Process() {
       id="process"
       ref={sectionRef}
       className={`relative overflow-hidden ${
-        theme === "dark" ? "bg-black" : "bg-white"
+        theme === "dark" ? "bg-gray-950" : "bg-white"
       }`}
     >
       {/* Ambient background (liquid glass refraction source) */}
@@ -228,36 +230,19 @@ export default function Process() {
             theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
         />
-        <div
-          className={`glass-ambient animate-drift-reverse bottom-[10%] right-[5%] w-[540px] h-[540px] ${
-            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
-          }`}
-          style={{ animationDelay: "-8s" }}
-        />
         <div className="absolute inset-0 grid-pattern opacity-20" />
       </div>
 
       {/* Desktop: pinned horizontal scrub */}
       <div className="process-desktop hidden lg:flex relative h-screen w-full flex-col">
         {/* Header */}
-        <div className="relative max-w-7xl mx-auto px-8 pt-24 text-center w-full">
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2
-            className={`mt-4 text-4xl sm:text-5xl font-bold ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
-          >
-            {t.title} <span className="text-red-500">{t.titleHighlight}</span>
-          </h2>
-          <p
-            className={`mt-4 text-lg ${
-              theme === "dark" ? "text-gray-400" : "text-gray-600"
-            }`}
-          >
-            {t.description}
-          </p>
+        <div className="relative max-w-7xl mx-auto px-8 pt-24 w-full">
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </div>
 
         {/* Horizontal track */}
@@ -429,23 +414,12 @@ export default function Process() {
           transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2
-            className={`mt-4 text-4xl font-bold ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
-          >
-            {t.title} <span className="text-red-500">{t.titleHighlight}</span>
-          </h2>
-          <p
-            className={`mt-4 text-lg ${
-              theme === "dark" ? "text-gray-400" : "text-gray-600"
-            }`}
-          >
-            {t.description}
-          </p>
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </motion.div>
 
         <div className="space-y-5">

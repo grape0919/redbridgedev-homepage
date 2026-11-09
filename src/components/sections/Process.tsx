@@ -238,7 +238,7 @@ export default function Process() {
       </div>
 
       {/* Desktop: pinned horizontal scrub */}
-      <div className="hidden lg:flex relative h-screen w-full flex-col">
+      <div className="process-desktop hidden lg:flex relative h-screen w-full flex-col">
         {/* Header */}
         <div className="relative max-w-7xl mx-auto px-8 pt-24 text-center w-full">
           <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
@@ -421,7 +421,7 @@ export default function Process() {
       {/* Mobile / tablet / reduced-motion fallback */}
       <div
         ref={mobileRef}
-        className="lg:hidden relative max-w-3xl mx-auto px-4 sm:px-6 py-24"
+        className="process-fallback lg:hidden relative max-w-3xl mx-auto px-4 sm:px-6 py-24"
       >
         <motion.div
           initial={{ opacity: 0, y: 40 }}

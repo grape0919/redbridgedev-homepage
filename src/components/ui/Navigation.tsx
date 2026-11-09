@@ -11,8 +11,6 @@ import LanguageToggle from "./LanguageToggle";
 
 const navItems = {
   ko: [
-    { name: "홈", href: "#hero" },
-    { name: "소개", href: "#about" },
     { name: "서비스", href: "#services" },
     { name: "포트폴리오", href: "#portfolio" },
     { name: "프로세스", href: "#process" },
@@ -21,8 +19,6 @@ const navItems = {
     { name: "문의", href: "#contact" },
   ],
   en: [
-    { name: "Home", href: "#hero" },
-    { name: "About", href: "#about" },
     { name: "Services", href: "#services" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "Process", href: "#process" },
@@ -154,7 +150,7 @@ export default function Navigation() {
                   e.preventDefault();
                   scrollToSection("#contact");
                 }}
-                className="px-6 py-2.5 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white text-sm font-medium hover:from-red-500 hover:to-red-600 transition-all shadow-lg shadow-red-900/30"
+                className="btn-primary px-6 py-2.5 text-sm"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -235,7 +231,7 @@ export default function Navigation() {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.7 }}
-                  className="mt-4 px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white text-center font-medium"
+                  className="btn-primary mt-4 px-6 py-3 w-full"
                 >
                   {ctaText}
                 </motion.a>

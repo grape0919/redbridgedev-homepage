@@ -5,6 +5,8 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeader from "@/components/ui/SectionHeader";
+
 
 const faqData = {
   ko: [
@@ -177,9 +179,7 @@ export default function FAQ() {
     <section
       id="faq"
       className={`relative py-32 overflow-hidden ${
-        theme === "dark"
-          ? "bg-gradient-to-b from-gray-950 to-black"
-          : "bg-gradient-to-b from-white to-gray-50"
+        theme === "dark" ? "bg-gray-950" : "bg-white"
       }`}
     >
       {/* Ambient liquid-glass refraction source */}
@@ -188,12 +188,6 @@ export default function FAQ() {
           className={`glass-ambient animate-drift top-[15%] right-[-5%] w-[540px] h-[540px] ${
             theme === "dark" ? "bg-red-600" : "bg-red-300"
           }`}
-        />
-        <div
-          className={`glass-ambient animate-drift-reverse bottom-[10%] left-[-5%] w-[460px] h-[460px] ${
-            theme === "dark" ? "bg-orange-600" : "bg-amber-300"
-          }`}
-          style={{ animationDelay: "-10s" }}
         />
       </div>
 
@@ -205,15 +199,12 @@ export default function FAQ() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2 className={`mt-4 text-4xl sm:text-5xl font-bold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
-            {t.title} <span className="text-red-500">{t.titleHighlight}</span>
-          </h2>
-          <p className={`mt-6 text-xl ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
-            {t.description}
-          </p>
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </motion.div>
 
         {/* FAQ Items */}

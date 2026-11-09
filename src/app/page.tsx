@@ -21,11 +21,12 @@ export default function Home() {
       <ChannelTalk />
       <main className="relative">
         <Navigation />
+        {/* 설득 흐름: 가치 제안 → 무엇을 → 증거 → 어떻게 → 왜 우리 → 궁금증 → 문의 */}
         <Hero />
-        <About />
         <Services />
         <Portfolio />
         <Process />
+        <About />
         <FAQ />
         <Contact />
         <Footer />

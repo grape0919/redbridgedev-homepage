@@ -12,6 +12,9 @@ import {
 } from "@/components/icons/rbd-icons";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeader from "@/components/ui/SectionHeader";
+import IconTile from "@/components/ui/IconTile";
+
 
 const servicesData = {
   ko: [
@@ -208,9 +211,7 @@ export default function Services() {
     <section
       id="services"
       className={`relative py-32 overflow-hidden ${
-        theme === "dark"
-          ? "bg-gradient-to-b from-black via-gray-950 to-black"
-          : "bg-gradient-to-b from-gray-50 via-white to-gray-50"
+        theme === "dark" ? "bg-gray-950" : "bg-white"
       }`}
     >
       {/* Ambient color field for liquid glass refraction */}
@@ -219,17 +220,6 @@ export default function Services() {
           className={`glass-ambient animate-drift top-[-10%] right-[-5%] w-[640px] h-[640px] ${
             theme === "dark" ? "bg-red-600" : "bg-red-400"
           }`}
-        />
-        <div
-          className={`glass-ambient animate-drift-reverse bottom-[-10%] left-[-5%] w-[640px] h-[640px] ${
-            theme === "dark" ? "bg-orange-600" : "bg-amber-300"
-          }`}
-        />
-        <div
-          className={`glass-ambient animate-drift top-[30%] left-[20%] w-[480px] h-[480px] ${
-            theme === "dark" ? "bg-violet-600" : "bg-violet-300"
-          }`}
-          style={{ animationDelay: "-6s" }}
         />
       </div>
 
@@ -244,23 +234,12 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
-            {t.subtitle}
-          </span>
-          <h2
-            className={`mt-4 text-4xl sm:text-5xl font-bold ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
-          >
-            {t.title} <span className="text-red-500">{t.titleHighlight}</span>
-          </h2>
-          <p
-            className={`mt-6 text-xl max-w-3xl mx-auto ${
-              theme === "dark" ? "text-gray-400" : "text-gray-600"
-            }`}
-          >
-            {t.description}
-          </p>
+          <SectionHeader
+            eyebrow={t.subtitle}
+            title={t.title}
+            highlight={t.titleHighlight}
+            description={t.description}
+          />
         </motion.div>
 
         {/* Services grid */}
@@ -281,17 +260,9 @@ export default function Services() {
 
                 {/* Icon */}
                 <div className="relative">
-                  <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} p-0.5 mb-6 shadow-lg`}
-                  >
-                    <div
-                      className={`w-full h-full rounded-2xl flex items-center justify-center ${
-                        theme === "dark" ? "bg-gray-900/70" : "bg-white/70"
-                      }`}
-                    >
-                      <service.icon className="w-10 h-10 text-red-500/85" />
-                    </div>
-                  </div>
+                  <IconTile gradient={service.gradient} size="lg" className="mb-6">
+                    <service.icon className="w-10 h-10" />
+                  </IconTile>
 
                   {/* Title & Description */}
                   <h3

@@ -301,7 +301,7 @@ export default function Hero() {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-full text-white font-medium hover:from-red-500 hover:to-red-600 transition-all shadow-[0_8px_32px_rgba(220,38,38,0.4)]"
+            className="btn-primary px-8 py-4"
             whileHover={{
               scale: 1.05,
               boxShadow: "0 0 50px rgba(220, 38, 38, 0.6)",
@@ -327,7 +327,7 @@ export default function Hero() {
                 .getElementById("portfolio")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="px-8 py-4 rounded-full font-medium text-white border border-white/25 bg-white/5 hover:bg-white/10 hover:border-white/40 transition-colors shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+            className="btn-secondary px-8 py-4"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

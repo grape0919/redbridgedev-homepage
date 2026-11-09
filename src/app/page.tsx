@@ -1,7 +1,6 @@
 "use client";
 
 import Navigation from "@/components/ui/Navigation";
-import CustomCursor from "@/components/ui/CustomCursor";
 import ChannelTalk from "@/components/ui/ChannelTalk";
 // import LoadingScreen from "@/components/ui/LoadingScreen";
 import Hero from "@/components/sections/Hero";
@@ -17,7 +16,6 @@ export default function Home() {
   return (
     <>
       {/* <LoadingScreen /> */}
-      <CustomCursor />
       <ChannelTalk />
       <main className="relative">
         <Navigation />

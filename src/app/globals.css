@@ -509,3 +509,14 @@ footer {
   transition-duration: 0.2s;
   transition-timing-function: ease-out;
 }
+
+/* 개발 프로세스: 모션 최소화 환경에서는 GSAP 핀 스크럽이 비활성되므로
+   데스크톱 가로 트랙 대신 세로 폴백을 보여준다 (트랙만 남으면 8단계 중 3개만 보이고 스크롤 불가). */
+@media (prefers-reduced-motion: reduce) {
+  .process-desktop {
+    display: none !important;
+  }
+  .process-fallback {
+    display: block !important;
+  }
+}

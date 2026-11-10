@@ -14,167 +14,194 @@ import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import SectionHeader from "@/components/ui/SectionHeader";
 import IconTile from "@/components/ui/IconTile";
+import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 
+// 실제로 만들어 운영해 본 영역만 서비스로 내건다. 각 카드는 대응하는 포트폴리오 사례로 연결된다.
 const servicesData = {
   ko: [
     {
       icon: RbdServiceWeb,
-      title: "웹 개발",
+      title: "홈페이지 · 브랜드 사이트",
       description:
-        "반응형 웹 애플리케이션, SPA, PWA 등 최신 웹 기술을 활용한 맞춤형 웹 솔루션을 제공합니다.",
+        "회사 소개, 브랜드, 제품 카탈로그 사이트를 디자인 구현부터 운영자 관리 화면까지 만듭니다.",
       features: [
-        "반응형 웹 디자인",
-        "Progressive Web App",
-        "SEO 최적화",
-        "고성능 웹 애플리케이션",
+        "반응형 디자인 구현",
+        "운영자용 콘텐츠 관리(CMS)",
+        "검색 노출(SEO) 설정",
+        "다국어 · 다크모드",
       ],
       gradient: "from-red-500 to-orange-500",
-    },
-    {
-      icon: RbdServiceApp,
-      title: "앱 개발",
-      description:
-        "iOS와 Android를 위한 네이티브 및 크로스 플랫폼 모바일 앱을 개발합니다.",
-      features: [
-        "React Native / Flutter",
-        "iOS & Android 네이티브",
-        "앱스토어 배포",
-        "푸시 알림 시스템",
-      ],
-      gradient: "from-red-500 to-pink-500",
-    },
-    {
-      icon: RbdServiceBackend,
-      title: "백엔드 개발",
-      description:
-        "확장 가능하고 안정적인 서버 아키텍처와 API를 설계하고 구축합니다.",
-      features: [
-        "RESTful API 설계",
-        "마이크로서비스 아키텍처",
-        "실시간 데이터 처리",
-        "보안 및 인증 시스템",
-      ],
-      gradient: "from-red-500 to-rose-500",
-    },
-    {
-      icon: RbdServiceDatabase,
-      title: "데이터베이스 설계",
-      description:
-        "효율적인 데이터 모델링과 최적화된 데이터베이스 설계를 제공합니다.",
-      features: [
-        "데이터베이스 설계",
-        "성능 최적화",
-        "데이터 마이그레이션",
-        "백업 및 복구 전략",
-      ],
-      gradient: "from-red-500 to-amber-500",
-    },
-    {
-      icon: RbdServiceCloud,
-      title: "클라우드 인프라",
-      description:
-        "AWS, GCP, Azure 등 클라우드 환경에서의 인프라 구축 및 운영을 지원합니다.",
-      features: [
-        "클라우드 아키텍처 설계",
-        "CI/CD 파이프라인",
-        "컨테이너 오케스트레이션",
-        "모니터링 및 로깅",
-      ],
-      gradient: "from-red-500 to-violet-500",
+      caseSlug: "wine-importer",
+      caseLabel: "와인 수입사 브랜드 사이트",
     },
     {
       icon: RbdServiceSolution,
-      title: "솔루션 개발",
+      title: "웹서비스 · SaaS",
       description:
-        "기업 맞춤형 소프트웨어 솔루션 및 자동화 시스템을 개발합니다.",
+        "회원·결제·구독이 들어가는 웹서비스를 기획 단계부터 출시 후 운영까지 함께합니다.",
       features: [
-        "ERP/CRM 커스터마이징",
-        "업무 자동화 솔루션",
-        "레거시 시스템 현대화",
-        "API 통합 서비스",
+        "회원가입 · 소셜 로그인",
+        "정기결제 · 구독 관리",
+        "관리자 화면 · 통계",
+        "웹 + 앱 동시 서비스",
+      ],
+      gradient: "from-red-500 to-pink-500",
+      caseSlug: "vocaro",
+      caseLabel: "영어 학습 SaaS",
+    },
+    {
+      icon: RbdServiceApp,
+      title: "MVP 개발",
+      description:
+        "아이디어를 가장 빨리 검증할 수 있는 범위로 좁혀, 실제로 동작하는 첫 버전을 만듭니다.",
+      features: [
+        "핵심 기능 범위 설계",
+        "웹 · 모바일 앱(Flutter)",
+        "빠른 출시와 피드백 반영",
+        "출시 후 확장 가능한 구조",
+      ],
+      gradient: "from-red-500 to-rose-500",
+      caseSlug: "petblood",
+      caseLabel: "AI 리포트 MVP",
+    },
+    {
+      icon: RbdServiceDatabase,
+      title: "업무 시스템",
+      description:
+        "예약, 대기열, 재고, 정산처럼 현장에서 손으로 하던 업무를 웹 시스템으로 바꿉니다.",
+      features: [
+        "현장 맞춤 업무 흐름 설계",
+        "문자 · 알림 자동화",
+        "관리자 대시보드",
+        "자동 배포 · 백업",
+      ],
+      gradient: "from-red-500 to-amber-500",
+      caseSlug: "hospital-queue",
+      caseLabel: "병원 대기열 관리 시스템",
+    },
+    {
+      icon: RbdServiceBackend,
+      title: "결제 · 인증 · 백엔드",
+      description:
+        "결제, 본인인증, 검색처럼 실수가 허용되지 않는 서버 기능을 설계하고 연동합니다.",
+      features: [
+        "PG 결제 · 간편결제 연동",
+        "휴대폰 본인인증",
+        "검색 · 추천 엔진",
+        "기존 시스템 API 연동",
+      ],
+      gradient: "from-red-500 to-violet-500",
+      caseSlug: "payments",
+      caseLabel: "QR 간편결제 시스템",
+    },
+    {
+      icon: RbdServiceCloud,
+      title: "AI 기능 개발",
+      description:
+        "챗봇, 문서 인식, 음성 대화 같은 AI 기능을 실제 서비스에 안전하게 붙입니다.",
+      features: [
+        "LLM 챗봇 · 상담 자동화",
+        "이미지 · 문서 인식",
+        "음성 인식 · 합성",
+        "AI 답변 품질 검증",
       ],
       gradient: "from-red-500 to-red-700",
+      caseSlug: "ai-backend",
+      caseLabel: "AI 대화 서비스 백엔드",
     },
   ],
   en: [
     {
       icon: RbdServiceWeb,
-      title: "Web Development",
+      title: "Websites & Brand Sites",
       description:
-        "We provide custom web solutions using the latest web technologies including responsive web applications, SPAs, and PWAs.",
+        "Company, brand, and catalog sites — from design implementation to an admin the owner can run.",
       features: [
-        "Responsive Web Design",
-        "Progressive Web App",
-        "SEO Optimization",
-        "High-Performance Web Apps",
+        "Responsive design build",
+        "Owner-managed content (CMS)",
+        "Search visibility (SEO)",
+        "Multilingual · dark mode",
       ],
       gradient: "from-red-500 to-orange-500",
-    },
-    {
-      icon: RbdServiceApp,
-      title: "App Development",
-      description:
-        "We develop native and cross-platform mobile apps for iOS and Android.",
-      features: [
-        "React Native / Flutter",
-        "iOS & Android Native",
-        "App Store Deployment",
-        "Push Notification System",
-      ],
-      gradient: "from-red-500 to-pink-500",
-    },
-    {
-      icon: RbdServiceBackend,
-      title: "Backend Development",
-      description:
-        "We design and build scalable and reliable server architectures and APIs.",
-      features: [
-        "RESTful API Design",
-        "Microservices Architecture",
-        "Real-time Data Processing",
-        "Security & Authentication",
-      ],
-      gradient: "from-red-500 to-rose-500",
-    },
-    {
-      icon: RbdServiceDatabase,
-      title: "Database Design",
-      description:
-        "We provide efficient data modeling and optimized database design.",
-      features: [
-        "Database Design",
-        "Performance Optimization",
-        "Data Migration",
-        "Backup & Recovery Strategy",
-      ],
-      gradient: "from-red-500 to-amber-500",
-    },
-    {
-      icon: RbdServiceCloud,
-      title: "Cloud Infrastructure",
-      description:
-        "We support infrastructure deployment and operation on AWS, GCP, Azure and more.",
-      features: [
-        "Cloud Architecture Design",
-        "CI/CD Pipeline",
-        "Container Orchestration",
-        "Monitoring & Logging",
-      ],
-      gradient: "from-red-500 to-violet-500",
+      caseSlug: "wine-importer",
+      caseLabel: "Wine importer brand site",
     },
     {
       icon: RbdServiceSolution,
-      title: "Solution Development",
+      title: "Web Services & SaaS",
       description:
-        "We develop custom enterprise software solutions and automation systems.",
+        "Web services with accounts, payments, and subscriptions — from planning through post-launch operations.",
       features: [
-        "ERP/CRM Customization",
-        "Workflow Automation",
-        "Legacy System Modernization",
-        "API Integration Services",
+        "Sign-up · social login",
+        "Recurring billing · subscriptions",
+        "Admin screens · analytics",
+        "Web + app from one codebase",
+      ],
+      gradient: "from-red-500 to-pink-500",
+      caseSlug: "vocaro",
+      caseLabel: "English learning SaaS",
+    },
+    {
+      icon: RbdServiceApp,
+      title: "MVP Development",
+      description:
+        "We narrow your idea to the fastest testable scope and ship a first version that actually works.",
+      features: [
+        "Core feature scoping",
+        "Web · mobile app (Flutter)",
+        "Fast launch and iteration",
+        "A structure that scales after launch",
+      ],
+      gradient: "from-red-500 to-rose-500",
+      caseSlug: "petblood",
+      caseLabel: "AI report MVP",
+    },
+    {
+      icon: RbdServiceDatabase,
+      title: "Business Systems",
+      description:
+        "Reservations, queues, inventory, settlements — we turn manual on-site work into web systems.",
+      features: [
+        "Workflow design for your operation",
+        "SMS · notification automation",
+        "Admin dashboards",
+        "Automated deploys · backups",
+      ],
+      gradient: "from-red-500 to-amber-500",
+      caseSlug: "hospital-queue",
+      caseLabel: "Hospital queue system",
+    },
+    {
+      icon: RbdServiceBackend,
+      title: "Payments · Identity · Backend",
+      description:
+        "Payments, identity verification, search — server features where mistakes aren't an option.",
+      features: [
+        "Payment gateway integration",
+        "Phone identity verification",
+        "Search · recommendation engines",
+        "API integration with existing systems",
+      ],
+      gradient: "from-red-500 to-violet-500",
+      caseSlug: "payments",
+      caseLabel: "QR payment system",
+    },
+    {
+      icon: RbdServiceCloud,
+      title: "AI Features",
+      description:
+        "Chatbots, document recognition, voice conversations — AI features added safely to real services.",
+      features: [
+        "LLM chatbots · support automation",
+        "Image · document recognition",
+        "Speech recognition · synthesis",
+        "AI answer quality checks",
       ],
       gradient: "from-red-500 to-red-700",
+      caseSlug: "ai-backend",
+      caseLabel: "AI chat service backend",
     },
   ],
 };
@@ -182,18 +209,20 @@ const servicesData = {
 const content = {
   ko: {
     subtitle: "Our Services",
-    title: "서비스",
-    titleHighlight: "영역",
-    description: "웹, 앱, 백엔드부터 클라우드 인프라까지, 전 영역에 걸친 개발 서비스를 제공합니다",
-    ctaQuestion: "프로젝트에 필요한 서비스가 궁금하신가요?",
+    title: "무엇을",
+    titleHighlight: "만드나요",
+    description: "홈페이지부터 결제·AI가 들어간 서비스까지 — 직접 만들어 운영해 본 영역만 말합니다",
+    relatedCase: "관련 사례",
+    ctaQuestion: "어떤 방식이 맞을지 아직 모르겠다면, 상황부터 들려주세요",
     ctaButton: "무료 상담 받기",
   },
   en: {
     subtitle: "Our Services",
-    title: "Service",
-    titleHighlight: "Areas",
-    description: "We provide development services across all areas from web, apps, backend to cloud infrastructure",
-    ctaQuestion: "Curious about the services you need for your project?",
+    title: "What We",
+    titleHighlight: "Build",
+    description: "From websites to services with payments and AI — only what we've built and run ourselves",
+    relatedCase: "Case study",
+    ctaQuestion: "Not sure which fits? Tell us your situation first",
     ctaButton: "Get Free Consultation",
   },
 };
@@ -294,6 +323,29 @@ export default function Services() {
                       </li>
                     ))}
                   </ul>
+
+                  {/* 관련 포트폴리오 사례 */}
+                  <Link
+                    href={`/portfolio/${service.caseSlug}/`}
+                    onClick={() =>
+                      trackEvent("select_content", {
+                        content_type: "service_case",
+                        item_id: service.caseSlug,
+                      })
+                    }
+                    className={`mt-7 pt-5 flex items-center justify-between gap-3 border-t text-sm transition-colors hover:text-red-500 ${
+                      theme === "dark"
+                        ? "border-white/10 text-gray-400"
+                        : "border-gray-900/10 text-gray-600"
+                    }`}
+                  >
+                    <span>
+                      <span className="text-red-500 font-medium">{t.relatedCase}</span>
+                      <span className="mx-2 opacity-40">·</span>
+                      {service.caseLabel}
+                    </span>
+                    <span aria-hidden>→</span>
+                  </Link>
                 </div>
               </div>
             </motion.div>

@@ -19,26 +19,27 @@ import {
 
 const content = {
   ko: {
-    eyebrow: "Engineering Portfolio",
-    heroTitle: "RED BRIDGE",
-    heroSub: "백엔드 / 풀스택 엔지니어링 기록",
-    intro1kicker: "설계부터 배포·운영까지",
+    eyebrow: "Case Studies",
+    heroTitle: "RED BRIDGE DEV",
+    heroSub: "프로젝트 사례",
+    intro1kicker: "기획부터 배포·운영까지",
     commonStack: [
-      "Python 3.12",
-      "FastAPI",
-      "SQLAlchemy 2.0 (완전 비동기)",
-      "MySQL",
-      "OpenSearch",
-      "Docker",
-      "GitHub Actions (self-hosted)",
-      "Sentry / structlog",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Flutter",
+      "Python · FastAPI",
+      "PostgreSQL · MySQL",
+      "Supabase",
+      "Docker · GitHub Actions",
     ],
-    productionTitle: "기업 실서비스 프로젝트",
-    productionDesc: "위치기반 매장 탐색·결제·리워드 플랫폼의 백엔드를 재직 중 담당한 기록입니다.",
-    redbridgeTitle: "RED BRIDGE 자체 프로젝트",
-    redbridgeDesc: "직접 기획하고 개발해 운영까지 책임지는 자체 서비스와 고객 프로젝트입니다.",
+    productionTitle: "엔터프라이즈 기술 사례",
+    productionDesc:
+      "RED BRIDGE DEV의 핵심 엔지니어가 위치기반 매장 탐색·결제·리워드 플랫폼에서 설계·구축한 프로젝트입니다. 결제·인증·검색·AI처럼 난도가 높은 영역을 실서비스에서 다뤄 본 역량을 보여 드립니다.",
+    redbridgeTitle: "고객 프로젝트 · 자체 서비스",
+    redbridgeDesc: "고객의 의뢰로 만들었거나, 직접 기획해 지금 운영하고 있는 서비스입니다.",
     detail: "자세히",
-    mapTitle: "담당 영역 한눈에 보기",
+    mapTitle: "엔터프라이즈 플랫폼에서 맡은 영역",
     layers: [
       { label: "사용자 접점", items: ["모바일 앱", "매장 POS", "파트너 웹"], note: "고객·매장·파트너가 쓰는 화면" },
       {
@@ -67,26 +68,27 @@ const content = {
     workTitle: "일하는 방식",
   },
   en: {
-    eyebrow: "Engineering Portfolio",
-    heroTitle: "RED BRIDGE",
-    heroSub: "Backend / Full-Stack Engineering Records",
-    intro1kicker: "from design to deployment and operations",
+    eyebrow: "Case Studies",
+    heroTitle: "RED BRIDGE DEV",
+    heroSub: "Project Case Studies",
+    intro1kicker: "from planning to deployment and operations",
     commonStack: [
-      "Python 3.12",
-      "FastAPI",
-      "SQLAlchemy 2.0 (fully async)",
-      "MySQL",
-      "OpenSearch",
-      "Docker",
-      "GitHub Actions (self-hosted)",
-      "Sentry / structlog",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Flutter",
+      "Python · FastAPI",
+      "PostgreSQL · MySQL",
+      "Supabase",
+      "Docker · GitHub Actions",
     ],
-    productionTitle: "Production Projects (Employment)",
-    productionDesc: "Backend work delivered as an employee for a location-based store discovery, payments, and rewards platform.",
-    redbridgeTitle: "RED BRIDGE In-House Projects",
-    redbridgeDesc: "Services and client projects we design, build, and operate end to end.",
+    productionTitle: "Enterprise Engineering Cases",
+    productionDesc:
+      "Projects designed and built by RED BRIDGE DEV's lead engineer on a location-based store discovery, payments, and rewards platform — showing hands-on depth in payments, identity, search, and AI at production scale.",
+    redbridgeTitle: "Client Projects · In-House Services",
+    redbridgeDesc: "Built for clients, or designed by us and running in production today.",
     detail: "Details",
-    mapTitle: "Scope at a Glance",
+    mapTitle: "Scope on the Enterprise Platform",
     layers: [
       { label: "User Touchpoints", items: ["Mobile App", "Store POS", "Partner Web"], note: "Screens used by customers, stores, and partners" },
       {
@@ -143,6 +145,13 @@ export default function PortfolioIndex() {
               <div className="flex items-start gap-4">
                 <span className="text-2xl font-extrabold text-red-600/80">{p.num}</span>
                 <div className="min-w-0 flex-1">
+                  <span
+                    className={`inline-block mb-1.5 text-[11px] font-medium tracking-wide ${
+                      dark ? "text-gray-500" : "text-gray-400"
+                    }`}
+                  >
+                    {c.industry}
+                  </span>
                   <h3
                     className={`font-bold group-hover:text-red-500 transition-colors ${
                       dark ? "text-white" : "text-gray-900"
@@ -195,25 +204,25 @@ export default function PortfolioIndex() {
           {language === "ko" ? (
             <>
               <Prose>
-                AI 서비스·결제·인증·검색·데이터 인프라를 <Strong>설계부터 배포·운영까지</Strong> 책임진
-                프로젝트 기록입니다.
+                홈페이지, 웹서비스, MVP, 업무 시스템까지 — RED BRIDGE DEV가{" "}
+                <Strong>{t.intro1kicker}</Strong> 책임진 프로젝트 사례입니다.
               </Prose>
               <Prose>
-                기업 실서비스에서 담당한 프로젝트와, RED BRIDGE가 직접 기획해 운영하는 자체 서비스를
-                함께 정리했습니다. 비공개 저장소 프로젝트는 코드 대신{" "}
-                <Strong>문제 → 설계 → 결과</Strong> 중심으로 소개합니다.
+                고객 프로젝트와 자체 서비스, 그리고 핵심 엔지니어가 기업 실서비스에서 수행한 기술
+                사례를 함께 정리했습니다. 각 사례는 <Strong>문제 → 설계 → 결과</Strong> 순서로
+                소개합니다.
               </Prose>
             </>
           ) : (
             <>
               <Prose>
-                A record of projects where we owned AI services, payments, identity verification,
-                search, and data infrastructure — <Strong>{t.intro1kicker}</Strong>.
+                Websites, web services, MVPs, and business systems — projects RED BRIDGE DEV owned{" "}
+                <Strong>{t.intro1kicker}</Strong>.
               </Prose>
               <Prose>
-                It covers production work delivered in employment alongside services RED BRIDGE
-                designs and operates itself. For private-repository projects we present{" "}
-                <Strong>problem → design → results</Strong> instead of code.
+                Client projects and in-house services sit alongside engineering cases our lead
+                engineer delivered on an enterprise platform. Each case follows{" "}
+                <Strong>problem → design → results</Strong>.
               </Prose>
             </>
           )}
@@ -225,7 +234,18 @@ export default function PortfolioIndex() {
         </div>
       </FadeIn>
 
-      {/* 기업 실서비스 프로젝트 */}
+      {/* 고객 프로젝트 · 자체 서비스 */}
+      <FadeIn className="mt-20">
+        <h2 className={`text-2xl sm:text-3xl font-bold ${dark ? "text-white" : "text-gray-900"}`}>
+          {t.redbridgeTitle}
+        </h2>
+        <p className={`mt-3 text-sm ${dark ? "text-gray-500" : "text-gray-500"}`}>
+          {t.redbridgeDesc}
+        </p>
+        {renderCards("redbridge")}
+      </FadeIn>
+
+      {/* 엔터프라이즈 기술 사례 */}
       <FadeIn className="mt-20">
         <h2 className={`text-2xl sm:text-3xl font-bold ${dark ? "text-white" : "text-gray-900"}`}>
           {t.productionTitle}
@@ -296,17 +316,6 @@ export default function PortfolioIndex() {
             </div>
           ))}
         </div>
-      </FadeIn>
-
-      {/* RED BRIDGE 자체 프로젝트 */}
-      <FadeIn className="mt-20">
-        <h2 className={`text-2xl sm:text-3xl font-bold ${dark ? "text-white" : "text-gray-900"}`}>
-          {t.redbridgeTitle}
-        </h2>
-        <p className={`mt-3 text-sm ${dark ? "text-gray-500" : "text-gray-500"}`}>
-          {t.redbridgeDesc}
-        </p>
-        {renderCards("redbridge")}
       </FadeIn>
 
       {/* 기술 역량 요약 */}

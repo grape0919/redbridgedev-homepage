@@ -16,7 +16,8 @@ import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import SectionHeader from "@/components/ui/SectionHeader";
 
-import { openChannelTalk } from "@/components/ui/ChannelTalk";
+import { openChannelTalk, openChannelTalkWithMessage } from "@/components/ui/ChannelTalk";
+import { trackEvent } from "@/lib/analytics";
 
 const contactInfoData = {
   ko: [
@@ -87,11 +88,11 @@ const content = {
       namePlaceholder: "홍길동",
       selectPlaceholder: "선택해주세요",
       projectTypes: {
-        web: "웹 개발",
-        app: "앱 개발",
-        solution: "솔루션 개발",
-        consulting: "기술 컨설팅",
-        other: "기타",
+        web: "홈페이지 · 브랜드 사이트",
+        app: "웹서비스 · 앱 · MVP",
+        solution: "업무 시스템",
+        consulting: "결제 · 인증 · AI 연동",
+        other: "기타 / 아직 잘 모르겠어요",
       },
       budgets: {
         under1000: "1,000만원 미만",
@@ -103,10 +104,15 @@ const content = {
       },
     },
     submit: {
-      idle: "문의하기",
+      idle: "문의 보내기",
       loading: "전송 중...",
-      success: "전송 완료!",
+      success: "채팅창에서 전송 버튼을 눌러주세요",
       error: "오류 발생. 다시 시도해주세요.",
+      sentHint: "작성하신 내용이 실시간 채팅창에 입력되었습니다. 전송 버튼만 누르면 접수됩니다.",
+      emailInstead: "채팅창이 열리지 않나요? 이메일로 보내기",
+      consent: "문의를 보내면 상담 목적의 개인정보(이름·이메일·회사명) 수집·이용에 동의하는 것으로 봅니다.",
+      consentLink: "개인정보처리방침",
+      editAgain: "내용 수정하기",
     },
     chat: {
       title: "RED BRIDGE DEV",
@@ -146,11 +152,11 @@ const content = {
       namePlaceholder: "John Doe",
       selectPlaceholder: "Please select",
       projectTypes: {
-        web: "Web Development",
-        app: "App Development",
-        solution: "Solution Development",
-        consulting: "Technical Consulting",
-        other: "Other",
+        web: "Website · Brand Site",
+        app: "Web Service · App · MVP",
+        solution: "Business System",
+        consulting: "Payments · Identity · AI",
+        other: "Other / Not sure yet",
       },
       budgets: {
         under1000: "Under $10K",
@@ -164,8 +170,13 @@ const content = {
     submit: {
       idle: "Send Inquiry",
       loading: "Sending...",
-      success: "Sent Successfully!",
+      success: "Press send in the chat window",
       error: "Error occurred. Please try again.",
+      sentHint: "Your inquiry has been filled into the live chat. Just press send to submit it.",
+      emailInstead: "Chat didn't open? Send by email instead",
+      consent: "By sending an inquiry you agree to the collection and use of your name, email, and company for consultation purposes.",
+      consentLink: "Privacy Policy",
+      editAgain: "Edit inquiry",
     },
     chat: {
       title: "RED BRIDGE DEV",
@@ -203,7 +214,6 @@ export default function Contact() {
     message: "",
   });
   const [formStatus, setFormStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -214,77 +224,61 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus("loading");
-    setErrorMessage("");
-
-    // 프로젝트 유형 한글/영문 변환
+  // 정적 사이트라 자체 메일 서버가 없다. 문의는 실제로 응대하는 채널(채널톡)로 보낸다:
+  // 작성 내용을 채팅 입력창에 채워 열고, 방문자가 전송을 누르면 접수된다. 이메일은 대안 경로.
+  const buildInquiry = () => {
     const projectTypeLabel = formData.projectType
       ? t.form.projectTypes[formData.projectType as keyof typeof t.form.projectTypes]
-      : "";
-
-    // 예산 한글/영문 변환
+      : "-";
     const budgetLabel = formData.budget
       ? t.form.budgets[formData.budget as keyof typeof t.form.budgets]
-      : language === "ko" ? "미정" : "TBD";
+      : language === "ko"
+      ? "미정"
+      : "TBD";
+    const lines =
+      language === "ko"
+        ? [
+            "[프로젝트 문의]",
+            `이름: ${formData.name}`,
+            `이메일: ${formData.email}`,
+            `회사명: ${formData.company || "-"}`,
+            `프로젝트 유형: ${projectTypeLabel}`,
+            `예상 예산: ${budgetLabel}`,
+            "",
+            formData.message,
+          ]
+        : [
+            "[Project Inquiry]",
+            `Name: ${formData.name}`,
+            `Email: ${formData.email}`,
+            `Company: ${formData.company || "-"}`,
+            `Project type: ${projectTypeLabel}`,
+            `Budget: ${budgetLabel}`,
+            "",
+            formData.message,
+          ];
+    return { text: lines.join("\n"), projectTypeLabel, budgetLabel };
+  };
 
-    try {
-      // 정적 export 사이트라 자체 API 라우트가 없음 — FormSubmit(이메일 전달 서비스)로 전송.
-      // 최초 1회, 수신함에 도착하는 활성화 메일을 승인해야 이후 제출이 전달된다.
-      const response = await fetch(
-        "https://formsubmit.co/ajax/contact@redbridgedev.ai.kr",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            _subject: `[RED BRIDGE DEV 문의] ${formData.name} — ${projectTypeLabel}`,
-            _template: "table",
-            _captcha: "false",
-            이름: formData.name,
-            이메일: formData.email,
-            회사명: formData.company || "-",
-            프로젝트유형: projectTypeLabel,
-            예상예산: budgetLabel,
-            내용: formData.message,
-            언어: language,
-          }),
-        }
-      );
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { text, projectTypeLabel, budgetLabel } = buildInquiry();
+    openChannelTalkWithMessage(text);
+    trackEvent("generate_lead", {
+      method: "channel_talk",
+      project_type: projectTypeLabel,
+      budget: budgetLabel,
+    });
+    setFormStatus("success");
+  };
 
-      if (!response.ok) {
-        const payload = await response.json().catch(() => null);
-        throw new Error(payload?.error || "Failed to send email");
-      }
-
-      setFormStatus("success");
-
-      // Reset form after success
-      setTimeout(() => {
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          projectType: "",
-          budget: "",
-          message: "",
-        });
-        setFormStatus("idle");
-      }, 3000);
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setErrorMessage(error instanceof Error ? error.message : "");
-      setFormStatus("error");
-
-      // Reset error status after 3 seconds
-      setTimeout(() => {
-        setFormStatus("idle");
-        setErrorMessage("");
-      }, 3000);
-    }
+  const mailtoHref = () => {
+    const { text, projectTypeLabel } = buildInquiry();
+    const subject =
+      language === "ko"
+        ? `[프로젝트 문의] ${formData.name} — ${projectTypeLabel}`
+        : `[Project Inquiry] ${formData.name} — ${projectTypeLabel}`;
+    return `mailto:contact@redbridgedev.ai.kr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
   };
 
   return (
@@ -361,7 +355,10 @@ export default function Contact() {
               <h3 className={`text-xl font-bold mb-4 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{t.quickContact}</h3>
               <div className="flex flex-col gap-4">
                 <motion.button
-                  onClick={openChannelTalk}
+                  onClick={() => {
+                    trackEvent("chat_open", { location: "contact_quick" });
+                    openChannelTalk();
+                  }}
                   className="flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-xl text-white font-medium hover:from-red-500 hover:to-red-600 transition-all"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -555,7 +552,7 @@ export default function Contact() {
                 ) : formStatus === "error" ? (
                   <>
                     <WarningCircle weight="duotone" className="w-5 h-5" />
-                    {errorMessage || t.submit.error}
+                    {t.submit.error}
                   </>
                 ) : (
                   <>
@@ -564,6 +561,43 @@ export default function Contact() {
                   </>
                 )}
               </motion.button>
+
+              {formStatus === "success" && (
+                <div
+                  role="status"
+                  className={`text-sm leading-relaxed ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}
+                >
+                  <p>{t.submit.sentHint}</p>
+                  <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                    <a
+                      href={mailtoHref()}
+                      onClick={() => trackEvent("generate_lead", { method: "email" })}
+                      className="text-red-500 hover:text-red-400 underline underline-offset-2"
+                    >
+                      {t.submit.emailInstead}
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setFormStatus("idle")}
+                      className={`underline underline-offset-2 ${theme === "dark" ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"}`}
+                    >
+                      {t.submit.editAgain}
+                    </button>
+                  </p>
+                </div>
+              )}
+
+              <p className={`text-xs leading-relaxed ${theme === "dark" ? "text-gray-500" : "text-gray-500"}`}>
+                {t.submit.consent}{" "}
+                <a
+                  href="/개인정보처리방침.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:text-red-500"
+                >
+                  {t.submit.consentLink}
+                </a>
+              </p>
             </form>
           </motion.div>
         </div>

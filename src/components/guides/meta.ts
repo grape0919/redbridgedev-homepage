@@ -40,6 +40,33 @@ export const guides: GuideMeta[] = [
     published: "2026-08-17",
     readingMinutes: 6,
   },
+  {
+    slug: "freelancer-vs-agency",
+    title: "프리랜서 vs 에이전시 vs 인하우스 — 개발, 누구에게 맡겨야 할까",
+    seoDescription:
+      "외주 개발을 프리랜서에게 맡길지, 개발 에이전시에 맡길지, 직접 채용할지 고민될 때 보는 비교 가이드입니다. 각 방식의 강점과 위험, 프로젝트 유형별로 맞는 선택 기준을 정리했습니다.",
+    oneLiner: "세 가지 방식의 강점·위험과 프로젝트 유형별 선택 기준",
+    published: "2026-11-11",
+    readingMinutes: 6,
+  },
+  {
+    slug: "maintenance-contract",
+    title: "유지보수 계약 가이드 — 출시 후 비용과 범위 정하는 법",
+    seoDescription:
+      "홈페이지·웹서비스·앱 출시 후 유지보수 계약을 어떻게 맺어야 할까요? 하자보수와 유지보수의 차이, 월정액·건별·시간제 계약 방식 비교, 계약서에 꼭 넣어야 할 항목을 정리했습니다.",
+    oneLiner: "하자보수와의 차이, 계약 방식 비교, 계약서 필수 항목",
+    published: "2026-11-11",
+    readingMinutes: 6,
+  },
+  {
+    slug: "project-brief",
+    title: "견적 요청 전에 정리할 7가지 — 프로젝트 브리프 작성법",
+    seoDescription:
+      "개발 견적을 요청하기 전에 무엇을 정리해야 정확한 견적을 받을 수 있을까요? 목적, 사용자, 핵심 기능, 참고 서비스, 일정과 예산까지 — 한 장짜리 프로젝트 브리프 작성법과 템플릿을 제공합니다.",
+    oneLiner: "정확한 견적을 받기 위한 한 장짜리 브리프와 템플릿",
+    published: "2026-11-11",
+    readingMinutes: 5,
+  },
 ];
 
 export function getGuide(slug: string): GuideMeta | undefined {

@@ -576,7 +576,7 @@ function HospitalQueueVisual() {
 
 /* ---------- ⑧ 와인 ---------- */
 
-function GoldluckwineVisual() {
+function WineImporterVisual() {
   const { theme } = useTheme();
   const v = useVisualCopy();
   const dark = theme === "dark";
@@ -601,7 +601,7 @@ function GoldluckwineVisual() {
           />
           <rect x="18" y="92" width="24" height="42" rx="2" fill={dark ? "#fafafa" : "#ffffff"} stroke="#d4d4d8" />
           <text x="30" y="109" textAnchor="middle" fontSize="7" fontWeight="700" fill="#b91c1c">
-            GOLD LUCK
+            NATURAL WINE
           </text>
           <text x="30" y="119" textAnchor="middle" fontSize="5.5" fill="#71717a">
             Chenin Blanc
@@ -725,6 +725,6 @@ export const projectVisuals: Record<string, () => ReactNode> = {
   "db-migration": DbMigrationVisual,
   vocaro: VocaroVisual,
   "hospital-queue": HospitalQueueVisual,
-  goldluckwine: GoldluckwineVisual,
+  "wine-importer": WineImporterVisual,
   petblood: PetbloodVisual,
 };

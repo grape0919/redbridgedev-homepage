@@ -13,30 +13,30 @@ import { useLanguage } from "@/context/LanguageContext";
 const footerLinksData = {
   ko: {
     services: [
-      { name: "웹 개발", href: "#services" },
-      { name: "앱 개발", href: "#services" },
-      { name: "솔루션 개발", href: "#services" },
-      { name: "기술 컨설팅", href: "#contact" },
+      { name: "홈페이지 · 브랜드 사이트", href: "#services" },
+      { name: "웹서비스 · MVP", href: "#services" },
+      { name: "업무 시스템", href: "#services" },
+      { name: "결제 · 인증 · AI 연동", href: "#services" },
     ],
     company: [
       { name: "왜 RED BRIDGE", href: "#about" },
       { name: "포트폴리오", href: "#portfolio" },
-      { name: "엔지니어 포트폴리오", href: "/portfolio/" },
+      { name: "프로젝트 사례", href: "/portfolio/" },
       { name: "외주 개발 가이드", href: "/guides/" },
       { name: "문의하기", href: "#contact" },
     ],
   },
   en: {
     services: [
-      { name: "Web Development", href: "#services" },
-      { name: "App Development", href: "#services" },
-      { name: "Solution Development", href: "#services" },
-      { name: "Technical Consulting", href: "#contact" },
+      { name: "Websites & Brand Sites", href: "#services" },
+      { name: "Web Services & MVPs", href: "#services" },
+      { name: "Business Systems", href: "#services" },
+      { name: "Payments · Identity · AI", href: "#services" },
     ],
     company: [
       { name: "Why RED BRIDGE", href: "#about" },
       { name: "Portfolio", href: "#portfolio" },
-      { name: "Engineer Portfolio", href: "/portfolio/" },
+      { name: "Case Studies", href: "/portfolio/" },
       { name: "Dev Guides", href: "/guides/" },
       { name: "Contact", href: "#contact" },
     ],

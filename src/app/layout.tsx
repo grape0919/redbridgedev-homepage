@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import PerfWatchdog from "@/components/ui/PerfWatchdog";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,22 +36,22 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://redbridgedev.ai.kr"),
   title: {
-    default: "RED BRIDGE DEV | 웹/앱/솔루션 외주 개발",
+    default: "RED BRIDGE DEV | 홈페이지·웹서비스·MVP 개발 에이전시",
     template: "%s | RED BRIDGE DEV",
   },
   description:
-    "RED BRIDGE DEV는 고객과 기술을 안전하고 튼튼하게 연결합니다. 대기업과 중견기업에서 쌓은 풍부한 경험을 바탕으로, 웹 개발, 앱 개발, 솔루션 개발 프로젝트에 최고의 품질과 안정성을 보장합니다.",
+    "RED BRIDGE DEV는 홈페이지·웹서비스·MVP·업무 시스템을 기획부터 배포·운영까지 한 팀이 책임지는 개발 에이전시입니다. 결제·인증·AI 연동까지, 지금 운영 중인 서비스로 증명합니다.",
   keywords: [
     "웹 개발",
     "앱 개발",
     "외주 개발",
     "솔루션 개발",
+    "개발 에이전시",
     "React",
     "Next.js",
     "TypeScript",
-    "React Native",
     "Flutter",
-    "Node.js",
+    "FastAPI",
     "웹 에이전시",
     "앱 제작",
     "웹사이트 제작",
@@ -72,9 +73,9 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "RED BRIDGE DEV | 웹/앱/솔루션 외주 개발",
+    title: "RED BRIDGE DEV | 홈페이지·웹서비스·MVP 개발 에이전시",
     description:
-      "고객과 기술을 안전하고 튼튼하게 연결합니다. 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+      "기획부터 배포·운영까지 한 팀이 책임지는 개발 에이전시. 운영 중인 서비스로 증명합니다.",
     url: "https://redbridgedev.ai.kr",
     siteName: "RED BRIDGE DEV",
     images: [
@@ -82,7 +83,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "RED BRIDGE DEV - 웹/앱/솔루션 외주 개발",
+        alt: "RED BRIDGE DEV - 홈페이지·웹서비스·MVP 개발 에이전시",
       },
     ],
     type: "website",
@@ -91,11 +92,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RED BRIDGE DEV | 웹/앱/솔루션 외주 개발",
+    title: "RED BRIDGE DEV | 홈페이지·웹서비스·MVP 개발 에이전시",
     description:
-      "고객과 기술을 안전하고 튼튼하게 연결합니다. 지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+      "기획부터 배포·운영까지 한 팀이 책임지는 개발 에이전시. 운영 중인 서비스로 증명합니다.",
     images: ["/og-image.png"],
-    creator: "@redbridgedev",
   },
   robots: {
     index: true,
@@ -130,7 +130,7 @@ const jsonLd = {
   url: "https://redbridgedev.ai.kr",
   logo: "https://redbridgedev.ai.kr/logo_red.png",
   description:
-    "고객과 기술을 안전하고 튼튼하게 연결하는 웹/앱/솔루션 개발 전문 회사",
+    "홈페이지·웹서비스·MVP·업무 시스템을 기획부터 운영까지 책임지는 개발 에이전시",
   foundingDate: "2024",
   contactPoint: {
     "@type": "ContactPoint",
@@ -149,18 +149,18 @@ const jsonLd = {
   service: [
     {
       "@type": "Service",
-      name: "웹 개발",
-      description: "React, Next.js 기반의 반응형 웹 애플리케이션 개발",
+      name: "홈페이지·브랜드 사이트 제작",
+      description: "운영자가 직접 관리하는 CMS와 SEO를 갖춘 브랜드 사이트 제작",
     },
     {
       "@type": "Service",
-      name: "앱 개발",
-      description: "React Native, Flutter 기반의 크로스 플랫폼 모바일 앱 개발",
+      name: "웹서비스·SaaS·MVP 개발",
+      description: "Next.js·FastAPI·Flutter 기반 웹서비스와 MVP를 기획부터 출시·운영까지",
     },
     {
       "@type": "Service",
-      name: "솔루션 개발",
-      description: "기업 맞춤형 소프트웨어 솔루션 및 자동화 시스템 개발",
+      name: "업무 시스템·결제·AI 연동",
+      description: "예약·대기열 같은 업무 시스템, 결제·본인인증, AI 기능 개발과 연동",
     },
   ],
 };
@@ -278,6 +278,17 @@ export default function RootLayout({
             </filter>
           </defs>
         </svg>
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
+            </Script>
+          </>
+        )}
         <PerfWatchdog />
         <ThemeProvider>
           <LanguageProvider>{children}</LanguageProvider>

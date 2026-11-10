@@ -47,15 +47,25 @@ Both providers wrap the app in [src/app/layout.tsx](src/app/layout.tsx). Every s
 - [src/components/three/Bridge3D.tsx](src/components/three/Bridge3D.tsx) renders a wireframe bridge in the Hero via `@react-three/fiber`. It is **dynamically imported with `ssr: false`** and Hero gates rendering via `useSyncExternalStore` on `matchMedia("(max-width: 768px)")`, `prefers-reduced-motion`, and `navigator.hardwareConcurrency < 4` — do not render Bridge3D unconditionally.
 - The custom cursor was removed (2026-11): hiding the OS cursor and drawing it on the main thread made pointer movement stutter on low-end PCs. Do not reintroduce it. (ESLint rule `react-hooks/set-state-in-effect` is enforced — prefer `useSyncExternalStore` for browser-state reads.)
 
-### Contact form → email
+### Positioning (2026-11)
 
-[src/components/sections/Contact.tsx](src/components/sections/Contact.tsx) POSTs to [src/app/api/contact/route.ts](src/app/api/contact/route.ts), which uses `nodemailer` + Gmail SMTP. Env vars: `GMAIL_USER`, `GMAIL_APP_PASSWORD`. Recipient hard-coded to `red.bridge.kim.dev@gmail.com`. The form includes Korean/English translation of `projectType` and `budget` labels before POST.
+The site speaks as an **agency** ("한 팀이 기획부터 운영까지"), never as a solo developer or a résumé. Keep it that way when editing copy:
+- No "단독/1인/Solo", commit counts, or "재직 중 담당" framing in visible copy. Enterprise projects are "엔터프라이즈 기술 사례 — 핵심 엔지니어가 수행" with the confidentiality footnote.
+- Services, FAQ, metadata and JSON-LD must only claim what the portfolio proves (Next.js/React, FastAPI, Flutter, Supabase/PostgreSQL/MySQL; payments, identity, search, AI). Each service card links to its proof case (`caseSlug`).
+- Client names are anonymized unless the client's own product is ours (Vocaro). The wine importer case is anonymized at the client's request (slug `wine-importer`, no domain/brand); the clinic is "정형외과 의원".
+- Portfolio order lives in `src/components/portfolio/meta.ts` (client/in-house first, enterprise after). Guides live in `src/components/guides/` (KO only).
 
-**Caveat:** the project builds with `output: "export"`, so the `/api/contact` route shows as `ƒ (Dynamic)` in build output but is **not included in the static `out/` bundle**. The Firebase deploy therefore ships a site where the contact form will 404 its endpoint. Any change to Contact form wiring must account for this — either point to an external endpoint, run without export, or add Firebase Functions / another host for the API route.
+### Contact → ChannelTalk
+
+There is no mail backend (static export). [Contact.tsx](src/components/sections/Contact.tsx) builds the inquiry text and opens ChannelTalk with it pre-filled (`openChannelTalkWithMessage` → `ChannelIO('openChat', undefined, text)`); the visitor presses send. A `mailto:` link is the fallback. Do not reintroduce third-party form relays (FormSubmit was removed at the owner's request). `src/app/api/contact/route.ts` (nodemailer) is legacy and is **not** part of the static bundle.
+
+### Analytics
+
+GA4 is wired in [src/lib/analytics.ts](src/lib/analytics.ts): set `GA_MEASUREMENT_ID` and the layout loads gtag; `trackEvent()` is a no-op without it. Events: `generate_lead` (form → channel_talk/email), `chat_open`, `cta_click`, `select_content` (portfolio/service case clicks).
 
 ### SEO
 
-[src/app/layout.tsx](src/app/layout.tsx) holds Metadata (OG, Twitter, robots), Naver site verification, and inline JSON-LD `Organization` + `Service` schema. Language alternates are declared but both `ko-KR` and `en-US` resolve to the same URL (no separate English route exists). `og-image.png`, `apple-touch-icon.png`, `icon.svg`, and the manifest's `icon-192/512` are referenced but **may not exist in `public/`** — verify before claiming SEO/PWA assets are complete.
+[src/app/layout.tsx](src/app/layout.tsx) holds Metadata (OG, Twitter, robots), Naver site verification, and inline JSON-LD `Organization` + `Service` schema. Portfolio and guide pages set their own title/description/canonical and JSON-LD. `public/sitemap.xml` is generated at prebuild from the slugs in the two `meta.ts` files. `firebase.json` redirects retired URLs (`/portfolio/goldluckwine/` → `/portfolio/wine-importer/`, `/brief/` → `/guides/project-brief/`). English is a client-side toggle on the same URL (not indexable); guides are Korean only.
 
 ### Styling
 

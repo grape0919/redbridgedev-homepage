@@ -6,71 +6,109 @@ import { Plus, Minus } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import SectionHeader from "@/components/ui/SectionHeader";
+import Link from "next/link";
 
 
-const faqData = {
+interface FAQEntry {
+  question: string;
+  answer: string;
+  /** 답변 아래에 붙는 더 읽을거리 링크 (가이드 등) */
+  link?: { href: string; label: string };
+}
+
+const faqData: Record<"ko" | "en", FAQEntry[]> = {
   ko: [
     {
-      question: "프로젝트 진행 과정은 어떻게 되나요?",
+      question: "어떤 프로젝트를 맡길 수 있나요?",
       answer:
-        "프로젝트는 기획 → 디자인 → 개발 → 테스트 → 배포 → 유지보수의 단계로 진행됩니다. 각 단계마다 고객과 긴밀하게 소통하며 피드백을 반영합니다. 프로젝트 규모에 따라 2주에서 3개월 정도 소요됩니다.",
+        "홈페이지·브랜드 사이트, 회원·결제가 들어가는 웹서비스와 SaaS, MVP, 예약·대기열 같은 업무 시스템, 결제·본인인증·AI 기능 연동을 맡습니다. 기획이 정리되지 않은 단계여도 괜찮습니다. 디자인은 협력 디자이너와 함께 진행하거나 보유하신 시안을 그대로 구현합니다.",
+      link: { href: "/portfolio/", label: "실제 프로젝트 사례 보기" },
     },
     {
       question: "개발 비용은 어떻게 산정되나요?",
       answer:
-        "프로젝트의 범위, 복잡도, 개발 기간에 따라 비용이 산정됩니다. 초기 상담을 통해 요구사항을 파악한 후 상세한 견적서를 제공해 드립니다. 무료 상담을 통해 대략적인 예산 범위를 먼저 확인하실 수 있습니다.",
+        "프로젝트의 범위, 복잡도, 개발 기간에 따라 산정합니다. 무료 상담에서 대략적인 예산 범위를 먼저 확인하실 수 있고, 요구사항을 정리한 뒤에는 산정 근거가 담긴 견적서를 드립니다.",
+      link: { href: "/guides/outsourcing-cost/", label: "외주 개발 비용 가이드 읽기" },
+    },
+    {
+      question: "개발 기간은 얼마나 걸리나요?",
+      answer:
+        "프로젝트 규모에 따라 2주에서 3개월 정도 소요됩니다. 상담 → 기획·설계 → 디자인 → 개발 → 테스트 → 배포 순으로 진행하며, 단계마다 진행 상황을 공유하고 피드백을 반영합니다.",
+      link: { href: "/guides/mvp-development/", label: "MVP 개발 기간과 프로세스 읽기" },
     },
     {
       question: "유지보수는 어떻게 지원되나요?",
       answer:
-        "프로젝트 완료 후 1~3개월의 무상 유지보수 기간을 제공합니다. 이후에는 월정액 또는 건별 유지보수 계약을 통해 지속적인 지원이 가능합니다. 긴급 이슈 발생 시 24시간 내 대응을 원칙으로 합니다.",
+        "프로젝트 완료 후 1~3개월의 무상 유지보수 기간을 제공합니다. 이후에는 월정액 또는 건별 유지보수 계약으로 지속적인 지원이 가능합니다. 긴급 이슈는 24시간 내 대응을 원칙으로 합니다.",
+      link: { href: "/guides/maintenance-contract/", label: "유지보수 계약 가이드 읽기" },
     },
     {
       question: "어떤 기술 스택을 사용하나요?",
       answer:
-        "프론트엔드는 React, Next.js, Vue.js를, 백엔드는 Node.js, Python(FastAPI), Go를 주로 사용합니다. 모바일 앱은 React Native, Flutter로 크로스 플랫폼 개발을 지원합니다. 클라우드는 AWS, GCP 환경을 지원합니다.",
+        "프론트엔드는 Next.js·React(TypeScript), 백엔드는 Python(FastAPI)과 Supabase·PostgreSQL·MySQL, 모바일 앱은 Flutter를 주로 사용합니다. 프로젝트 성격과 운영 비용에 맞춰 선택하며, 이미 사용 중인 기술이 있다면 그에 맞춥니다.",
     },
     {
       question: "기존 시스템과 연동이 가능한가요?",
       answer:
-        "네, 가능합니다. REST API, GraphQL, 웹훅 등 다양한 방식으로 기존 시스템과의 연동을 지원합니다. ERP, CRM, 결제 시스템 등 다양한 외부 서비스와의 통합 경험이 풍부합니다.",
+        "네, 가능합니다. REST API와 웹훅으로 기존 시스템과 연동하며, 결제(PG), 휴대폰 본인인증, 문자 발송, 검색 엔진 연동을 실제 서비스에서 구축·운영한 경험이 있습니다.",
     },
     {
       question: "프로젝트 진행 중 요구사항 변경이 가능한가요?",
       answer:
-        "애자일 방법론을 적용하여 유연하게 요구사항 변경에 대응합니다. 다만, 큰 범위의 변경은 일정과 비용에 영향을 줄 수 있으므로 사전 협의가 필요합니다. 스프린트 단위로 진행 상황을 공유하며 조율합니다.",
+        "가능합니다. 주 단위로 진행 상황을 공유하며 우선순위를 함께 조정합니다. 다만 범위가 크게 바뀌는 변경은 일정과 비용에 영향을 줄 수 있어 사전에 협의합니다.",
+    },
+    {
+      question: "개인 개발자(프리랜서)에게 맡기는 것과 무엇이 다른가요?",
+      answer:
+        "기획·디자인·개발·배포·운영을 한 팀이 책임지고, 진행 과정과 산출물을 문서로 남깁니다. 담당자 한 사람의 사정에 프로젝트가 멈추지 않도록 운영 절차와 인수인계 자료까지 함께 납품합니다.",
+      link: { href: "/guides/freelancer-vs-agency/", label: "프리랜서 vs 에이전시 비교 읽기" },
     },
   ],
   en: [
     {
-      question: "What is the project development process?",
+      question: "What kinds of projects do you take on?",
       answer:
-        "Projects proceed through Planning → Design → Development → Testing → Deployment → Maintenance stages. We communicate closely with clients at each stage and incorporate feedback. Depending on the project scope, it takes 2 weeks to 3 months.",
+        "Websites and brand sites, web services and SaaS with accounts and payments, MVPs, business systems such as reservations and queues, and integrations for payments, identity verification, and AI features. It's fine if your plan isn't fully formed yet. For design, we work with partner designers or build from the mockups you already have.",
+      link: { href: "/portfolio/", label: "See real project cases" },
     },
     {
       question: "How is the development cost calculated?",
       answer:
-        "Costs are calculated based on project scope, complexity, and development period. After understanding your requirements through initial consultation, we provide a detailed quote. You can first check the approximate budget range through a free consultation.",
+        "Cost depends on scope, complexity, and timeline. A free consultation gives you a rough budget range first; once requirements are organized, you receive a quote that shows how it was calculated.",
+      link: { href: "/guides/outsourcing-cost/", label: "Read the cost guide (Korean)" },
+    },
+    {
+      question: "How long does development take?",
+      answer:
+        "Typically two weeks to three months depending on scale. We move through consultation → planning → design → development → testing → deployment, sharing progress and applying feedback at each stage.",
+      link: { href: "/guides/mvp-development/", label: "Read the MVP timeline guide (Korean)" },
     },
     {
       question: "How is maintenance supported?",
       answer:
-        "We provide 1-3 months of free maintenance after project completion. Afterwards, continuous support is available through monthly or per-case maintenance contracts. We respond to urgent issues within 24 hours.",
+        "We provide 1–3 months of free maintenance after completion. After that, ongoing support is available through monthly or per-case contracts. Urgent issues are answered within 24 hours.",
+      link: { href: "/guides/maintenance-contract/", label: "Read the maintenance guide (Korean)" },
     },
     {
       question: "What technology stack do you use?",
       answer:
-        "For frontend, we primarily use React, Next.js, and Vue.js. For backend, we use Node.js, Python(FastAPI), and Go. For mobile apps, we support cross-platform development with React Native and Flutter. We support AWS and GCP cloud environments.",
+        "Mainly Next.js and React (TypeScript) on the frontend, Python (FastAPI) with Supabase, PostgreSQL, or MySQL on the backend, and Flutter for mobile apps. We choose based on the project and its running costs, and adapt to technology you already use.",
     },
     {
       question: "Is integration with existing systems possible?",
       answer:
-        "Yes, it is possible. We support integration with existing systems through REST API, GraphQL, webhooks, and more. We have extensive experience integrating with various external services including ERP, CRM, and payment systems.",
+        "Yes. We integrate through REST APIs and webhooks, and have built and operated payment gateway, phone identity verification, SMS, and search engine integrations in production services.",
     },
     {
       question: "Can requirements be changed during the project?",
       answer:
-        "We apply agile methodology to flexibly respond to requirement changes. However, large-scale changes may affect schedule and cost, so prior consultation is required. We share progress and coordinate on a sprint basis.",
+        "Yes. We share progress weekly and adjust priorities together. Changes that significantly alter the scope can affect schedule and cost, so we agree on those in advance.",
+    },
+    {
+      question: "How is this different from hiring a freelancer?",
+      answer:
+        "One team owns planning, design, development, deployment, and operations, and documents the process and deliverables. We also hand over operating procedures and transition materials so the project never depends on a single person's availability.",
+      link: { href: "/guides/freelancer-vs-agency/", label: "Read freelancer vs agency (Korean)" },
     },
   ],
 };
@@ -78,13 +116,14 @@ const faqData = {
 interface FAQItemProps {
   question: string;
   answer: string;
+  link?: { href: string; label: string };
   isOpen: boolean;
   onToggle: () => void;
   index: number;
   theme: string;
 }
 
-function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemProps) {
+function FAQItem({ question, answer, link, isOpen, onToggle, index, theme }: FAQItemProps) {
   const panelId = `faq-panel-${index}`;
   const buttonId = `faq-button-${index}`;
   return (
@@ -135,9 +174,20 @@ function FAQItem({ question, answer, isOpen, onToggle, index, theme }: FAQItemPr
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <p className={`pb-6 px-2 leading-relaxed ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
-              {answer}
-            </p>
+            <div className="pb-6 px-2">
+              <p className={`leading-relaxed ${theme === "dark" ? "text-gray-300" : "text-gray-700"}`}>
+                {answer}
+              </p>
+              {link && (
+                <Link
+                  href={link.href}
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-red-500 hover:text-red-400 transition-colors"
+                >
+                  {link.label}
+                  <span aria-hidden>→</span>
+                </Link>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -219,6 +269,7 @@ export default function FAQ() {
               key={index}
               question={faq.question}
               answer={faq.answer}
+              link={faq.link}
               isOpen={openIndex === index}
               onToggle={() => setOpenIndex(openIndex === index ? null : index)}
               index={index}

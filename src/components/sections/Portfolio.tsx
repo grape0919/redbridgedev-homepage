@@ -19,6 +19,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { projects } from "@/components/portfolio/meta";
 import SectionHeader from "@/components/ui/SectionHeader";
 import IconTile from "@/components/ui/IconTile";
+import { trackEvent } from "@/lib/analytics";
 
 
 // 메인 페이지에 노출할 대표 프로젝트 — 데이터는 /portfolio 와 동일한 meta.ts 단일 소스
@@ -28,19 +29,19 @@ const featured: {
   gradient: string;
 }[] = [
   { slug: "vocaro", icon: Notebook, gradient: "from-red-500 to-orange-500" },
+  { slug: "hospital-queue", icon: ClipboardText, gradient: "from-red-500 to-rose-500" },
+  { slug: "wine-importer", icon: Wine, gradient: "from-red-500 to-red-700" },
   { slug: "payments", icon: QrCode, gradient: "from-red-500 to-pink-500" },
   { slug: "ai-backend", icon: Brain, gradient: "from-red-500 to-violet-500" },
-  { slug: "hospital-queue", icon: ClipboardText, gradient: "from-red-500 to-rose-500" },
   { slug: "search", icon: MapPin, gradient: "from-red-500 to-amber-500" },
-  { slug: "goldluckwine", icon: Wine, gradient: "from-red-500 to-red-700" },
 ];
 
 const content = {
   ko: {
     subtitle: "Our Work",
-    title: "운영 중인",
-    titleHighlight: "포트폴리오",
-    description: "직접 설계하고 구축해 운영까지 책임진 실제 프로젝트들입니다",
+    title: "프로젝트",
+    titleHighlight: "사례",
+    description: "고객 프로젝트와 자체 서비스 — 직접 만들고 지금도 운영하는 실제 사례입니다",
     viewMore: "자세히 보기",
     viewAll: "전체 포트폴리오 보기",
     moreProjects: "비슷한 프로젝트를 계획 중이신가요?",
@@ -49,9 +50,9 @@ const content = {
   },
   en: {
     subtitle: "Our Work",
-    title: "Portfolio in",
-    titleHighlight: "Production",
-    description: "Real projects we designed, built, and operate in production",
+    title: "Project",
+    titleHighlight: "Case Studies",
+    description: "Client projects and in-house services — real work we built and still run",
     viewMore: "View Details",
     viewAll: "View Full Portfolio",
     moreProjects: "Planning a similar project?",
@@ -61,7 +62,7 @@ const content = {
 };
 
 // 운영 중 뱃지를 달 프로젝트 (period에 '운영 중'이 포함된 것과 동일하지만 명시적으로 관리)
-const liveSlugs = new Set(["vocaro", "hospital-queue", "goldluckwine"]);
+const liveSlugs = new Set(["vocaro", "hospital-queue", "wine-importer"]);
 
 export default function Portfolio() {
   const ref = useRef<HTMLDivElement>(null);
@@ -170,6 +171,9 @@ export default function Portfolio() {
               >
                 <Link
                   href={`/portfolio/${f.slug}/`}
+                  onClick={() =>
+                    trackEvent("select_content", { content_type: "portfolio", item_id: f.slug })
+                  }
                   className="glass-panel group relative flex flex-col h-full min-h-[300px] rounded-3xl overflow-hidden p-8 transition-all duration-300 hover:border-red-500/40"
                 >
                   {/* Corner gradient accent */}
@@ -200,7 +204,7 @@ export default function Portfolio() {
                   <p className={`mt-3 text-sm leading-relaxed ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     {c.oneLiner}
                   </p>
-                  <p className="mt-3 text-xs font-medium text-red-500">{c.role}</p>
+                  <p className="mt-3 text-xs font-medium text-red-500">{c.industry}</p>
 
                   <span
                     className={`mt-auto pt-5 inline-flex items-center gap-2 text-sm font-medium transition-colors ${

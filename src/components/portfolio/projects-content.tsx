@@ -103,7 +103,7 @@ const defs: Record<string, ProjectDef> = {
       ko: {
         metaRows: [
           ["기간", "2026.03 ~ 2026.07 (진행 중)"],
-          ["역할", "백엔드 단독 구축 · AI 아키텍처 전환 주도 · 음성 파이프라인 설계"],
+          ["역할", "백엔드 전 구간 설계·구축 · AI 아키텍처 전환 · 음성 파이프라인 설계"],
           ["기술", "Python · FastAPI · MySQL · OpenAI (GPT / Whisper / TTS)"],
         ],
         intro: (
@@ -140,7 +140,7 @@ const defs: Record<string, ProjectDef> = {
           },
         ],
         stats: [
-          { value: "단독", label: "백엔드 전 구간 구축·운영" },
+          { value: "전 구간", label: "백엔드 설계·구축·운영" },
           { value: "0건", label: "네트워크 끊김에 의한 대화 유실" },
           { value: "4단계", label: "무중단 AI 아키텍처 전환" },
           { value: "출시", label: "프로덕션 앱 정식 탑재" },
@@ -149,7 +149,7 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Mar 2026 – Jul 2026 (ongoing)"],
-          ["Role", "Sole backend engineer · led AI architecture migration · designed voice pipeline"],
+          ["Role", "End-to-end backend design & build · AI architecture migration · voice pipeline"],
           ["Stack", "Python · FastAPI · MySQL · OpenAI (GPT / Whisper / TTS)"],
         ],
         intro: (
@@ -186,7 +186,7 @@ const defs: Record<string, ProjectDef> = {
           },
         ],
         stats: [
-          { value: "Solo", label: "Built & operated the entire backend" },
+          { value: "End-to-end", label: "Backend built & operated" },
           { value: "0", label: "Conversations lost to disconnects" },
           { value: "4 phases", label: "Zero-downtime architecture migration" },
           { value: "Live", label: "Shipped in the production app" },
@@ -320,7 +320,7 @@ const defs: Record<string, ProjectDef> = {
         features: [
           {
             title: "3채널 동시 전환",
-            desc: "백엔드 설계부터 모바일 앱, 파트너 웹까지 전 채널을 한 사람의 오너십으로 끝까지 마이그레이션했습니다.",
+            desc: "백엔드 설계부터 모바일 앱, 파트너 웹까지 전 채널을 한 팀의 오너십으로 끝까지 마이그레이션했습니다.",
           },
           {
             title: "개인정보 보호 강화",
@@ -366,7 +366,7 @@ const defs: Record<string, ProjectDef> = {
         features: [
           {
             title: "3 Channels at Once",
-            desc: "From backend design to the Flutter app and Next.js partner web — one owner carried the migration across every channel.",
+            desc: "From backend design to the Flutter app and Next.js partner web — one team carried the migration across every channel.",
           },
           {
             title: "Stronger Privacy",
@@ -398,13 +398,13 @@ const defs: Record<string, ProjectDef> = {
       ko: {
         metaRows: [
           ["기간", "2026.07 ~ (신규 구축)"],
-          ["역할", "단독 설계·구축"],
+          ["역할", "검색 인프라 설계·구축"],
           ["기술", "OpenSearch · 한국어 형태소 분석 · Python 색인 배치 · MySQL"],
         ],
         intro: (
           <>
             매장 약 40만 건을 대상으로 지도 마커·검색·자동완성을 지탱하는{" "}
-            <Strong>한국어 특화 검색 인프라</Strong>를 2주 만에 단독으로 구축했습니다. 검색 구조가
+            <Strong>한국어 특화 검색 인프라</Strong>를 2주 만에 구축했습니다. 검색 구조가
             바뀌어도 <Strong>서비스를 멈추지 않고</Strong> 전체 데이터를 다시 색인할 수 있습니다.
           </>
         ),
@@ -435,7 +435,7 @@ const defs: Record<string, ProjectDef> = {
         ],
         stats: [
           { value: "40만", label: "검색 대상 매장" },
-          { value: "2주", label: "0→1 단독 구축" },
+          { value: "2주", label: "0→1 구축" },
           { value: "0회", label: "재색인 중 서비스 중단" },
           { value: "분리", label: "품질 튜닝과 재색인 사이클" },
         ],
@@ -443,12 +443,12 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Jul 2026 – (new build)"],
-          ["Role", "Designed & built solo"],
+          ["Role", "Search infrastructure design & build"],
           ["Stack", "OpenSearch · Korean morphological analysis · Python indexing batch · MySQL"],
         ],
         intro: (
           <>
-            In two weeks, one engineer built the <Strong>Korean-specialized search
+            In two weeks, we built the <Strong>Korean-specialized search
             infrastructure</Strong> behind map markers, search, and autocomplete for roughly
             400,000 stores. When the index schema changes, the whole dataset can be reindexed{" "}
             <Strong>without stopping the service</Strong>.
@@ -481,7 +481,7 @@ const defs: Record<string, ProjectDef> = {
         ],
         stats: [
           { value: "400K", label: "Stores searchable" },
-          { value: "2 wks", label: "Zero-to-one, built solo" },
+          { value: "2 wks", label: "Zero-to-one build" },
           { value: "0", label: "Outages during reindexing" },
           { value: "Split", label: "Tuning decoupled from reindex" },
         ],
@@ -496,7 +496,7 @@ const defs: Record<string, ProjectDef> = {
       ko: {
         metaRows: [
           ["기간", "2026.07 ~"],
-          ["역할", "단독 설계·구축 — 프로세스 + CI/CD + 가이드 문서"],
+          ["역할", "프로세스 설계 · CI/CD · 가이드 문서"],
           ["기술", "Alembic · MySQL · GitHub Actions · Slack 알림"],
         ],
         intro: (
@@ -541,7 +541,7 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Jul 2026 –"],
-          ["Role", "Designed & built solo — process + CI/CD + guides"],
+          ["Role", "Process design · CI/CD · guides"],
           ["Stack", "Alembic · MySQL · GitHub Actions · Slack alerts"],
         ],
         intro: (
@@ -594,7 +594,7 @@ const defs: Record<string, ProjectDef> = {
       ko: {
         metaRows: [
           ["기간", "2025.12 ~ 운영 중"],
-          ["역할", "단독 기획·개발·운영 — 제품 기획부터 결제·마케팅 자동화까지"],
+          ["역할", "기획·디자인·개발·운영 전 과정 — 제품 기획부터 결제·마케팅 자동화까지"],
           ["기술", "Next.js · React · Supabase · TossPayments · OpenAI"],
           ["서비스", link("https://e-vocaro.com", "e-vocaro.com")],
         ],
@@ -632,7 +632,7 @@ const defs: Record<string, ProjectDef> = {
           },
         ],
         stats: [
-          { value: "1인", label: "기획→개발→운영 전체" },
+          { value: "전 과정", label: "기획→개발→운영" },
           { value: "운영 중", label: "구독 결제 실가동" },
           { value: "3종", label: "시험지 출력 포맷" },
           { value: "웹+앱", label: "동시 서비스 채널" },
@@ -641,7 +641,7 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Dec 2025 – in production"],
-          ["Role", "Solo: product, development, operations — through billing and marketing automation"],
+          ["Role", "Product, design, development, operations — through billing and marketing automation"],
           ["Stack", "Next.js · React · Supabase · TossPayments · OpenAI"],
           ["Service", link("https://e-vocaro.com", "e-vocaro.com")],
         ],
@@ -679,7 +679,7 @@ const defs: Record<string, ProjectDef> = {
           },
         ],
         stats: [
-          { value: "1 person", label: "Product to operations" },
+          { value: "Full cycle", label: "Product to operations" },
           { value: "Live", label: "Subscriptions in production" },
           { value: "3", label: "Test output formats" },
           { value: "Web+App", label: "Channels from one codebase" },
@@ -695,7 +695,7 @@ const defs: Record<string, ProjectDef> = {
       ko: {
         metaRows: [
           ["기간", "2025.08 ~ 운영 중"],
-          ["역할", "단독 개발 — 기획·개발·배포·운영"],
+          ["역할", "기획·개발·배포·운영 전 과정"],
           ["기술", "Next.js · PostgreSQL · Docker · SMS 연동"],
           ["고객", "정형외과 의원 (실서비스 운영 중)"],
         ],
@@ -741,7 +741,7 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Aug 2025 – in production"],
-          ["Role", "Solo: product, development, deployment, operations"],
+          ["Role", "Planning, development, deployment, operations"],
           ["Stack", "Next.js · PostgreSQL · Docker · SMS integration"],
           ["Client", "An orthopedic clinic (live in production)"],
         ],
@@ -788,16 +788,16 @@ const defs: Record<string, ProjectDef> = {
     },
   },
 
-  goldluckwine: {
+  "wine-importer": {
     stepIcons: [icon(PaintBrush), icon(Wine), icon(PencilSimple), icon(MagnifyingGlass)],
     featureIcons: [icon(PencilSimple), icon(Lightning), icon(MagnifyingGlass), icon(ShieldCheck)],
     copy: {
       ko: {
         metaRows: [
           ["기간", "2024.03 ~ 운영 중 (2026.07 전면 리뉴얼)"],
-          ["역할", "단독 개발 — 디자인 시안 구현 · CMS 구축 · SEO/성능 개선"],
+          ["역할", "디자인 시안 구현 · CMS 구축 · SEO/성능 개선"],
           ["기술", "React · TypeScript · Supabase · Vercel"],
-          ["서비스", link("https://goldluckwine.com", "goldluckwine.com")],
+          ["고객", "내추럴 와인 수입사 (고객사 요청으로 익명화)"],
         ],
         intro: (
           <>
@@ -833,7 +833,7 @@ const defs: Record<string, ProjectDef> = {
           },
         ],
         stats: [
-          { value: "운영 중", label: "goldluckwine.com 라이브" },
+          { value: "운영 중", label: "고객사 사이트 라이브" },
           { value: "3주", label: "전면 리뉴얼 완료" },
           { value: "셀프", label: "운영자 직접 콘텐츠 관리" },
           { value: "자동", label: "사이트맵·검색엔진 등록" },
@@ -842,9 +842,9 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Mar 2024 – in production (full redesign Jul 2026)"],
-          ["Role", "Solo development — pixel-faithful design build · CMS · SEO/performance"],
+          ["Role", "Pixel-faithful design build · CMS · SEO/performance"],
           ["Stack", "React · TypeScript · Supabase · Vercel"],
-          ["Service", link("https://goldluckwine.com", "goldluckwine.com")],
+          ["Client", "A natural wine importer (anonymized at the client's request)"],
         ],
         intro: (
           <>
@@ -880,7 +880,7 @@ const defs: Record<string, ProjectDef> = {
           },
         ],
         stats: [
-          { value: "Live", label: "goldluckwine.com in production" },
+          { value: "Live", label: "Client site in production" },
           { value: "3 wks", label: "Full redesign delivered" },
           { value: "Self", label: "Owner-managed content" },
           { value: "Auto", label: "Sitemap & search registration" },
@@ -896,7 +896,7 @@ const defs: Record<string, ProjectDef> = {
       ko: {
         metaRows: [
           ["기간", "2026.07 ~ (MVP 개발 중)"],
-          ["역할", "단독 기획·설계·개발 — 사업 기획서부터 제품 명세·구현까지"],
+          ["역할", "사업 기획·제품 설계·개발 — 기획서부터 제품 명세·구현까지"],
           ["기술", "Python · Flutter · 멀티모달 AI(Claude/GPT/Gemini) · OCR"],
         ],
         intro: (
@@ -942,7 +942,7 @@ const defs: Record<string, ProjectDef> = {
       en: {
         metaRows: [
           ["Period", "Jul 2026 – (MVP in progress)"],
-          ["Role", "Solo: business plan, product spec, architecture, implementation"],
+          ["Role", "Business plan, product spec, architecture, implementation"],
           ["Stack", "Python · Flutter · multimodal AI (Claude/GPT/Gemini) · OCR"],
         ],
         intro: (

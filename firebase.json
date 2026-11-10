@@ -6,6 +6,18 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "trailingSlash": true
+    "trailingSlash": true,
+    "redirects": [
+      {
+        "source": "/portfolio/goldluckwine{,/}",
+        "destination": "/portfolio/wine-importer/",
+        "type": 301
+      },
+      {
+        "source": "/brief{,/}",
+        "destination": "/guides/project-brief/",
+        "type": 301
+      }
+    ]
   }
 }

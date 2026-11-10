@@ -11,6 +11,7 @@ import { CaretDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { gsap } from "@/lib/gsap";
+import { trackEvent } from "@/lib/analytics";
 import {
   subscribePerfMode,
   getPerfLowSnapshot,
@@ -37,34 +38,34 @@ const getLowPowerServerSnapshot = () => true;
 
 const content = {
   ko: {
-    subtitle: "Web / App / Solution Development",
-    tagline1: "고객과 기술을",
-    taglineHighlight: "안전하고 튼튼하게",
-    tagline2: "연결합니다",
-    description: "지속 가능하고 확장 가능한 솔루션을 구축하는 개발 파트너",
-    ctaPrimary: "프로젝트 시작하기",
+    subtitle: "Web · App · MVP Development Agency",
+    tagline1: "기획부터 운영까지,",
+    taglineHighlight: "끝까지 책임지는",
+    tagline2: "개발 에이전시",
+    description: "홈페이지·웹서비스·MVP·업무 시스템을 한 팀이 설계하고 만들고 운영합니다",
+    ctaPrimary: "프로젝트 문의하기",
     ctaSecondary: "포트폴리오 보기",
     scroll: "Scroll",
     stats: [
-      { value: "10+", label: "년 개발 경력" },
       { value: "9개", label: "구축·운영 프로젝트" },
       { value: "3개", label: "운영 중인 서비스" },
+      { value: "1팀", label: "기획부터 운영까지 전담" },
       { value: "24h", label: "문의 회신" },
     ],
   },
   en: {
-    subtitle: "Web / App / Solution Development",
-    tagline1: "Connecting customers and technology",
-    taglineHighlight: "safely and securely",
-    tagline2: "",
-    description: "A development partner building sustainable and scalable solutions",
+    subtitle: "Web · App · MVP Development Agency",
+    tagline1: "From planning to operations,",
+    taglineHighlight: "an agency that owns",
+    tagline2: "the outcome",
+    description: "One team designs, builds, and runs your website, web service, MVP, or business system",
     ctaPrimary: "Start a Project",
     ctaSecondary: "View Portfolio",
     scroll: "Scroll",
     stats: [
-      { value: "10+", label: "Years of Experience" },
       { value: "9", label: "Projects Built & Run" },
       { value: "3", label: "Services in Production" },
+      { value: "1 team", label: "Planning through Operations" },
       { value: "24h", label: "Inquiry Response" },
     ],
   },
@@ -234,8 +235,8 @@ export default function Hero() {
         {/* SEO: primary H1 for search engines (visually replaced by logo + tagline below) */}
         <h1 className="sr-only">
           {language === "ko"
-            ? "RED BRIDGE DEV — 웹 · 앱 · 솔루션 외주 개발"
-            : "RED BRIDGE DEV — Web / App / Solution Outsourcing Development"}
+            ? "RED BRIDGE DEV — 홈페이지 · 웹서비스 · MVP 개발 에이전시"
+            : "RED BRIDGE DEV — Website, Web Service & MVP Development Agency"}
         </h1>
 
         <motion.div
@@ -297,6 +298,7 @@ export default function Hero() {
             href="#contact"
             onClick={(e) => {
               e.preventDefault();
+              trackEvent("cta_click", { location: "hero", label: "contact" });
               document
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" });
@@ -323,6 +325,7 @@ export default function Hero() {
             href="#portfolio"
             onClick={(e) => {
               e.preventDefault();
+              trackEvent("cta_click", { location: "hero", label: "portfolio" });
               document
                 .getElementById("portfolio")
                 ?.scrollIntoView({ behavior: "smooth" });

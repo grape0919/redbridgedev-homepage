@@ -413,8 +413,8 @@ export function PortfolioFootnote({ confidential = true }: { confidential?: bool
   const dark = theme === "dark";
   const note =
     language === "ko"
-      ? "기업 실서비스 프로젝트는 재직 중 수행한 개발 건으로, 코드는 사내 비공개 저장소에 있습니다. 아키텍처·수치는 보안에 문제없는 수준으로 재구성했으며, 상세 내용은 미팅에서 설명 가능합니다."
-      : "Production projects were delivered as an employee; the code lives in private company repositories. Architecture and figures have been reconstructed to a security-safe level — details can be discussed in a meeting.";
+      ? "엔터프라이즈 기술 사례는 RED BRIDGE DEV의 핵심 엔지니어가 기업 재직 중 수행한 프로젝트로, 코드는 해당 기업의 비공개 저장소에 있습니다. 아키텍처·수치는 보안에 문제없는 수준으로 재구성했으며, 상세 내용은 미팅에서 설명드립니다."
+      : "Enterprise engineering cases were delivered by RED BRIDGE DEV's lead engineer while employed at the company; the code lives in that company's private repositories. Architecture and figures are reconstructed to a security-safe level — details can be discussed in a meeting.";
   return (
     <FadeIn>
       {confidential && (

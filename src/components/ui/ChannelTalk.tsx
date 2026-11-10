@@ -2,9 +2,15 @@
 
 import { useEffect } from "react";
 
+type ChannelIOFn = {
+  (...args: unknown[]): void;
+  q?: unknown[][];
+  c?: (args: unknown[]) => void;
+};
+
 declare global {
   interface Window {
-    ChannelIO?: (command: string, options?: Record<string, unknown>) => void;
+    ChannelIO?: ChannelIOFn;
     ChannelIOInitialized?: boolean;
   }
 }
@@ -29,20 +35,13 @@ export default function ChannelTalk() {
       if (w.ChannelIO) {
         return console.error("ChannelIO script included twice.");
       }
-      const ch: {
-        (command: string, options?: Record<string, unknown>): void;
-        q: unknown[][];
-        c: (args: unknown[]) => void;
-      } = function (command: string, options?: Record<string, unknown>) {
-        ch.c([command, options]);
-      } as {
-        (command: string, options?: Record<string, unknown>): void;
-        q: unknown[][];
-        c: (args: unknown[]) => void;
+      // SDK 로드 전 호출을 인자 전체로 큐에 쌓는다 (openChat처럼 인자가 3개인 명령 포함)
+      const ch: ChannelIOFn = function (...args: unknown[]) {
+        ch.c?.(args);
       };
       ch.q = [];
       ch.c = function (args: unknown[]) {
-        ch.q.push(args);
+        ch.q?.push(args);
       };
       w.ChannelIO = ch;
 
@@ -73,4 +72,9 @@ export default function ChannelTalk() {
 // Channel.io 열기 함수 (외부에서 사용 가능)
 export const openChannelTalk = () => {
   window.ChannelIO?.("showMessenger");
+};
+
+/** 새 채팅을 열고 입력창에 메시지를 미리 채운다 — 방문자가 전송만 누르면 된다. */
+export const openChannelTalkWithMessage = (message: string) => {
+  window.ChannelIO?.("openChat", undefined, message);
 };

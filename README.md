@@ -4,7 +4,7 @@
 홈페이지·랜딩페이지·웹서비스·MVP 개발 | Business websites, web applications and practical MVPs.
 
 
-스타트업 CTO 출신 9년 차 개발자가 고객과 직접 소통합니다. 프로젝트 범위에 따라 기획자·디자이너와 협업하며, 기능·제외 범위·검수 기준을 먼저 합의합니다.
+RED BRIDGE DEV는 기획부터 배포·운영까지 책임지는 개발 에이전시입니다. 스타트업 CTO 출신 시니어 엔지니어가 직접 설계하고 고객과 소통하며, 프로젝트 범위에 따라 기획자·디자이너와 한 팀으로 협업합니다. 기능·제외 범위·검수 기준을 먼저 합의합니다.
 
 
 ## 실제 개발 사례 / Selected work
@@ -19,7 +19,7 @@
 
 
 - [개발 분야·상담 안내](https://redbridgedev.ai.kr/?utm_source=github&utm_medium=referral&utm_campaign=website_inquiry_202610)
-- [무료 상담 준비 도구](https://redbridgedev.ai.kr/brief/?utm_source=github&utm_medium=referral&utm_campaign=brief_tool_20261021): 회원가입 없이 문의 초안을 정리합니다. 자동 견적이나 상담 접수 기능은 아닙니다.
+- [프로젝트 브리프 작성법·템플릿](https://redbridgedev.ai.kr/guides/project-brief/?utm_source=github&utm_medium=referral&utm_campaign=brief_tool_20261021): 회원가입 없이 문의 초안을 정리할 수 있는 한 장짜리 템플릿입니다. 자동 견적이나 상담 접수 기능은 아닙니다.
 
 
 기술: React · Next.js · TypeScript · Node.js · Python/FastAPI · Java/Spring Boot. 실제 비용·기간·유지보수 범위는 요구사항 확인 후 협의하며 외부 서비스 이용료는 별도입니다.

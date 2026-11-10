@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { GuideChrome } from "./chrome";
 
 // 셸 — 포트폴리오와 동일한 헤더/토글을 공유하는 클라이언트 크롬으로 감싼다.
@@ -68,5 +69,17 @@ export function InfoTable({
         </tbody>
       </table>
     </div>
+  );
+}
+
+/** 본문 속 내부 링크 (포트폴리오·문의·다른 가이드) */
+export function A({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="font-medium text-red-500 underline underline-offset-2 hover:text-red-400 transition-colors"
+    >
+      {children}
+    </Link>
   );
 }

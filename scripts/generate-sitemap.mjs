@@ -50,6 +50,12 @@ const urls = [
     priority: "1.0",
   },
   {
+    loc: `${BASE}/ax/`,
+    lastmod: lastCommitDate(["src/app/ax", "src/components/ax"]),
+    changefreq: "monthly",
+    priority: "0.9",
+  },
+  {
     loc: `${BASE}/portfolio/`,
     lastmod: lastCommitDate(portfolioSources),
     changefreq: "monthly",

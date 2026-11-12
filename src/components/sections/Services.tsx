@@ -18,8 +18,22 @@ import Link from "next/link";
 import { trackEvent } from "@/lib/analytics";
 
 
-// 실제로 만들어 운영해 본 영역만 서비스로 내건다. 각 카드는 대응하는 포트폴리오 사례로 연결된다.
-const servicesData = {
+interface ServiceCard {
+  icon: typeof RbdServiceWeb;
+  title: string;
+  description: string;
+  features: string[];
+  gradient: string;
+  /** 대응하는 포트폴리오 사례 */
+  caseSlug?: string;
+  caseLabel?: string;
+  /** 사례 대신 전용 상세 페이지로 보내는 카드 (AI 업무 자동화 → /ax/) */
+  href?: string;
+  linkLabel?: string;
+}
+
+// 실제로 만들어 운영해 본 영역만 서비스로 내건다. 각 카드는 대응하는 포트폴리오 사례(또는 상세 페이지)로 연결된다.
+const servicesData: Record<"ko" | "en", ServiceCard[]> = {
   ko: [
     {
       icon: RbdServiceWeb,
@@ -98,18 +112,18 @@ const servicesData = {
     },
     {
       icon: RbdServiceCloud,
-      title: "AI 기능 개발",
+      title: "AI 업무 자동화 · 시스템 연동",
       description:
-        "챗봇, 문서 인식, 음성 대화 같은 AI 기능을 실제 서비스에 안전하게 붙입니다.",
+        "반복되는 데이터 조회와 자료 정리, 문서 검증 업무를 줄입니다. 사내 데이터와 AI를 연결하고, 직원들이 직접 사용할 업무 도구를 개발합니다.",
       features: [
-        "LLM 챗봇 · 상담 자동화",
-        "이미지 · 문서 인식",
-        "음성 인식 · 합성",
-        "AI 답변 품질 검증",
+        "사내 DB · GA4와 AI 연결",
+        "데이터 수집 · 정리 · 검증 자동화",
+        "기존 서비스 AI 기능 연동",
+        "업무별 사용 교육과 도입 지원",
       ],
       gradient: "from-red-500 to-red-700",
-      caseSlug: "ai-backend",
-      caseLabel: "AI 대화 서비스 백엔드",
+      href: "/ax/",
+      linkLabel: "AI 업무 자동화 자세히 보기",
     },
   ],
   en: [
@@ -190,18 +204,18 @@ const servicesData = {
     },
     {
       icon: RbdServiceCloud,
-      title: "AI Features",
+      title: "AI Workflow Automation & Integration",
       description:
-        "Chatbots, document recognition, voice conversations — AI features added safely to real services.",
+        "Cut down repetitive data lookups, file wrangling, and document checks. We connect your internal data to AI and build the tools your staff actually use.",
       features: [
-        "LLM chatbots · support automation",
-        "Image · document recognition",
-        "Speech recognition · synthesis",
-        "AI answer quality checks",
+        "Internal DB · GA4 connected to AI",
+        "Data collection · cleanup · validation",
+        "AI features for existing services",
+        "Per-team onboarding and training",
       ],
       gradient: "from-red-500 to-red-700",
-      caseSlug: "ai-backend",
-      caseLabel: "AI chat service backend",
+      href: "/ax/",
+      linkLabel: "More on AI workflow automation",
     },
   ],
 };
@@ -211,8 +225,13 @@ const content = {
     subtitle: "Our Services",
     title: "무엇을",
     titleHighlight: "만드나요",
-    description: "홈페이지부터 결제·AI가 들어간 서비스까지 — 직접 만들어 운영해 본 영역만 말합니다",
+    description:
+      "회사 소개를 위한 홈페이지, 실제 기능을 검증할 웹서비스, 반복 업무를 줄이는 자동화 도구까지. 목적과 현재 업무 방식에 맞춰 필요한 범위를 함께 정합니다.",
     relatedCase: "관련 사례",
+    axTitle: "AI를 도입한 뒤, 실제 업무에서 쓰고 계신가요?",
+    axDescription:
+      "데이터를 확인할 때마다 개발팀에 요청하거나, 여러 시스템에서 자료를 모으는 일을 반복하고 있다면 업무 흐름부터 살펴봅니다. 필요한 데이터를 연결하고, 담당자가 직접 사용할 수 있는 도구를 만듭니다.",
+    axButton: "AI 활용 도입 사례와 서비스 보기",
     ctaQuestion: "어떤 방식이 맞을지 아직 모르겠다면, 상황부터 들려주세요",
     ctaButton: "무료 상담 받기",
   },
@@ -220,8 +239,13 @@ const content = {
     subtitle: "Our Services",
     title: "What We",
     titleHighlight: "Build",
-    description: "From websites to services with payments and AI — only what we've built and run ourselves",
+    description:
+      "A website to introduce your company, a web service to validate real features, or a tool that removes repetitive work. We scope it together around your goal and how you work today.",
     relatedCase: "Case study",
+    axTitle: "You adopted AI — is it actually used in daily work?",
+    axDescription:
+      "If you ask developers every time you need data, or keep collecting files from several systems, we start by looking at the workflow. We connect the data you need and build tools your team can use directly.",
+    axButton: "See AI adoption cases and services",
     ctaQuestion: "Not sure which fits? Tell us your situation first",
     ctaButton: "Get Free Consultation",
   },
@@ -324,13 +348,13 @@ export default function Services() {
                     ))}
                   </ul>
 
-                  {/* 관련 포트폴리오 사례 */}
+                  {/* 관련 포트폴리오 사례 (또는 전용 상세 페이지) */}
                   <Link
-                    href={`/portfolio/${service.caseSlug}/`}
+                    href={service.href ?? `/portfolio/${service.caseSlug}/`}
                     onClick={() =>
                       trackEvent("select_content", {
-                        content_type: "service_case",
-                        item_id: service.caseSlug,
+                        content_type: service.href ? "service_page" : "service_case",
+                        item_id: service.href ?? service.caseSlug,
                       })
                     }
                     className={`mt-7 pt-5 flex items-center justify-between gap-3 border-t text-sm transition-colors hover:text-red-500 ${
@@ -339,11 +363,15 @@ export default function Services() {
                         : "border-gray-900/10 text-gray-600"
                     }`}
                   >
-                    <span>
-                      <span className="text-red-500 font-medium">{t.relatedCase}</span>
-                      <span className="mx-2 opacity-40">·</span>
-                      {service.caseLabel}
-                    </span>
+                    {service.href ? (
+                      <span className="text-red-500 font-medium">{service.linkLabel}</span>
+                    ) : (
+                      <span>
+                        <span className="text-red-500 font-medium">{t.relatedCase}</span>
+                        <span className="mx-2 opacity-40">·</span>
+                        {service.caseLabel}
+                      </span>
+                    )}
                     <span aria-hidden>→</span>
                   </Link>
                 </div>
@@ -351,6 +379,46 @@ export default function Services() {
             </motion.div>
           ))}
         </div>
+
+        {/* AI 업무 자동화 소개 — 상세 페이지(/ax/)로 연결 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="mt-8"
+        >
+          <div className="glass-panel rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-8">
+            <div className="flex-1">
+              <span className="text-red-500 text-sm tracking-widest uppercase font-medium">
+                AI Automation
+              </span>
+              <h3
+                className={`mt-3 text-2xl sm:text-3xl font-bold ${
+                  theme === "dark" ? "text-white" : "text-gray-900"
+                }`}
+              >
+                {t.axTitle}
+              </h3>
+              <p
+                className={`mt-4 leading-relaxed max-w-3xl ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                {t.axDescription}
+              </p>
+            </div>
+            <Link
+              href="/ax/"
+              onClick={() =>
+                trackEvent("cta_click", { location: "services_ax_banner", label: "ax_page" })
+              }
+              className="btn-primary shrink-0 px-7 py-3.5 text-sm sm:text-base"
+            >
+              {t.axButton}
+              <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </motion.div>
 
         {/* CTA */}
         <motion.div

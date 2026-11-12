@@ -67,7 +67,7 @@ const content = {
     subtitle: "Contact Us",
     title: "프로젝트",
     titleHighlight: "문의",
-    description: "새로운 프로젝트를 시작하고 싶으시다면 언제든 연락주세요",
+    description: "새 프로젝트든, 줄이고 싶은 반복 업무든 편하게 알려주세요. 기획서가 없어도 괜찮습니다",
     contactTitle: "연락처",
     quickContact: "빠른 연락",
     kakaoButton: "카카오톡 채널 문의",
@@ -91,7 +91,8 @@ const content = {
         web: "홈페이지 · 브랜드 사이트",
         app: "웹서비스 · 앱 · MVP",
         solution: "업무 시스템",
-        consulting: "결제 · 인증 · AI 연동",
+        consulting: "결제 · 인증 · 백엔드",
+        ax: "AI 업무 자동화 · 시스템 연동",
         other: "기타 / 아직 잘 모르겠어요",
       },
       budgets: {
@@ -131,7 +132,7 @@ const content = {
     subtitle: "Contact Us",
     title: "Project",
     titleHighlight: "Inquiry",
-    description: "Contact us anytime if you want to start a new project",
+    description: "A new project or repetitive work you want to cut down — tell us about it. No spec required",
     contactTitle: "Contact",
     quickContact: "Quick Contact",
     kakaoButton: "KakaoTalk Channel",
@@ -155,7 +156,8 @@ const content = {
         web: "Website · Brand Site",
         app: "Web Service · App · MVP",
         solution: "Business System",
-        consulting: "Payments · Identity · AI",
+        consulting: "Payments · Identity · Backend",
+        ax: "AI Workflow Automation & Integration",
         other: "Other / Not sure yet",
       },
       budgets: {
@@ -466,6 +468,9 @@ export default function Contact() {
                     </option>
                     <option value="consulting" className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
                       {t.form.projectTypes.consulting}
+                    </option>
+                    <option value="ax" className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
+                      {t.form.projectTypes.ax}
                     </option>
                     <option value="other" className={theme === "dark" ? "bg-gray-900" : "bg-white"}>
                       {t.form.projectTypes.other}

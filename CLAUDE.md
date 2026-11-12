@@ -55,6 +55,14 @@ The site speaks as an **agency** ("한 팀이 기획부터 운영까지"), never
 - Client names are anonymized unless the client's own product is ours (Vocaro). The wine importer case is anonymized at the client's request (slug `wine-importer`, no domain/brand); the clinic is "정형외과 의원".
 - Portfolio order lives in `src/components/portfolio/meta.ts` (client/in-house first, enterprise after). Guides live in `src/components/guides/` (KO only).
 
+### AX page (`/ax/`, 2026-11)
+
+AI 업무 자동화·시스템 연동 service page. Copy lives in `src/components/ax/content.ts` (KO only), layout in `src/app/ax/page.tsx` (server-rendered, with Service/FAQPage/Breadcrumb JSON-LD), client shell + consult button in `src/components/ax/chrome.tsx`. Entry points: nav "AI 자동화", the 6th Services card, the banner under the Services grid, and the footer. Rules for its copy:
+- Do not name the speaker as "한 팀" or "개발자 한 명" — keep the voice neutral.
+- The cases are **experience gained while employed, not agency contracts**: every case carries the "재직 중 수행 경험" badge. No company names, product names, or launch countries.
+- Only the confirmed scope and figures (e.g. 40분 → 3분대). No invented savings rates, guarantees, or features (access control, audit logs, auto-merge/deploy).
+- The consult button opens ChannelTalk with the `[AI 업무 자동화 문의]` draft; never ask for passwords, API keys, or personal data in the first contact.
+
 ### Contact → ChannelTalk
 
 There is no mail backend (static export). [Contact.tsx](src/components/sections/Contact.tsx) builds the inquiry text and opens ChannelTalk with it pre-filled (`openChannelTalkWithMessage` → `ChannelIO('openChat', undefined, text)`); the visitor presses send. A `mailto:` link is the fallback. Do not reintroduce third-party form relays (FormSubmit was removed at the owner's request). `src/app/api/contact/route.ts` (nodemailer) is legacy and is **not** part of the static bundle.

@@ -32,7 +32,7 @@ Single-page marketing site for RED BRIDGE DEV (웹/앱/솔루션 외주 개발).
 ### Page composition
 
 [src/app/page.tsx](src/app/page.tsx) is a single `"use client"` component that stacks section components in order:
-`Hero → Services → Portfolio → Process → About(왜 RED BRIDGE) → FAQ → Contact → Footer`, with `Navigation` and `ChannelTalk` as overlays. `scripts/check-landing.mjs`(prebuild) enforces this order and the nav anchors — update `EXPECTED_ORDER` there when reordering. All sections live in [src/components/sections/](src/components/sections/) and are self-contained — each owns its copy (both `ko` and `en` objects inline) and its animation logic. There is no CMS or remote content source.
+`Hero → Services → Portfolio → Process → About(왜 RED BRIDGE) → FAQ → Contact → Footer`, with `Navigation` as an overlay. `scripts/check-landing.mjs`(prebuild) enforces this order and the nav anchors — update `EXPECTED_ORDER` there when reordering. All sections live in [src/components/sections/](src/components/sections/) and are self-contained — each owns its copy (both `ko` and `en` objects inline) and its animation logic. There is no CMS or remote content source.
 
 ### i18n + theme
 
@@ -65,7 +65,7 @@ AI 업무 자동화·시스템 연동 service page. Copy lives in `src/component
 
 ### Contact → ChannelTalk
 
-There is no mail backend (static export). [Contact.tsx](src/components/sections/Contact.tsx) builds the inquiry text and opens ChannelTalk with it pre-filled (`openChannelTalkWithMessage` → `ChannelIO('openChat', undefined, text)`); the visitor presses send. A `mailto:` link is the fallback. Do not reintroduce third-party form relays (FormSubmit was removed at the owner's request). `src/app/api/contact/route.ts` (nodemailer) is legacy and is **not** part of the static bundle.
+There is no mail backend (static export). [Contact.tsx](src/components/sections/Contact.tsx) builds the inquiry text and opens ChannelTalk with it pre-filled (`openChannelTalkWithMessage` → `ChannelIO('openChat', undefined, text)`); the visitor presses send. A `mailto:` link is the fallback. `<ChannelTalk />` is mounted **once in the root layout** — do not mount it per page: a client-side route change unmounts the page copy, and the next page's buttons then call a messenger that never re-boots. The plugin only boots on the `redbridgedev.ai.kr` domain (Firebase preview channels won't open it), and it returns 401 to headless user agents — test with a regular Chrome UA. Do not reintroduce third-party form relays (FormSubmit was removed at the owner's request). `src/app/api/contact/route.ts` (nodemailer) is legacy and is **not** part of the static bundle.
 
 ### Analytics
 

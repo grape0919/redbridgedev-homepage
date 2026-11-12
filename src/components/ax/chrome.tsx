@@ -3,10 +3,9 @@
 import { useState, type ReactNode } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { PortfolioShell } from "@/components/portfolio/ui";
-import ChannelTalk from "@/components/ui/ChannelTalk";
 import { trackEvent } from "@/lib/analytics";
 
-/* AX(/ax/) 페이지의 클라이언트 셸 — 서브페이지 공용 헤더·푸터를 쓰고 채널톡을 띄운다.
+/* AX(/ax/) 페이지의 클라이언트 셸 — 서브페이지 공용 헤더·푸터를 쓴다 (채널톡은 루트 레이아웃이 띄운다).
    본문은 한국어 전용이라 EN 모드에서는 안내 문구만 노출한다. */
 
 const navLabels = {
@@ -26,7 +25,6 @@ export function AxChrome({ children }: { children: ReactNode }) {
   const { language } = useLanguage();
   return (
     <PortfolioShell navLinks={navLabels[language]}>
-      <ChannelTalk />
       {language === "en" && (
         <p className="mb-8 rounded-2xl border border-red-900/40 bg-red-950/20 px-4 py-3 text-sm text-red-400">
           This page is currently available in Korean only.

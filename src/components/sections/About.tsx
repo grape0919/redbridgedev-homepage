@@ -195,7 +195,7 @@ export default function About() {
                   <value.icon className="w-8 h-8" />
                 </IconTile>
                 <h3
-                  className={`text-xl font-semibold mb-3 ${
+                  className={`text-xl font-bold mb-3 ${
                     theme === "dark" ? "text-white" : "text-gray-900"
                   }`}
                 >
@@ -224,7 +224,7 @@ export default function About() {
             {t.techSubtitle}
           </span>
           <h3
-            className={`mt-4 text-3xl sm:text-4xl font-bold mb-12 ${
+            className={`mt-4 text-2xl sm:text-3xl font-bold mb-10 ${
               theme === "dark" ? "text-white" : "text-gray-900"
             }`}
           >

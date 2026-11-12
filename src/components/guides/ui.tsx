@@ -30,7 +30,7 @@ export function UL({ children }: { children: ReactNode }) {
 
 export function Callout({ children }: { children: ReactNode }) {
   return (
-    <div className="my-6 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+    <div className="my-6 rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-4 text-sm leading-relaxed text-[var(--text-secondary)]">
       {children}
     </div>
   );
@@ -45,7 +45,7 @@ export function InfoTable({
   rows: string[][];
 }) {
   return (
-    <div className="my-6 overflow-x-auto rounded-xl border border-[var(--border)]">
+    <div className="my-6 overflow-x-auto rounded-2xl border border-[var(--border)]">
       <table className="w-full min-w-[480px] text-sm">
         <thead>
           <tr className="bg-[var(--surface)] text-left">

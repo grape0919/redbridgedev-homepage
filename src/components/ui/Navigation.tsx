@@ -67,12 +67,14 @@ export default function Navigation() {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      window.location.href = href;
+      window.location.assign(href);
     }
     setIsMobileMenuOpen(false);
   };
 
   const ctaText = language === "ko" ? "프로젝트 문의" : "Get Started";
+  // 스크롤 전에는 내비가 투명한 채로 어두운 히어로 위에 놓인다 — 테마와 무관하게 밝은 색을 쓴다
+  const onDark = theme === "dark" || !isScrolled;
 
   return (
     <>
@@ -100,7 +102,7 @@ export default function Navigation() {
               whileHover={{ scale: 1.02 }}
             >
               <Image
-                src={theme === "dark" ? "/logo_white.png" : "/logo_red.png"}
+                src={onDark ? "/logo_white.png" : "/logo_red.png"}
                 alt="RED BRIDGE DEV"
                 width={160}
                 height={40}
@@ -122,7 +124,7 @@ export default function Navigation() {
                   className={`relative text-sm font-medium transition-colors ${
                     activeSection === item.href.slice(1)
                       ? "text-red-500"
-                      : theme === "dark"
+                      : onDark
                       ? "text-gray-300 hover:text-white"
                       : "text-gray-600 hover:text-gray-900"
                   }`}
@@ -161,7 +163,7 @@ export default function Navigation() {
             {/* Mobile Menu Button */}
             <div className="lg:hidden flex items-center">
               <motion.button
-                className={`p-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`}
+                className={`p-2 ${onDark ? "text-white" : "text-gray-900"}`}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? (language === "ko" ? "메뉴 닫기" : "Close menu") : (language === "ko" ? "메뉴 열기" : "Open menu")}
                 aria-expanded={isMobileMenuOpen}

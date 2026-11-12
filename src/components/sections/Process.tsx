@@ -236,7 +236,7 @@ export default function Process() {
       {/* Desktop: pinned horizontal scrub */}
       <div className="process-desktop hidden lg:flex relative h-screen w-full flex-col">
         {/* Header */}
-        <div className="relative max-w-7xl mx-auto px-8 pt-24 w-full">
+        <div className="relative max-w-7xl mx-auto px-8 pt-32 w-full">
           <SectionHeader
             eyebrow={t.subtitle}
             title={t.title}
@@ -287,7 +287,7 @@ export default function Process() {
                   </div>
 
                   <h3
-                    className={`text-2xl font-bold mb-3 ${
+                    className={`text-xl font-bold mb-3 ${
                       theme === "dark" ? "text-white" : "text-gray-900"
                     }`}
                   >
@@ -334,7 +334,7 @@ export default function Process() {
             <div className="process-step flex-shrink-0 w-[440px]">
               <div className="glass-panel rounded-3xl p-8 h-[360px] flex flex-col justify-center items-center text-center">
                 <h3
-                  className={`text-2xl font-bold mb-4 ${
+                  className={`text-xl font-bold mb-3 ${
                     theme === "dark" ? "text-white" : "text-gray-900"
                   }`}
                 >

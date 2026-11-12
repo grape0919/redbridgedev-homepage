@@ -319,7 +319,7 @@ export default function Contact() {
             className="lg:col-span-2 space-y-8"
           >
             <div>
-              <h3 className={`text-2xl font-bold mb-6 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{t.contactTitle}</h3>
+              <h3 className={`text-xl font-bold mb-5 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{t.contactTitle}</h3>
               <div className="space-y-6">
                 {contactInfo.map((info) => (
                   // 주소처럼 연결할 곳이 없는 항목은 링크 대신 일반 카드로 렌더
@@ -359,7 +359,7 @@ export default function Contact() {
                     trackEvent("chat_open", { location: "contact_quick" });
                     openChannelTalk();
                   }}
-                  className="flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-red-600 to-red-700 rounded-xl text-white font-medium hover:from-red-500 hover:to-red-600 transition-all"
+                  className="btn-primary w-full py-4 gap-3"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -527,7 +527,7 @@ export default function Contact() {
                 type="submit"
                 disabled={formStatus === "loading" || formStatus === "success"}
                 aria-live="polite"
-                className={`w-full py-4 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-all ${
+                className={`w-full py-4 rounded-full text-white font-medium flex items-center justify-center gap-2 transition-all ${
                   formStatus === "success"
                     ? "bg-green-600"
                     : formStatus === "error"

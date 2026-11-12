@@ -295,7 +295,7 @@ export default function Services() {
 
                   {/* Title & Description */}
                   <h3
-                    className={`text-2xl font-bold mb-4 ${
+                    className={`text-xl font-bold mb-3 ${
                       theme === "dark" ? "text-white" : "text-gray-900"
                     }`}
                   >

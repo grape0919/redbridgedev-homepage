@@ -27,7 +27,7 @@ export function GuideChrome({ children }: { children: ReactNode }) {
     <PortfolioShell navLinks={navLabels[language]}>
       <div className="max-w-3xl mx-auto">
         {language === "en" && (
-          <p className="mb-8 rounded-xl border border-red-900/40 bg-red-950/20 px-4 py-3 text-sm text-red-400">
+          <p className="mb-8 rounded-2xl border border-red-900/40 bg-red-950/20 px-4 py-3 text-sm text-red-400">
             These guides are currently available in Korean only.
           </p>
         )}

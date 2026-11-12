@@ -242,7 +242,7 @@ function PaymentsVisual() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className={`rounded-xl border p-4 text-center ${
+          className={`rounded-2xl border p-4 text-center ${
             dark ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200 shadow-md"
           }`}
         >
@@ -271,7 +271,7 @@ function IdentityVisual() {
           {channels.map((c) => (
             <div key={c.label} className="flex flex-col items-center gap-1.5">
               <div
-                className={`w-12 h-12 rounded-xl border flex items-center justify-center ${
+                className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${
                   dark ? "bg-gray-900 border-gray-800 text-gray-400" : "bg-white border-gray-200 text-gray-500 shadow-sm"
                 }`}
               >
@@ -671,7 +671,7 @@ function PetbloodVisual() {
         initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className={`w-full max-w-sm rounded-xl border p-5 ${
+        className={`w-full max-w-sm rounded-2xl border p-5 ${
           dark ? "bg-gray-950 border-gray-800" : "bg-white border-gray-200 shadow-lg"
         }`}
       >

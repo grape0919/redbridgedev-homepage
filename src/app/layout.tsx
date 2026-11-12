@@ -1,27 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import Script from "next/script";
+import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import PerfWatchdog from "@/components/ui/PerfWatchdog";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -203,7 +187,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased noise-overlay`}
+        className="antialiased noise-overlay"
       >
         {/* SVG filters for Liquid Glass refraction (iOS 26 style) */}
         <svg

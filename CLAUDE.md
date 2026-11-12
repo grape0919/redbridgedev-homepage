@@ -69,4 +69,6 @@ GA4 is wired in [src/lib/analytics.ts](src/lib/analytics.ts): set `GA_MEASUREMEN
 
 ### Styling
 
-Tailwind v4 (`@import "tailwindcss"` in [globals.css](src/app/globals.css), config via `@tailwindcss/postcss`). Fonts are wired through `next/font/google` in layout (`Geist`, `Geist_Mono`, `Poppins`) and exposed as CSS variables. Primary brand color is red-500/600/700 throughout.
+Tailwind v4 (`@import "tailwindcss"` in [globals.css](src/app/globals.css), config via `@tailwindcss/postcss`). The typeface is **Pretendard Variable** (npm `pretendard`, dynamic-subset CSS imported in layout — only the glyph ranges a page uses are fetched). `body` sets `word-break: keep-all` so Korean wraps by word. Primary brand color is red-500/600/700 throughout.
+
+Design rules: one section header (`SectionHeader`), one card surface (`.glass-panel`, 24px radius; subpage cards 16px), pill buttons (`.btn-primary` / `.btn-secondary`), card titles 20px/700. Decorative children inside `.glass-panel` must carry the `absolute` class (the panel forces `position: relative` on other children). The hero message is the page `h1`; the nav uses light-on-dark colors while it sits over the hero regardless of theme. Subpages (portfolio, guides) share `PortfolioShell`, which renders the site `Footer`.

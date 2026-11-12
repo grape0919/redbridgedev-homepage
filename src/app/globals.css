@@ -42,8 +42,8 @@
   --color-border: var(--border);
   --color-text-secondary: var(--text-secondary);
   --color-text-muted: var(--text-muted);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 * {
@@ -57,7 +57,10 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  /* 1b. 한글은 어절 단위로 줄바꿈 (단어 중간에서 끊기지 않게) */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -336,7 +339,10 @@ body {
   z-index: 1;
 }
 
-.glass-panel > * {
+/* 콘텐츠를 하이라이트(::before/::after) 위로 올린다.
+   .absolute 자식(호버 글로우 등 장식)은 제외 — 포함하면 position이 relative로 덮여
+   장식이 카드 안 공간을 차지하고 상단에 빈 영역이 생긴다. */
+.glass-panel > *:not(.absolute) {
   position: relative;
   z-index: 3;
 }
@@ -566,4 +572,15 @@ footer {
 [data-theme="light"][data-perf="low"] .glass-panel,
 [data-theme="light"][data-perf="low"] .glass-panel-strong {
   background: rgba(255, 255, 255, 0.9);
+}
+
+/* 제목은 줄 길이를 고르게, 본문은 마지막 줄 외톨이 단어를 줄인다 */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p,
+li {
+  text-wrap: pretty;
 }

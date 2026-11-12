@@ -81,7 +81,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           {prev ? (
             <Link
               href={`/portfolio/${prev.slug}/`}
-              className={`group rounded-xl border p-5 transition-all ${
+              className={`group rounded-2xl border p-5 transition-all ${
                 dark
                   ? "bg-gray-900/40 border-gray-800 hover:border-red-900/60"
                   : "bg-white border-gray-200 hover:border-red-300 hover:shadow-md"
@@ -108,7 +108,7 @@ export default function ProjectDetail({ slug }: { slug: string }) {
           {next && (
             <Link
               href={`/portfolio/${next.slug}/`}
-              className={`group rounded-xl border p-5 text-right transition-all ${
+              className={`group rounded-2xl border p-5 text-right transition-all ${
                 dark
                   ? "bg-gray-900/40 border-gray-800 hover:border-red-900/60"
                   : "bg-white border-gray-200 hover:border-red-300 hover:shadow-md"

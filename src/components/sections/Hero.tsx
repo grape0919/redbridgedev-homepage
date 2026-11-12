@@ -232,12 +232,6 @@ export default function Hero() {
         ref={contentRef}
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 text-center"
       >
-        {/* SEO: primary H1 for search engines (visually replaced by logo + tagline below) */}
-        <h1 className="sr-only">
-          {language === "ko"
-            ? "RED BRIDGE DEV — 홈페이지 · 웹서비스 · MVP 개발 에이전시"
-            : "RED BRIDGE DEV — Website, Web Service & MVP Development Agency"}
-        </h1>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -263,27 +257,28 @@ export default function Hero() {
             alt="RED BRIDGE DEV"
             width={500}
             height={120}
-            className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto mx-auto drop-shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+            className="h-12 sm:h-14 md:h-16 w-auto mx-auto drop-shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
             priority
           />
         </motion.div>
 
-        <motion.p
+        {/* 가장 큰 요소는 로고가 아니라 메시지 — 페이지의 h1 */}
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="text-xl sm:text-2xl mb-4 max-w-3xl mx-auto text-gray-100 drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]"
+          className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 max-w-4xl mx-auto text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]"
         >
-          {t.tagline1}{" "}
-          <span className="text-red-400 font-medium">{t.taglineHighlight}</span>{" "}
-          {t.tagline2}
-        </motion.p>
+          {t.tagline1}
+          <br className="hidden sm:block" />{" "}
+          <span className="text-red-400">{t.taglineHighlight}</span> {t.tagline2}
+        </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="text-lg mb-12 max-w-2xl mx-auto text-gray-300 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+          className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto text-gray-300 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
         >
           {t.description}
         </motion.p>

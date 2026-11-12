@@ -136,7 +136,7 @@ export default function PortfolioIndex() {
             <Link
               key={p.slug}
               href={`/portfolio/${p.slug}/`}
-              className={`group rounded-xl border p-5 transition-all ${
+              className={`group rounded-2xl border p-5 transition-all ${
                 dark
                   ? "bg-gray-900/40 border-gray-800 hover:border-red-900/60"
                   : "bg-white border-gray-200 hover:border-red-300 hover:shadow-md"
@@ -260,7 +260,7 @@ export default function PortfolioIndex() {
       <FadeIn className="mt-16">
         <SubTitle>{t.mapTitle}</SubTitle>
         <div
-          className={`rounded-xl border p-5 sm:p-6 space-y-3 ${
+          className={`rounded-2xl border p-5 sm:p-6 space-y-3 ${
             dark ? "bg-gray-950 border-gray-800" : "bg-white border-gray-200"
           }`}
         >

@@ -7,6 +7,7 @@ import { motion, useInView } from "framer-motion";
 import { ArrowLeft, Moon, Sun } from "@phosphor-icons/react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import Footer from "@/components/sections/Footer";
 
 /* ---------- 포트폴리오 페이지 공용 빌딩 블록 ---------- */
 
@@ -45,7 +46,7 @@ export function MetaTable({ rows }: { rows: [string, ReactNode][] }) {
   const { theme } = useTheme();
   return (
     <div
-      className={`my-6 rounded-xl border overflow-hidden ${
+      className={`my-6 rounded-2xl border overflow-hidden ${
         theme === "dark" ? "border-gray-800" : "border-gray-200"
       }`}
     >
@@ -84,7 +85,7 @@ export function SimpleTable({ head, rows }: { head: string[]; rows: ReactNode[][
   const { theme } = useTheme();
   return (
     <div
-      className={`my-6 rounded-xl border overflow-x-auto ${
+      className={`my-6 rounded-2xl border overflow-x-auto ${
         theme === "dark" ? "border-gray-800" : "border-gray-200"
       }`}
     >
@@ -212,7 +213,7 @@ export function StepFlow({ steps }: { steps: Step[] }) {
       {steps.map((step, i) => (
         <div key={step.title} className="contents">
           <div
-            className={`flex-1 rounded-xl border p-4 text-center ${
+            className={`flex-1 rounded-2xl border p-4 text-center ${
               dark ? "bg-gray-900/40 border-gray-800" : "bg-white border-gray-200"
             }`}
           >
@@ -264,7 +265,7 @@ export function HighlightGrid({ items }: { items: Highlight[] }) {
       {items.map((item) => (
         <div
           key={item.title}
-          className={`rounded-xl border p-5 ${
+          className={`rounded-2xl border p-5 ${
             dark ? "bg-gray-900/40 border-gray-800" : "bg-white border-gray-200"
           }`}
         >
@@ -294,7 +295,7 @@ export function StatCards({ stats }: { stats: { value: string; label: string }[]
       {stats.map((s) => (
         <div
           key={s.label}
-          className={`rounded-xl border p-5 text-center ${
+          className={`rounded-2xl border p-5 text-center ${
             dark ? "bg-gray-900/40 border-gray-800" : "bg-white border-gray-200"
           }`}
         >
@@ -401,6 +402,7 @@ export function PortfolioShell({ children, backHref = "/", navLinks }: ShellProp
         </div>
         {children}
       </main>
+      <Footer />
     </div>
   );
 }
@@ -419,7 +421,7 @@ export function PortfolioFootnote({ confidential = true }: { confidential?: bool
     <FadeIn>
       {confidential && (
         <div
-          className={`mt-8 rounded-xl border p-6 text-sm leading-relaxed ${
+          className={`mt-8 rounded-2xl border p-6 text-sm leading-relaxed ${
             dark
               ? "bg-gray-900/40 border-gray-800 text-gray-500"
               : "bg-white border-gray-200 text-gray-500"

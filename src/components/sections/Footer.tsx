@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   GithubLogo,
@@ -20,7 +21,6 @@ const footerLinksData = {
     ],
     company: [
       { name: "왜 RED BRIDGE", href: "#about" },
-      { name: "포트폴리오", href: "#portfolio" },
       { name: "프로젝트 사례", href: "/portfolio/" },
       { name: "외주 개발 가이드", href: "/guides/" },
       { name: "문의하기", href: "#contact" },
@@ -35,7 +35,6 @@ const footerLinksData = {
     ],
     company: [
       { name: "Why RED BRIDGE", href: "#about" },
-      { name: "Portfolio", href: "#portfolio" },
       { name: "Case Studies", href: "/portfolio/" },
       { name: "Dev Guides", href: "/guides/" },
       { name: "Contact", href: "#contact" },
@@ -50,8 +49,8 @@ const socialLinks = [
 
 const content = {
   ko: {
-    tagline1: "고객과 기술을 안전하고 튼튼하게 연결합니다.",
-    tagline2: "지속 가능하고 확장 가능한 솔루션을 구축합니다.",
+    tagline1: "기획부터 운영까지 책임지는 개발 에이전시.",
+    tagline2: "홈페이지·웹서비스·MVP·업무 시스템을 만듭니다.",
     servicesTitle: "서비스",
     companyTitle: "회사",
     contactTitle: "연락처",
@@ -62,8 +61,8 @@ const content = {
     privacyPolicy: "개인정보처리방침",
   },
   en: {
-    tagline1: "Connecting customers and technology safely and securely.",
-    tagline2: "Building sustainable and scalable solutions.",
+    tagline1: "A development agency that owns planning through operations.",
+    tagline2: "Websites, web services, MVPs, and business systems.",
     servicesTitle: "Services",
     companyTitle: "Company",
     contactTitle: "Contact",
@@ -91,9 +90,19 @@ export default function Footer() {
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.location.assign(`/${href}`);
       }
     }
   };
+
+  // 맨 위로 버튼: 충분히 내려왔을 때만, 데스크톱에서만 노출 (모바일에서는 콘텐츠를 가린다)
+  const [showTop, setShowTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 800);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <footer className={`relative border-t ${
@@ -134,6 +143,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={social.name}
                   className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
                     theme === "dark"
                       ? "bg-gray-900 text-gray-400 hover:bg-red-900/30 hover:text-red-500"
@@ -253,7 +263,12 @@ export default function Footer() {
       {/* Scroll to top button */}
       <motion.button
         onClick={scrollToTop}
-        className={`fixed bottom-24 right-6 w-12 h-12 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:text-white hover:bg-red-600 transition-all z-40 ${
+        aria-label={language === "ko" ? "맨 위로" : "Back to top"}
+        aria-hidden={!showTop}
+        tabIndex={showTop ? 0 : -1}
+        className={`fixed bottom-24 right-6 w-12 h-12 backdrop-blur-sm rounded-full shadow-lg hidden md:flex items-center justify-center hover:text-white hover:bg-red-600 transition-all z-40 ${
+          showTop ? "" : "pointer-events-none"
+        } ${
           theme === "dark"
             ? "bg-gray-800/80 text-gray-400"
             : "bg-white/80 text-gray-500 border border-gray-200"
@@ -261,8 +276,8 @@ export default function Footer() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        animate={{ opacity: showTop ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
       >
         <ArrowUp weight="bold" className="w-5 h-5" />
       </motion.button>

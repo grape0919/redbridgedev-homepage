@@ -17,7 +17,8 @@ const footerLinksData = {
       { name: "홈페이지 · 브랜드 사이트", href: "#services" },
       { name: "웹서비스 · MVP", href: "#services" },
       { name: "업무 시스템", href: "#services" },
-      { name: "결제 · 인증 · AI 연동", href: "#services" },
+      { name: "결제 · 인증 · 백엔드", href: "#services" },
+      { name: "AI 업무 자동화", href: "/ax/" },
     ],
     company: [
       { name: "왜 RED BRIDGE", href: "#about" },
@@ -31,7 +32,8 @@ const footerLinksData = {
       { name: "Websites & Brand Sites", href: "#services" },
       { name: "Web Services & MVPs", href: "#services" },
       { name: "Business Systems", href: "#services" },
-      { name: "Payments · Identity · AI", href: "#services" },
+      { name: "Payments · Identity · Backend", href: "#services" },
+      { name: "AI Workflow Automation", href: "/ax/" },
     ],
     company: [
       { name: "Why RED BRIDGE", href: "#about" },
@@ -50,7 +52,7 @@ const socialLinks = [
 const content = {
   ko: {
     tagline1: "기획부터 운영까지 책임지는 개발 에이전시.",
-    tagline2: "홈페이지·웹서비스·MVP·업무 시스템을 만듭니다.",
+    tagline2: "홈페이지·웹서비스·MVP부터 AI 업무 자동화까지 만듭니다.",
     servicesTitle: "서비스",
     companyTitle: "회사",
     contactTitle: "연락처",
@@ -62,7 +64,7 @@ const content = {
   },
   en: {
     tagline1: "A development agency that owns planning through operations.",
-    tagline2: "Websites, web services, MVPs, and business systems.",
+    tagline2: "Websites, web services, MVPs, and AI workflow automation.",
     servicesTitle: "Services",
     companyTitle: "Company",
     contactTitle: "Contact",

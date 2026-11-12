@@ -47,6 +47,9 @@ export const metadata: Metadata = {
     "레드브릿지",
     "개발 외주",
     "홈페이지 제작",
+    "AI 업무 자동화",
+    "업무 자동화",
+    "MCP 연동",
   ],
   authors: [{ name: "RED BRIDGE DEV", url: "https://redbridgedev.ai.kr" }],
   creator: "RED BRIDGE DEV",
@@ -143,8 +146,14 @@ const jsonLd = {
     },
     {
       "@type": "Service",
-      name: "업무 시스템·결제·AI 연동",
-      description: "예약·대기열 같은 업무 시스템, 결제·본인인증, AI 기능 개발과 연동",
+      name: "업무 시스템·결제·인증 연동",
+      description: "예약·대기열 같은 업무 시스템, 결제·본인인증, 검색 등 서버 기능 개발과 연동",
+    },
+    {
+      "@type": "Service",
+      name: "AI 업무 자동화·시스템 연동",
+      description: "사내 DB·GA4와 AI 연결, 반복 업무 자동화, 기존 서비스 AI 기능 연동",
+      url: "https://redbridgedev.ai.kr/ax/",
     },
   ],
 };

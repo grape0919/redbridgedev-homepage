@@ -12,6 +12,7 @@ import LanguageToggle from "./LanguageToggle";
 const navItems = {
   ko: [
     { name: "서비스", href: "#services" },
+    { name: "AI 자동화", href: "/ax/" },
     { name: "포트폴리오", href: "#portfolio" },
     { name: "프로세스", href: "#process" },
     { name: "FAQ", href: "#faq" },
@@ -20,6 +21,7 @@ const navItems = {
   ],
   en: [
     { name: "Services", href: "#services" },
+    { name: "AI Automation", href: "/ax/" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "Process", href: "#process" },
     { name: "FAQ", href: "#faq" },

@@ -1,7 +1,6 @@
 "use client";
 
 import Navigation from "@/components/ui/Navigation";
-import ChannelTalk from "@/components/ui/ChannelTalk";
 // import LoadingScreen from "@/components/ui/LoadingScreen";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -16,7 +15,6 @@ export default function Home() {
   return (
     <>
       {/* <LoadingScreen /> */}
-      <ChannelTalk />
       <main className="relative">
         <Navigation />
         {/* 설득 흐름: 가치 제안 → 무엇을 → 증거 → 어떻게 → 왜 우리 → 궁금증 → 문의 */}

@@ -33,7 +33,9 @@ export default function ChannelTalk() {
     const handle = ric(() => {
       const w = window;
       if (w.ChannelIO) {
-        return console.error("ChannelIO script included twice.");
+        // 이미 로드된 상태(재마운트) — 스크립트를 다시 넣지 않고 boot만 보장한다
+        w.ChannelIO("boot", { pluginKey: CHANNEL_IO_PLUGIN_KEY });
+        return;
       }
       // SDK 로드 전 호출을 인자 전체로 큐에 쌓는다 (openChat처럼 인자가 3개인 명령 포함)
       const ch: ChannelIOFn = function (...args: unknown[]) {
@@ -60,10 +62,8 @@ export default function ChannelTalk() {
       w.ChannelIO?.("boot", { pluginKey: CHANNEL_IO_PLUGIN_KEY });
     });
 
-    return () => {
-      cancelRic(handle as number);
-      window.ChannelIO?.("shutdown");
-    };
+    // 언마운트 시 shutdown하지 않는다 — 다음 화면의 문의 버튼이 꺼진 메신저를 호출하게 된다
+    return () => cancelRic(handle as number);
   }, []);
 
   return null;

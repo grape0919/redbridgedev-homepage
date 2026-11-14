@@ -4,11 +4,13 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
+  useState,
   useSyncExternalStore,
 } from "react";
 import { motion } from "framer-motion";
 import { CaretDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useLanguage } from "@/context/LanguageContext";
 import { gsap } from "@/lib/gsap";
 import { trackEvent } from "@/lib/analytics";
@@ -18,15 +20,18 @@ import {
   getPerfLowServerSnapshot,
 } from "@/lib/perfMode";
 
-// Desktop-only gate so mobile skips the 1.7MB video (keeps LCP low on small screens).
+// 3D 와이어프레임 다리 — three.js 번들은 조건을 통과한 데스크톱에서만 내려받는다.
+const Bridge3D = dynamic(() => import("@/components/three/Bridge3D"), { ssr: false });
+
+// Desktop-only gate so mobile skips the WebGL scene (keeps LCP·배터리 부담 낮게).
 const subscribeMediaQuery = () => () => {};
 const getDesktopSnapshot = () =>
   window.matchMedia("(min-width: 768px)").matches;
 const getServerSnapshot = () => false;
 
 // 저사양 기기 감지 — 명백히 약한 기기(2코어·2GB 이하)이거나 모션 최소화 설정이면
-// 비디오 대신 포스터 이미지를 쓰고 스크롤 scrub 변형을 생략한다.
-// 4코어·4GB급은 영상이 충분히 도는 경우가 많아 스펙으로 막지 않고,
+// 3D 다리 대신 정적 배경(그리드·글로우)을 쓰고 스크롤 scrub 변형을 생략한다.
+// 4코어·4GB급은 충분히 도는 경우가 많아 스펙으로 막지 않고,
 // 실측 FPS 워치독(PerfWatchdog)이 실제로 느린 기기만 골라 저성능 모드로 전환한다.
 const getLowPowerSnapshot = () => {
   const nav = navigator as Navigator & { deviceMemory?: number };
@@ -75,7 +80,7 @@ const content = {
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const bridgeRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrimRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -95,7 +100,17 @@ export default function Hero() {
     getPerfLowSnapshot,
     getPerfLowServerSnapshot
   );
-  const showVideo = isDesktop && !lowPower && !perfLow;
+  const show3D = isDesktop && !lowPower && !perfLow;
+
+  // 히어로가 화면 밖이면 3D 렌더 루프를 멈춘다 (아래 섹션을 스크롤할 때 프레임 확보)
+  const [heroVisible, setHeroVisible] = useState(true);
+  useEffect(() => {
+    const section = containerRef.current;
+    if (!show3D || !section) return;
+    const io = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting));
+    io.observe(section);
+    return () => io.disconnect();
+  }, [show3D]);
   const { language } = useLanguage();
 
   const t = content[language];
@@ -132,26 +147,16 @@ export default function Hero() {
     };
   }, []);
 
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const video = videoRef.current;
-    if (video && prefersReducedMotion) {
-      video.pause();
-    }
-  }, []);
-
   useLayoutEffect(() => {
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       const section = containerRef.current;
-      const video = videoRef.current;
+      const bridge = bridgeRef.current;
       const contentEl = contentRef.current;
       const scrim = scrimRef.current;
-      // 저사양 모드에서는 video가 렌더되지 않으므로 scrub 타임라인 전체가 생략된다.
-      if (!section || !video || !contentEl || !scrim) return;
+      // 저사양 모드에서는 3D 다리가 렌더되지 않으므로 scrub 타임라인 전체가 생략된다.
+      if (!section || !bridge || !contentEl || !scrim) return;
 
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({
@@ -163,7 +168,7 @@ export default function Hero() {
           },
         });
 
-        tl.to(video, { scale: 1.12, yPercent: 8, ease: "none" }, 0)
+        tl.to(bridge, { scale: 1.12, yPercent: 8, ease: "none" }, 0)
           .to(contentEl, { yPercent: -20, ease: "none" }, 0)
           .to(scrim, { opacity: 1.4, ease: "none" }, 0);
       }, section);
@@ -172,7 +177,7 @@ export default function Hero() {
     });
 
     return () => mm.revert();
-  }, [showVideo]);
+  }, [show3D]);
 
   const scrollToAbout = () => {
     const element = document.getElementById("about");
@@ -187,37 +192,20 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
     >
-      {/* Background — 고성능 데스크톱만 비디오, 모바일·저사양은 포스터 이미지 (LCP·프레임 확보) */}
-      {showVideo ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/hero-poster.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/Cinematic_Tech_Brand_Hero_Video.mp4" type="video/mp4" />
-        </video>
-      ) : (
-        <Image
-          src="/hero-poster.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+      {/* Background — 그리드는 항상, 3D 와이어프레임 다리는 고성능 데스크톱만 (모바일·저사양은 정적 배경) */}
+      <div className="absolute inset-0 grid-pattern opacity-60" aria-hidden />
+      {show3D && (
+        <div ref={bridgeRef} className="absolute inset-0" aria-hidden>
+          <Bridge3D active={heroVisible} />
+        </div>
       )}
 
-      {/* Cinematic scrim — darkens edges, keeps center slightly clearer */}
+      {/* Scrim — 선이 가는 다리가 묻히지 않도록 옅게, 아래쪽만 다음 섹션으로 자연스럽게 어둡힌다 */}
       <div
         ref={scrimRef}
-        className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/85"
+        className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/10 via-black/30 to-black"
       />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(0,0,0,0.6)_80%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.45)_0%,_transparent_45%,_rgba(0,0,0,0.5)_100%)]" />
 
       {/* Mouse-tracked red glow (rAF로 직접 갱신 — React 리렌더 없음) */}
       <div

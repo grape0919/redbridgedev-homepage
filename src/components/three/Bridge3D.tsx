@@ -283,7 +283,8 @@ function Scene({ progress }: { progress: number }) {
   );
 }
 
-export default function Bridge3D() {
+/** active=false면 렌더 루프를 멈춘다 — 히어로가 화면 밖일 때 GPU·CPU를 쓰지 않도록 */
+export default function Bridge3D({ active = true }: { active?: boolean }) {
   const [progress, setProgress] = useState(0);
   const isClient = typeof window !== "undefined";
 
@@ -320,6 +321,8 @@ export default function Bridge3D() {
 
   return (
     <Canvas
+      frameloop={active ? "always" : "never"}
+      dpr={[1, 1.5]}
       style={{ background: "transparent" }}
       gl={{ antialias: true, alpha: true }}
     >

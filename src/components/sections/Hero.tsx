@@ -24,13 +24,15 @@ const getDesktopSnapshot = () =>
   window.matchMedia("(min-width: 768px)").matches;
 const getServerSnapshot = () => false;
 
-// 저사양 기기 감지 — 코어 수·메모리가 적거나 모션 최소화 설정이면
+// 저사양 기기 감지 — 명백히 약한 기기(2코어·2GB 이하)이거나 모션 최소화 설정이면
 // 비디오 대신 포스터 이미지를 쓰고 스크롤 scrub 변형을 생략한다.
+// 4코어·4GB급은 영상이 충분히 도는 경우가 많아 스펙으로 막지 않고,
+// 실측 FPS 워치독(PerfWatchdog)이 실제로 느린 기기만 골라 저성능 모드로 전환한다.
 const getLowPowerSnapshot = () => {
   const nav = navigator as Navigator & { deviceMemory?: number };
   return (
-    (navigator.hardwareConcurrency || 8) <= 4 ||
-    (nav.deviceMemory !== undefined && nav.deviceMemory <= 4) ||
+    (navigator.hardwareConcurrency || 8) <= 2 ||
+    (nav.deviceMemory !== undefined && nav.deviceMemory <= 2) ||
     window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 };

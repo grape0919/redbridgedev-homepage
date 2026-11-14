@@ -44,7 +44,9 @@ Both providers wrap the app in [src/app/layout.tsx](src/app/layout.tsx). Every s
 ### Animation / 3D
 
 - Framer Motion drives all section transitions (`useInView` + `motion.div`). Standard pattern: `initial={{opacity:0, y:50}}` + `animate={isInView ? {...} : {}}`.
-- [src/components/three/Bridge3D.tsx](src/components/three/Bridge3D.tsx) renders a wireframe bridge in the Hero via `@react-three/fiber`. It is **dynamically imported with `ssr: false`** and Hero gates rendering via `useSyncExternalStore` on `matchMedia("(max-width: 768px)")`, `prefers-reduced-motion`, and `navigator.hardwareConcurrency < 4` — do not render Bridge3D unconditionally.
+- The Hero background is a looping video (`public/Cinematic_Tech_Brand_Hero_Video.mp4`) shown only on desktop (≥768px) when the device is not obviously weak (≤2 cores / ≤2GB), `prefers-reduced-motion` is off, and adaptive perf mode is off; otherwise it renders `hero-poster.jpg`. The prerendered HTML always has the poster — the swap happens after hydration.
+- Adaptive perf mode: [PerfWatchdog](src/components/ui/PerfWatchdog.tsx) measures FPS **after `load` + a 2s warm-up**, and turns on `data-perf="low"` (removes the video, disables glass blur) only after 3 consecutive sub-42fps seconds; the result sticks for the tab via sessionStorage. Do not measure from first paint — startup jank on ordinary PCs used to trip it and silently replace the video with the poster (2026-11).
+- `src/components/three/Bridge3D.tsx` (wireframe bridge) is legacy and no longer rendered.
 - The custom cursor was removed (2026-11): hiding the OS cursor and drawing it on the main thread made pointer movement stutter on low-end PCs. Do not reintroduce it. (ESLint rule `react-hooks/set-state-in-effect` is enforced — prefer `useSyncExternalStore` for browser-state reads.)
 
 ### Positioning (2026-11)

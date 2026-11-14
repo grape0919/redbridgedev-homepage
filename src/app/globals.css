@@ -138,24 +138,6 @@ body {
     linear-gradient(90deg, rgba(220, 38, 38, 0.08) 1px, transparent 1px);
 }
 
-/* Noise texture overlay */
-.noise-overlay::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.03;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
-  z-index: 1000;
-}
-
-[data-theme="light"] .noise-overlay::before {
-  opacity: 0.02;
-}
-
 /* Gradient animations */
 @keyframes gradient-shift {
   0%, 100% {
@@ -227,119 +209,37 @@ body {
   transform: translateY(0);
 }
 
-/* ===== Liquid Glass (iOS 26 style) ===== */
-.glass-panel {
-  position: relative;
-  isolation: isolate;
-  /* Force GPU compositing layer so backdrop-filter is applied from first paint
-     (Chrome otherwise defers url() filter activation until first repaint) */
-  transform: translate3d(0, 0, 0);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.02) 50%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  /* Fallback for Safari/Firefox: heavier blur to simulate refraction */
-  backdrop-filter: blur(28px) saturate(200%) contrast(1.15) brightness(1.08);
-  -webkit-backdrop-filter: blur(28px) saturate(200%) contrast(1.15)
-    brightness(1.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow:
-    0 10px 40px 0 rgba(0, 0, 0, 0.45),
-    0 2px 8px 0 rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.3),
-    inset 0 -1px 0 0 rgba(255, 255, 255, 0.05),
-    inset 0 0 24px 0 rgba(255, 255, 255, 0.04);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* True refraction on Chrome 120+ (SVG displacement on backdrop) */
-@supports (backdrop-filter: url(#glass-distort)) {
-  .glass-panel {
-    backdrop-filter: url(#glass-distort) blur(6px) saturate(180%) contrast(1.12)
-      brightness(1.05);
-  }
-}
-
-/* Larger surfaces use stronger refraction pattern */
+/* ===== Glass card (경량) =====
+   성능 원칙 (2026-11, 저사양 PC 스크롤 끊김 대응 — 헤드리스 측정 기준 장식만으로 12fps → 59fps 차이):
+   - backdrop-filter·SVG 굴절 없음 (블러는 고정 내비 하나만)
+   - 큰 반경 그림자·여러 겹 inset 그림자 없음 — 작은 그림자 1개 + 윗면 1px 하이라이트
+   - ::before 마스크 테두리, ::after mix-blend 반사광 없음 — 같은 인상을 배경 그라데이션 레이어로 낸다
+   스크롤 중 매 프레임 다시 그려지는 비용이 큰 효과는 여기 다시 넣지 말 것. */
+.glass-panel,
 .glass-panel-strong {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.02) 50%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  backdrop-filter: blur(32px) saturate(210%) contrast(1.18) brightness(1.1);
-  -webkit-backdrop-filter: blur(32px) saturate(210%) contrast(1.18)
-    brightness(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow:
-    0 14px 48px 0 rgba(0, 0, 0, 0.5),
-    0 2px 8px 0 rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.32),
-    inset 0 -1px 0 0 rgba(255, 255, 255, 0.06),
-    inset 0 0 28px 0 rgba(255, 255, 255, 0.05);
-}
-
-@supports (backdrop-filter: url(#glass-distort-strong)) {
-  .glass-panel-strong {
-    backdrop-filter: url(#glass-distort-strong) blur(8px) saturate(200%)
-      contrast(1.15) brightness(1.08);
-  }
-}
-
-/* Edge highlight: specular top-left + subtle bottom rim (simulates glass thickness) */
-.glass-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.15) 20%,
-    rgba(255, 255, 255, 0) 45%,
-    rgba(255, 255, 255, 0) 65%,
-    rgba(255, 255, 255, 0.08) 85%,
-    rgba(255, 255, 255, 0.2) 100%
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 2;
-}
-
-/* Inner specular highlights for surface curvature illusion */
-.glass-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
   background:
-    radial-gradient(
-      ellipse 80% 40% at 25% 0%,
-      rgba(255, 255, 255, 0.18) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 60% 30% at 80% 100%,
-      rgba(255, 255, 255, 0.06) 0%,
-      transparent 55%
-    );
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.8;
-  z-index: 1;
+    radial-gradient(ellipse 80% 40% at 25% 0%, rgba(255, 255, 255, 0.09) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.05) 100%),
+    rgba(12, 12, 14, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-top-color: rgba(255, 255, 255, 0.24);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 콘텐츠를 하이라이트(::before/::after) 위로 올린다.
+/* 고정 내비만 가벼운 블러 — 화면에 한 개뿐이고 글자 가독성에 필요하다 */
+nav .glass-panel {
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background: rgba(10, 10, 12, 0.6);
+}
+
+/* 콘텐츠를 장식 위로 올린다.
    .absolute 자식(호버 글로우 등 장식)은 제외 — 포함하면 position이 relative로 덮여
    장식이 카드 안 공간을 차지하고 상단에 빈 영역이 생긴다. */
 .glass-panel > *:not(.absolute) {
@@ -347,63 +247,30 @@ body {
   z-index: 3;
 }
 
+/* 호버: 그림자 재계산 없이 이동·테두리 색만 바꾼다 */
 .glass-panel:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow:
-    0 24px 60px 0 rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(220, 38, 38, 0.18),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.32),
-    inset 0 -1px 0 0 rgba(255, 255, 255, 0.06);
+  border-color: rgba(220, 38, 38, 0.35);
 }
 
-[data-theme="light"] .glass-panel {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.5) 0%,
-    rgba(255, 255, 255, 0.25) 50%,
-    rgba(255, 255, 255, 0.4) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow:
-    0 10px 40px 0 rgba(15, 23, 42, 0.1),
-    0 2px 8px 0 rgba(15, 23, 42, 0.04),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 0 rgba(15, 23, 42, 0.02);
-}
-
-[data-theme="light"] .glass-panel::before {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.4) 25%,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(15, 23, 42, 0.02) 75%,
-    rgba(15, 23, 42, 0.06) 100%
-  );
-}
-
-[data-theme="light"] .glass-panel::after {
+[data-theme="light"] .glass-panel,
+[data-theme="light"] .glass-panel-strong {
   background:
-    radial-gradient(
-      ellipse 80% 40% at 25% 0%,
-      rgba(255, 255, 255, 0.6) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse 60% 30% at 80% 100%,
-      rgba(15, 23, 42, 0.04) 0%,
-      transparent 55%
-    );
-  mix-blend-mode: normal;
-  opacity: 0.6;
+    radial-gradient(ellipse 80% 40% at 25% 0%, rgba(255, 255, 255, 0.7) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.55) 50%, rgba(255, 255, 255, 0.65) 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-top-color: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 6px 20px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="light"] nav .glass-panel {
+  background: rgba(255, 255, 255, 0.7);
 }
 
 [data-theme="light"] .glass-panel:hover {
-  box-shadow:
-    0 24px 60px 0 rgba(15, 23, 42, 0.15),
-    0 0 0 1px rgba(220, 38, 38, 0.2),
-    inset 0 1px 0 0 rgba(255, 255, 255, 1);
+  border-color: rgba(220, 38, 38, 0.3);
 }
 
 /* Glass form input */
@@ -412,8 +279,6 @@ body {
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: inherit;
   transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
@@ -452,12 +317,13 @@ body {
   border-radius: 9999px;
   opacity: 0.35;
   pointer-events: none;
-  -webkit-mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 0%, transparent 100%);
+  /* 마스크 대신 그라데이션 자체로 번짐을 만든다 (마스크 레이어 합성 비용 제거). bg-red-* 클래스 색은 무시된다. */
+  background: radial-gradient(closest-side, rgba(220, 38, 38, 1) 0%, rgba(220, 38, 38, 0) 100%) !important;
 }
 
 [data-theme="light"] .glass-ambient {
   opacity: 0.3;
+  background: radial-gradient(closest-side, rgba(248, 113, 113, 1) 0%, rgba(248, 113, 113, 0) 100%) !important;
 }
 
 /* 실측 FPS 워치독(PerfWatchdog)이 저성능을 감지하면 장식 애니메이션을 전부 멈춘다 */
@@ -495,12 +361,10 @@ body {
   }
 }
 
-.animate-drift {
-  animation: drift-slow 18s ease-in-out infinite;
-}
-
+/* 성능: 배경 빛 번짐(마스크 블롭)을 계속 움직이면 매 프레임 다시 합성된다 — 정지 상태로 둔다 (2026-11) */
+.animate-drift,
 .animate-drift-reverse {
-  animation: drift-slow 22s ease-in-out infinite reverse;
+  animation: none;
 }
 
 /* Theme transition: 전역 `*` 셀렉터는 모든 DOM 노드에 트랜지션을 걸어
@@ -562,16 +426,14 @@ footer {
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* 저성능 모드: 글래스 패널의 backdrop-filter(블러·SVG 굴절)는 가장 비싼 효과라 끈다 */
-[data-perf="low"] .glass-panel,
-[data-perf="low"] .glass-panel-strong {
+/* 저성능 모드: 내비 블러도 끈다 (카드는 기본값이 이미 블러 없음) */
+[data-perf="low"] nav .glass-panel {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  background: rgba(24, 24, 27, 0.85);
+  background: rgba(16, 16, 18, 0.92);
 }
-[data-theme="light"][data-perf="low"] .glass-panel,
-[data-theme="light"][data-perf="low"] .glass-panel-strong {
-  background: rgba(255, 255, 255, 0.9);
+[data-theme="light"][data-perf="low"] nav .glass-panel {
+  background: rgba(255, 255, 255, 0.95);
 }
 
 /* 제목은 줄 길이를 고르게, 본문은 마지막 줄 외톨이 단어를 줄인다 */

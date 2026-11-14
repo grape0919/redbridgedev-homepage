@@ -188,7 +188,7 @@ export default function About() {
               key={value.title}
               className="value-card glass-panel group relative p-8 rounded-3xl overflow-hidden"
             >
-              <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br from-red-500 to-red-700 blur-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none" />
+              <div className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-[radial-gradient(closest-side,rgba(239,68,68,0.5),transparent)] opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none" />
 
               <div className="relative">
                 <IconTile className="mb-6">

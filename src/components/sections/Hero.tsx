@@ -100,17 +100,19 @@ export default function Hero() {
     getPerfLowSnapshot,
     getPerfLowServerSnapshot
   );
-  const show3D = isDesktop && !lowPower && !perfLow;
+  // 데스크톱이면 항상 다리를 보여 준다. 저사양·저성능·모션 최소화면 완성된 다리를 정지 화면으로 한 번만 그린다.
+  const show3D = isDesktop;
+  const animate3D = !lowPower && !perfLow;
 
   // 히어로가 화면 밖이면 3D 렌더 루프를 멈춘다 (아래 섹션을 스크롤할 때 프레임 확보)
   const [heroVisible, setHeroVisible] = useState(true);
   useEffect(() => {
     const section = containerRef.current;
-    if (!show3D || !section) return;
+    if (!show3D || !animate3D || !section) return;
     const io = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting));
     io.observe(section);
     return () => io.disconnect();
-  }, [show3D]);
+  }, [show3D, animate3D]);
   const { language } = useLanguage();
 
   const t = content[language];
@@ -156,7 +158,8 @@ export default function Hero() {
       const contentEl = contentRef.current;
       const scrim = scrimRef.current;
       // 저사양 모드에서는 3D 다리가 렌더되지 않으므로 scrub 타임라인 전체가 생략된다.
-      if (!section || !bridge || !contentEl || !scrim) return;
+      // 정지 모드(저사양·저성능)에서는 스크롤 연출도 생략한다
+      if (!animate3D || !section || !bridge || !contentEl || !scrim) return;
 
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({
@@ -177,7 +180,7 @@ export default function Hero() {
     });
 
     return () => mm.revert();
-  }, [show3D]);
+  }, [show3D, animate3D]);
 
   const scrollToAbout = () => {
     const element = document.getElementById("about");
@@ -195,8 +198,8 @@ export default function Hero() {
       {/* Background — 그리드는 항상, 3D 와이어프레임 다리는 고성능 데스크톱만 (모바일·저사양은 정적 배경) */}
       <div className="absolute inset-0 grid-pattern opacity-60" aria-hidden />
       {show3D && (
-        <div ref={bridgeRef} className="absolute inset-0" aria-hidden>
-          <Bridge3D active={heroVisible} />
+        <div ref={bridgeRef} className="absolute inset-0 pointer-events-none" aria-hidden>
+          <Bridge3D animate={animate3D} active={heroVisible} />
         </div>
       )}
 
@@ -230,7 +233,7 @@ export default function Hero() {
           className="flex items-center justify-center gap-2 mb-6"
         >
           <Sparkle weight="fill" className="w-5 h-5 text-red-400" />
-          <span className="text-red-400 text-sm tracking-widest uppercase font-medium drop-shadow-[0_0_12px_rgba(220,38,38,0.6)]">
+          <span className="text-red-400 text-sm tracking-widest uppercase font-medium [text-shadow:0_0_12px_rgba(220,38,38,0.6)]">
             {t.subtitle}
           </span>
           <Sparkle weight="fill" className="w-5 h-5 text-red-400" />
@@ -257,7 +260,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 max-w-4xl mx-auto text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]"
+          className="text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 max-w-4xl mx-auto text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.8)]"
         >
           {t.tagline1}
           <br className="hidden sm:block" />{" "}
@@ -268,7 +271,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto text-gray-300 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+          className="text-lg sm:text-xl mb-10 max-w-2xl mx-auto text-gray-300 [text-shadow:0_2px_12px_rgba(0,0,0,0.8)]"
         >
           {t.description}
         </motion.p>
@@ -336,7 +339,7 @@ export default function Hero() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 1.7 + index * 0.1, type: "spring" }}
-                className="text-3xl sm:text-4xl font-bold text-red-400 mb-2 drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]"
+                className="text-3xl sm:text-4xl font-bold text-red-400 mb-2 [text-shadow:0_0_20px_rgba(220,38,38,0.5)]"
               >
                 {stat.value}
               </motion.div>

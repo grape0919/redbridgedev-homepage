@@ -308,7 +308,7 @@ export default function Services() {
               <div className="glass-panel h-full p-8 rounded-3xl overflow-hidden">
                 {/* Specular highlight on hover */}
                 <div
-                  className={`absolute -top-20 -right-20 w-48 h-48 rounded-full bg-gradient-to-br ${service.gradient} blur-3xl opacity-0 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none`}
+                  className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-[radial-gradient(closest-side,rgba(239,68,68,0.55),transparent)] opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
                 />
 
                 {/* Icon */}

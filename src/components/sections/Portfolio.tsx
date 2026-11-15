@@ -179,7 +179,7 @@ export default function Portfolio() {
                   {/* Corner gradient accent */}
                   <div
                     aria-hidden
-                    className={`absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br ${f.gradient} blur-3xl opacity-0 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none`}
+                    className="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-[radial-gradient(closest-side,rgba(239,68,68,0.5),transparent)] opacity-0 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
                   />
 
                   <div className="flex items-center justify-between">

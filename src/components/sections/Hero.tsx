@@ -100,7 +100,7 @@ export default function Hero() {
     getPerfLowSnapshot,
     getPerfLowServerSnapshot
   );
-  // 데스크톱이면 항상 다리를 그린다(그리는 연출 포함). 저사양·저성능·모션 최소화면 다 그린 뒤 회전 없이 멈춘다.
+  // 데스크톱이면 항상 회전하며 그려지는 다리를 보여 준다. 저사양·저성능·모션 최소화면 낮은 fps로 그리고 스크롤 연출은 생략한다.
   const show3D = isDesktop;
   const animate3D = !lowPower && !perfLow;
 
@@ -108,7 +108,7 @@ export default function Hero() {
   const [heroVisible, setHeroVisible] = useState(true);
   useEffect(() => {
     const section = containerRef.current;
-    if (!show3D || !animate3D || !section) return;
+    if (!show3D || !section) return;
     const io = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting));
     io.observe(section);
     return () => io.disconnect();
@@ -199,7 +199,7 @@ export default function Hero() {
       <div className="absolute inset-0 grid-pattern opacity-60" aria-hidden />
       {show3D && (
         <div ref={bridgeRef} className="absolute inset-0 pointer-events-none" aria-hidden>
-          <Bridge3D rotate={animate3D} active={heroVisible} />
+          <Bridge3D lowFps={!animate3D} active={heroVisible} />
         </div>
       )}
 

@@ -100,7 +100,7 @@ export default function Hero() {
     getPerfLowSnapshot,
     getPerfLowServerSnapshot
   );
-  // 데스크톱이면 항상 다리를 보여 준다. 저사양·저성능·모션 최소화면 완성된 다리를 정지 화면으로 한 번만 그린다.
+  // 데스크톱이면 항상 다리를 그린다(그리는 연출 포함). 저사양·저성능·모션 최소화면 다 그린 뒤 회전 없이 멈춘다.
   const show3D = isDesktop;
   const animate3D = !lowPower && !perfLow;
 
@@ -199,7 +199,7 @@ export default function Hero() {
       <div className="absolute inset-0 grid-pattern opacity-60" aria-hidden />
       {show3D && (
         <div ref={bridgeRef} className="absolute inset-0 pointer-events-none" aria-hidden>
-          <Bridge3D animate={animate3D} active={heroVisible} />
+          <Bridge3D rotate={animate3D} active={heroVisible} />
         </div>
       )}
 

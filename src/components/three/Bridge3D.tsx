@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -8,7 +8,9 @@ import * as THREE from "three";
    성능 원칙 (저사양 PC 스크롤 끊김 대응, 2026-11):
    - 도형은 한 번만 만든다. "그려지는" 연출은 setDrawRange로 보이는 범위만 늘린다
      (React state로 매 프레임 지오메트리를 다시 만들지 않는다).
-   - 렌더는 frameloop="demand" + 30fps 티커. animate=false면 완성된 다리를 한 번만 그리고 멈춘다.
+   - 렌더는 frameloop="demand" + 30fps 티커.
+   - "그려지는" 연출(약 3초)은 기기 성능과 관계없이 항상 재생한다 — 브랜드 인상의 핵심이고 30fps 3초는 부담이 작다.
+     rotate=false(저사양·저성능·모션 최소화)면 다 그린 뒤 회전 없이 멈춘다.
    - OrbitControls·조명 없음 (선·점 재질은 조명을 쓰지 않는다). 회전은 그룹을 직접 돌린다. */
 
 const DRAW_MS = 3000;
@@ -121,11 +123,12 @@ const floatingPositions = (() => {
   return a;
 })();
 
-function Scene({ animate }: { animate: boolean }) {
+function Scene({ rotate, onDrawn }: { rotate: boolean; onDrawn: () => void }) {
   const root = useRef<THREE.Group>(null);
   const bridge = useRef<THREE.Group>(null);
   const floating = useRef<THREE.Points>(null);
   const start = useRef<number | null>(null);
+  const drawn = useRef(false);
 
   const { lines, vertices, floatGeo, lineCount, vertexCount } = useMemo(() => {
     const { linePositions, vertexPositions } = buildBridge();
@@ -156,15 +159,17 @@ function Scene({ animate }: { animate: boolean }) {
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     if (start.current === null) start.current = t;
-    // 그려지는 진행도 — 정지 모드면 처음부터 완성
-    const progress = animate
-      ? Math.min(Math.max((t - start.current) * 1000 - DRAW_DELAY_MS, 0) / DRAW_MS, 1)
-      : 1;
+    // 그려지는 진행도 (모든 데스크톱에서 재생)
+    const progress = Math.min(Math.max((t - start.current) * 1000 - DRAW_DELAY_MS, 0) / DRAW_MS, 1);
+    if (progress >= 1 && !drawn.current) {
+      drawn.current = true;
+      onDrawn();
+    }
     const visibleLines = Math.floor((lineCount / 2) * progress) * 2;
     lines.setDrawRange(0, visibleLines);
     vertices.setDrawRange(0, Math.min(vertexCount, Math.floor(vertexCount * progress)));
 
-    if (animate) {
+    if (rotate) {
       // OrbitControls autoRotate(speed 0.5) ≒ 120초에 한 바퀴
       if (root.current) root.current.rotation.y = (t * Math.PI * 2) / 120;
       if (bridge.current) bridge.current.rotation.y = Math.sin(t * 0.2) * 0.1;
@@ -208,10 +213,11 @@ function Ticker({ running }: { running: boolean }) {
 }
 
 /**
- * @param animate 그려지는 연출·회전을 할지 (false면 완성된 다리를 정지 화면으로 한 번만 그림)
- * @param active  화면에 보이는지 (false면 렌더를 멈춤)
+ * @param rotate 다 그린 뒤 회전·떠다니는 연출을 계속할지 (false면 완성된 다리에서 렌더를 멈춤)
+ * @param active 화면에 보이는지 (false면 렌더를 멈춤)
  */
-export default function Bridge3D({ animate = true, active = true }: { animate?: boolean; active?: boolean }) {
+export default function Bridge3D({ rotate = true, active = true }: { rotate?: boolean; active?: boolean }) {
+  const [drawn, setDrawn] = useState(false);
   return (
     <Canvas
       frameloop="demand"
@@ -221,8 +227,8 @@ export default function Bridge3D({ animate = true, active = true }: { animate?: 
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
       style={{ background: "transparent", pointerEvents: "none" }}
     >
-      <Scene animate={animate} />
-      <Ticker running={animate && active} />
+      <Scene rotate={rotate} onDrawn={() => setDrawn(true)} />
+      <Ticker running={active && (!drawn || rotate)} />
     </Canvas>
   );
 }

@@ -1,3 +1,19 @@
+import { Marketing10 } from "./marketing-10";
+import { Marketing09 } from "./marketing-09";
+import { Marketing08 } from "./marketing-08";
+import { Marketing07 } from "./marketing-07";
+import { AX06 } from "./ax-ax06";
+import { AX05 } from "./ax-ax05";
+import { AX04 } from "./ax-ax04";
+import { AX03 } from "./ax-ax03";
+import { AX02 } from "./ax-ax02";
+import { AX01 } from "./ax-ax01";
+import { Marketing06 } from "./marketing-06";
+import { Marketing05 } from "./marketing-05";
+import { Marketing04 } from "./marketing-04";
+import { Marketing03 } from "./marketing-03";
+import { Marketing02 } from "./marketing-02";
+import { Marketing01 } from "./marketing-01";
 import type { ComponentType } from "react";
 import { H2, P, Strong, UL, Callout, InfoTable, A } from "./ui";
 
@@ -601,6 +617,22 @@ function ProjectBrief() {
 }
 
 export const guideContent: Record<string, ComponentType> = {
+"business-system-migration": Marketing10,
+"subscription-service-operations": Marketing09,
+"partner-settlement-system": Marketing08,
+"b2b-order-portal": Marketing07,
+"ax-adoption-and-operations": AX06,
+"ax-first-workflow-pilot": AX05,
+"ai-service-backend-integration": AX04,
+"ai-document-review-workflow": AX03,
+"ai-work-data-access": AX02,
+"ax-start-with-workflow": AX01,
+"erp-order-integration": Marketing06,
+"external-data-management": Marketing05,
+"business-dashboard-decisions": Marketing04,
+"payment-order-integration": Marketing03,
+"existing-settlement-improvement": Marketing02,
+"excel-order-consolidation": Marketing01,
   "outsourcing-cost": OutsourcingCost,
   "mvp-development": MvpDevelopment,
   "agency-checklist": AgencyChecklist,

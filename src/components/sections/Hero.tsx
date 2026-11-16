@@ -10,7 +10,7 @@ import {
 import { motion } from "framer-motion";
 import { CaretDown, Sparkle } from "@phosphor-icons/react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+import BridgeCanvas from "@/components/hero/BridgeCanvas";
 import { useLanguage } from "@/context/LanguageContext";
 import { gsap } from "@/lib/gsap";
 import { trackEvent } from "@/lib/analytics";
@@ -20,10 +20,7 @@ import {
   getPerfLowServerSnapshot,
 } from "@/lib/perfMode";
 
-// 3D 와이어프레임 다리 — three.js 번들은 조건을 통과한 데스크톱에서만 내려받는다.
-const Bridge3D = dynamic(() => import("@/components/three/Bridge3D"), { ssr: false });
-
-// Desktop-only gate so mobile skips the WebGL scene (keeps LCP·배터리 부담 낮게).
+// Desktop-only gate — 모바일은 정적 배경(그리드·글로우)만 보여 준다.
 const subscribeMediaQuery = () => () => {};
 const getDesktopSnapshot = () =>
   window.matchMedia("(min-width: 768px)").matches;
@@ -199,7 +196,7 @@ export default function Hero() {
       <div className="absolute inset-0 grid-pattern opacity-60" aria-hidden />
       {show3D && (
         <div ref={bridgeRef} className="absolute inset-0 pointer-events-none" aria-hidden>
-          <Bridge3D lowFps={!animate3D} active={heroVisible} />
+          <BridgeCanvas lowFps={!animate3D} active={heroVisible} />
         </div>
       )}
 

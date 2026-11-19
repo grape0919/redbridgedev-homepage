@@ -196,7 +196,7 @@ export default function BridgeCanvas({ lowFps = false, active = true }: { lowFps
     const floatCam = new Float32Array(floating.length * 3);
     const tmp = new Float32Array(3);
 
-    let width = 0, height = 0, focal = 1;
+    let width = 0, height = 0, focal = 1, centerY = 0;
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -205,7 +205,11 @@ export default function BridgeCanvas({ lowFps = false, active = true }: { lowFps
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      focal = height / 2 / Math.tan(FOV / 2);
+      // 세로 화면(휴대폰)에서는 다리 폭(약 13 유닛)이 잘리지 않게 너비 기준으로 줄인다.
+      // 가로 화면은 기존과 같이 높이 기준(세로 시야각 50도)이다.
+      focal = Math.min(height / 2 / Math.tan(FOV / 2), width / 1.05);
+      // 세로 화면은 다리가 버튼 뒤에 가려지지 않게 화면 중심을 제목 쪽(위)으로 올린다
+      centerY = height > width ? height * 0.34 : height / 2;
     };
     resize();
     const ro = new ResizeObserver(() => {
@@ -251,14 +255,14 @@ export default function BridgeCanvas({ lowFps = false, active = true }: { lowFps
         const t = (NEAR - bz) / (az - bz);
         bx += (ax - bx) * t; by += (ay - by) * t; bz = NEAR;
       }
-      const cx = width / 2, cy = height / 2;
+      const cx = width / 2, cy = centerY;
       path.moveTo(cx + (ax * focal) / az, cy - (ay * focal) / az);
       path.lineTo(cx + (bx * focal) / bz, cy - (by * focal) / bz);
     };
 
     /** 점 묶음을 한 번에 채운다. 크기는 깊이에 반비례 */
     const fillPoints = (cam: Float32Array, count: number, size: number) => {
-      const cx = width / 2, cy = height / 2;
+      const cx = width / 2, cy = centerY;
       ctx.beginPath();
       for (let i = 0; i < count; i++) {
         const z = cam[i * 3 + 2];
@@ -319,7 +323,7 @@ export default function BridgeCanvas({ lowFps = false, active = true }: { lowFps
         toCam(x1 * rc + z2 * rs, y2, -x1 * rs + z2 * rc, floatCam, i * 3);
       });
 
-      const cx = width / 2, cy = height / 2;
+      const cx = width / 2, cy = centerY;
       ctx.clearRect(0, 0, width, height);
       ctx.lineCap = "round";
 

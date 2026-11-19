@@ -20,7 +20,7 @@ import {
   getPerfLowServerSnapshot,
 } from "@/lib/perfMode";
 
-// Desktop-only gate — 모바일은 정적 배경(그리드·글로우)만 보여 준다.
+// 데스크톱 판정 — 다리는 모든 기기에 그리되, 모바일은 20fps로 그리고 스크롤 연출(scrub)은 생략한다.
 const subscribeMediaQuery = () => () => {};
 const getDesktopSnapshot = () =>
   window.matchMedia("(min-width: 768px)").matches;
@@ -98,7 +98,8 @@ export default function Hero() {
     getPerfLowServerSnapshot
   );
   // 데스크톱이면 항상 회전하며 그려지는 다리를 보여 준다. 저사양·저성능·모션 최소화면 낮은 fps로 그리고 스크롤 연출은 생략한다.
-  const show3D = isDesktop;
+  // 2D 캔버스라 휴대폰에서도 부담이 작다 (프레임당 약 0.4ms) — 모든 기기에 다리를 그린다.
+  const show3D = true;
   const animate3D = !lowPower && !perfLow;
 
   // 히어로가 화면 밖이면 3D 렌더 루프를 멈춘다 (아래 섹션을 스크롤할 때 프레임 확보)
@@ -109,7 +110,7 @@ export default function Hero() {
     const io = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting));
     io.observe(section);
     return () => io.disconnect();
-  }, [show3D, animate3D]);
+  }, [show3D, animate3D, isDesktop]);
   const { language } = useLanguage();
 
   const t = content[language];
@@ -156,7 +157,7 @@ export default function Hero() {
       const scrim = scrimRef.current;
       // 저사양 모드에서는 3D 다리가 렌더되지 않으므로 scrub 타임라인 전체가 생략된다.
       // 정지 모드(저사양·저성능)에서는 스크롤 연출도 생략한다
-      if (!animate3D || !section || !bridge || !contentEl || !scrim) return;
+      if (!animate3D || !isDesktop || !section || !bridge || !contentEl || !scrim) return;
 
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({
@@ -177,7 +178,7 @@ export default function Hero() {
     });
 
     return () => mm.revert();
-  }, [show3D, animate3D]);
+  }, [show3D, animate3D, isDesktop]);
 
   const scrollToAbout = () => {
     const element = document.getElementById("about");
@@ -196,7 +197,7 @@ export default function Hero() {
       <div className="absolute inset-0 grid-pattern opacity-60" aria-hidden />
       {show3D && (
         <div ref={bridgeRef} className="absolute inset-0 pointer-events-none" aria-hidden>
-          <BridgeCanvas lowFps={!animate3D} active={heroVisible} />
+          <BridgeCanvas lowFps={!animate3D || !isDesktop} active={heroVisible} />
         </div>
       )}
 

@@ -13,6 +13,7 @@ export interface GuideMeta {
 }
 
 export const guides: GuideMeta[] = [
+{ slug: "ai-outsourcing-usage-cost", title: "AI 외주사 견적 비교, 월 사용량이 바뀌면 얼마가 달라질까요?", seoDescription: "AI 외주사 견적을 비교할 때는 첫 달에 지불할 금액과 그다음 달부터 드는 비용을 나눠 보세요. 문서 요약 도구를 예로 들면 개발과 배포는 한 번 맡길 수 있지만, 문서를 처리할 때마다 모델 사용료가 생길 수 있습니다. 어느 계정에서 누구에게 청구되는지도 계약 전에 확인할 항목입니다.", oneLiner: "AI 외주사 견적을 비교할 때는 첫 달에 지불할 금액과 그다음 달부터 드는 비용을 나눠 보세요. 문서 요약 도구를 예로 들면 개발과 배포는 한 번 맡길 수 있지만, 문서를 처리할 때마다 모델 사용료가 생길 수 있습니다. 어느 계정에서 누구에게 청구되는지도 계약 전에 확인할 항목입니다.", published: "2026-11-22", readingMinutes: 3 },
 { slug: "business-system-migration", title: "엑셀에서 업무 시스템으로 전환할 때, 기존 자료와 진행 중인 업무는 어떻게 옮길까요?", seoDescription: "업무 시스템 전환에 필요한 이전 대상 정리, 시험 이전, 결과 대조, 담당자 확인과 운영 전환 기준을 설명합니다.", oneLiner: "업무 시스템 전환에 필요한 이전 대상 정리, 시험 이전, 결과 대조, 담당자 확인과 운영 전환 기준을 설명합니다.", published: "2026-11-14", readingMinutes: 4 },
 { slug: "subscription-service-operations", title: "정기결제 서비스 개발, 갱신 실패와 이용 상태를 어떻게 연결할까요?", seoDescription: "정기결제 서비스에서 갱신 성공·실패, 고객 안내, 재시도, 이용 유예와 해지 후 종료 시점을 정하는 방법을 설명합니다.", oneLiner: "정기결제 서비스에서 갱신 성공·실패, 고객 안내, 재시도, 이용 유예와 해지 후 종료 시점을 정하는 방법을 설명합니다.", published: "2026-11-14", readingMinutes: 4 },
 { slug: "partner-settlement-system", title: "파트너 정산 시스템 구축, 계산부터 확정·명세서까지 연결하려면", seoDescription: "파트너별 수수료 규칙과 조정 내역을 관리하고 거래 집계, 예외 검토, 정산 확정, 명세서 생성까지 연결하는 구축 범위입니다.", oneLiner: "파트너별 수수료 규칙과 조정 내역을 관리하고 거래 집계, 예외 검토, 정산 확정, 명세서 생성까지 연결하는 구축 범위입니다.", published: "2026-11-14", readingMinutes: 4 },

@@ -1,3 +1,4 @@
+import { ApprovedNov22 } from "./ai-outsourcing-usage-cost";
 import { Marketing10 } from "./marketing-10";
 import { Marketing09 } from "./marketing-09";
 import { Marketing08 } from "./marketing-08";
@@ -617,6 +618,7 @@ function ProjectBrief() {
 }
 
 export const guideContent: Record<string, ComponentType> = {
+"ai-outsourcing-usage-cost": ApprovedNov22,
 "business-system-migration": Marketing10,
 "subscription-service-operations": Marketing09,
 "partner-settlement-system": Marketing08,

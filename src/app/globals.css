@@ -446,3 +446,11 @@ p,
 li {
   text-wrap: pretty;
 }
+
+/* 스크롤 중 호버 차단 (ScrollHoverGuard) — 지나가는 카드·링크의 호버 전환이 스크롤 프레임을 깎았다.
+   본문 섹션·푸터만 막고 고정 요소(내비·휴대폰 메뉴)는 그대로 둔다. */
+[data-scrolling] main > section,
+[data-scrolling] main > div:not(.fixed),
+[data-scrolling] footer {
+  pointer-events: none;
+}

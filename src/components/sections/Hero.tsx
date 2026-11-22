@@ -42,11 +42,12 @@ const getLowPowerServerSnapshot = () => true;
 
 const content = {
   ko: {
-    subtitle: "Web · App · MVP Development Agency",
-    tagline1: "기획부터 운영까지,",
-    taglineHighlight: "끝까지 책임지는",
-    tagline2: "개발 에이전시",
-    description: "홈페이지와 웹서비스 개발부터 AI 업무 자동화까지, 필요한 범위를 함께 정하고 개발합니다",
+    subtitle: "AI Transformation · Web · App Partner",
+    tagline1: "업무에 AI를 연결하고,",
+    taglineHighlight: "끝까지 함께 만드는",
+    tagline2: "AX 파트너",
+    description:
+      "반복 업무 자동화와 사내 데이터·AI 연결부터 홈페이지·웹서비스 개발까지, 필요한 범위를 함께 정하고 실제 업무에 쓰이게 만듭니다",
     ctaPrimary: "프로젝트 문의하기",
     ctaSecondary: "포트폴리오 보기",
     scroll: "Scroll",
@@ -58,11 +59,12 @@ const content = {
     ],
   },
   en: {
-    subtitle: "Web · App · MVP Development Agency",
-    tagline1: "From planning to operations,",
-    taglineHighlight: "an agency that owns",
-    tagline2: "the outcome",
-    description: "From websites and web services to AI workflow automation — we scope what you need together, then build it",
+    subtitle: "AI Transformation · Web · App Partner",
+    tagline1: "Connecting AI to your work —",
+    taglineHighlight: "an AX partner",
+    tagline2: "that builds it with you",
+    description:
+      "From automating repetitive work and connecting your data to AI, to websites and web services — we scope it together and make it work in your daily operations",
     ctaPrimary: "Start a Project",
     ctaSecondary: "View Portfolio",
     scroll: "Scroll",

@@ -4,6 +4,7 @@ import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import PerfWatchdog from "@/components/ui/PerfWatchdog";
+import ScrollHoverGuard from "@/components/ui/ScrollHoverGuard";
 import ChannelTalk from "@/components/ui/ChannelTalk";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
@@ -205,6 +206,7 @@ export default function RootLayout({
           </>
         )}
         <PerfWatchdog />
+        <ScrollHoverGuard />
         {/* 채널톡은 사이트 전체에서 한 번만 띄운다 (페이지별로 띄우면 화면 전환 시 종료된 채 다시 켜지지 않는다) */}
         <ChannelTalk />
         <ThemeProvider>

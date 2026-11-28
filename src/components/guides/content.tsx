@@ -1,3 +1,4 @@
+import { ApprovedNov28 } from "./ax-weekly-report-baseline";
 import { ApprovedNov22 } from "./ai-outsourcing-usage-cost";
 import { Marketing10 } from "./marketing-10";
 import { Marketing09 } from "./marketing-09";
@@ -618,6 +619,7 @@ function ProjectBrief() {
 }
 
 export const guideContent: Record<string, ComponentType> = {
+"ax-weekly-report-baseline": ApprovedNov28,
 "ai-outsourcing-usage-cost": ApprovedNov22,
 "business-system-migration": Marketing10,
 "subscription-service-operations": Marketing09,
